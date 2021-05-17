@@ -1,0 +1,19 @@
+#macro(singlecollector $sub)
+    $!sub.Content#if ($!sub.getAttribute('affiliation')), $!sub.getAttribute('affiliation') #end
+	 #if ($!sub.Attributes.get('abbr'))&nbsp;($!sub.Attributes.get('abbr'))#end
+#end
+
+<h3 class="ddititle">
+	$!node.Name
+</h3>
+  #if ($!node.SubNodes.size() > 1)
+  <ul class="keywordnode">
+	#foreach ($sub in $!node.SubNodes)
+	    <li>
+    #singlecollector($!sub)
+    </li>
+    #end
+  </ul>
+  #else
+    #singlecollector($!node.SubNodes.get(0))
+  #end

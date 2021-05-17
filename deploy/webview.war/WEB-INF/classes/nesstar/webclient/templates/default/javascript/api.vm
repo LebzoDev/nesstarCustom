@@ -1,0 +1,216 @@
+function Api() {
+
+
+Api.prototype.getTopTitle = function() {
+	return '$!menuClass.getTopTitle()';
+};
+
+Api.prototype.getTableUrl = function() {
+   #if ($!menuClass.getTableUrl(false))
+      return '$!menuClass.getTableUrl(false)';
+   #else
+     return null;
+   #end
+};
+
+Api.prototype.getDefaultTableUrl = function() {
+	return '$!menuClass.getDefaultTableUrl(false)';
+};
+
+Api.prototype.getGraphUrl = function() {
+   #if ($!menuClass.getGraphUrl(false))
+     return '$!menuClass.getGraphUrl(false)';
+   #else
+     return null;
+   #end
+};
+
+Api.prototype.getGraphTypes = function() {
+   var types = new Array();
+   #foreach ($type in $!menuClass.getGraphTypes(false))
+   types['image$!{type.name}'] = '$!type.href';
+   #end
+   return types;
+};
+
+Api.prototype.getSpreadsheetUrl = function() {
+	return '$!menuClass.getSpreadsheetUrl(false)';
+};
+
+
+Api.prototype.getPdfUrl = function() {
+   return '$!menuClass.getPdfUrl(false)';
+};
+
+
+Api.prototype.getTimelineUrl = function() {
+   #if ($!menuClass.getTimelineUrl(false))
+      return '$!menuClass.getTimelineUrl(false)';
+   #else
+      return null;
+   #end
+};
+
+Api.prototype.getScatterPlotUrl = function() {
+   return '$!menuClass.getScatterPlotUrl()';
+};
+
+Api.prototype.getSubsetUrl = function() {
+   return '$!menuClass.getSubsetUrl()';
+};
+
+Api.prototype.getWeightUrl = function() {
+   return '$!menuClass.getWeightUrl()';
+};
+
+Api.prototype.getComputeUrl = function() {
+   return '$!menuClass.getComputeUrl()';
+};
+
+Api.prototype.getDownloadUrl = function() {
+   return '$!menuClass.getDownloadUrl(false)';
+};
+
+Api.prototype.getShoppingCartUrl = function() {
+   return '$!menuClass.getShoppingCartUrl()';
+};
+
+Api.prototype.getPrintUrl = function() {
+   return '$!menuClass.getPrintUrl()';
+};
+
+Api.prototype.getMapUrl = function() {
+   #if ($!menuClass.getMapUrl(false))
+      return '$!menuClass.getMapUrl(false)';
+   #else
+      return null;
+   #end
+};
+
+Api.prototype.getCurrentViewUrl = function() {
+   #if ($!menuClass.getCurrentViewUrl(false))
+      return '$!menuClass.getCurrentViewUrl(false)';
+   #else
+      return null;
+   #end
+};
+
+Api.prototype.getBookmarkOnclick = function() {
+   #if ($!menuClass.ServerSideBookmarkAvailable)
+    return "return createBookmark(this,'$!menuClass.getCurrentViewUrlEncoded(false)')";
+   #else
+      return "return createBookmarkUrl(this,'$!menuClass.getCurrentViewUrlEncoded(false)')";
+   #end
+};
+
+Api.prototype.getServerBookmarkUrl = function() {
+   return '$!menuClass.getServerBookmarkUrl(false)';
+};
+
+Api.prototype.getBookmarkOnclickUrl = function() {
+    #if ($!menuClass.ServerSideBookmarkAvailable)
+    return '$!menuClass.getCurrentViewUrlEncoded(false)';
+   #else
+      return '$!menuClass.getCurrentViewUrlEncoded(false)';
+   #end
+};
+
+Api.prototype.isServerSideBookmarkAvailable = function() {
+    return "$!menuClass.ServerSideBookmarkAvailable"; 
+};
+
+Api.prototype.isMapAvailable = function() {
+   return $!menuClass.isMapAvailable();
+};
+
+Api.prototype.getThemeFile = function() {
+  return '$!map.getThemeFile()';
+};
+
+Api.prototype.getSelectedTime = function() {
+   #if ($!cube.getSelectedTimeCategory())
+   return '$!cube.getSelectedTimeCategory()';
+   #else
+   return null;
+   #end
+};
+
+Api.prototype.getDecimalPlaces = function() {
+
+   return $!cube.getDecimalPlaces();
+};
+
+Api.prototype.getFilterMenu = function() {
+   localmenuhash = {};
+   #set ($menus = $dimensionchooser.sliceMenus)
+     #foreach ($key in $menus.keySet())
+       localmenuhash.aX$key='$menus.get($key)';
+     #end
+   return localmenuhash;
+};
+
+Api.prototype.getBaseUrls = function() {
+   localbaseurls = {};
+   #set ($bases = $dimensionchooser.urlBases)
+     #foreach ($key in $bases.keySet())
+       localbaseurls.aX$key='$bases.get($key)';
+     #end
+   return localbaseurls;
+};
+
+
+Api.prototype.getDimensionLabels = function() {
+    labels = {};
+    #set ($dimensions = $dimensionchooser.getDimensions())
+   #if ($!dimensions.size() > 0)
+       #foreach ($dimension in $dimensions)
+       var id = 'anchor-var$!{dimension.getCode()}';
+       labels[id] = '$!dimension.getEllipsisizedLabel()#if ($!dimension.showSelectionLabel()): <span class="sliceselection">$!dimension.getEllipsisizedSelected()</span>#end';
+       #end
+   #end
+   return labels;
+};
+
+Api.prototype.getDimensionTitles = function() {
+    titles = {};
+    #set ($dimensions = $dimensionchooser.getDimensions())
+   #if ($!dimensions.size() > 0)
+       #foreach ($dimension in $dimensions)
+       var id = 'anchor-var$!{dimension.getCode()}';
+       titles[id] = '$!dimension.getLabel()#if ($!dimension.hasSelection()): $!dimension.getFullSelected()#end';
+       #end
+   #end
+   return titles;
+};
+
+
+Api.prototype.getLevelEntries = function() {
+   entries = {};
+   #foreach ($entry in $!cube.getLevelMenuEntries())
+   var id = '$!entry.getId()';
+   entries[id] = '$!entry.getLink(false)';
+   #end
+   return entries;   
+};
+
+Api.prototype.getNewWindowMapLink = function() {
+  return '$!map.getNewWindowMapLink(false)';
+};
+
+Api.prototype.getLeftMenu = function() {
+   entries = {};
+   #foreach ($field in $!menuClass.getLeftMenu())
+      entries['$!field.id'] = '$!field.unescaped';
+   #end
+   return entries;
+};
+
+
+Api.prototype.getTableInfo = function() {
+  var items = new Array();
+  #parse ("javascript/tableinfo.vm")
+  return items;
+};
+}
+api = new Api();
+

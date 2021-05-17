@@ -1,0 +1,57 @@
+#if (!$!viewer.getIsLogin())
+   #if (!$!embed)
+      <div class="regressionHead">$!i18n.regressionHeader</div>
+   #end
+
+<script type="text/javascript">
+	mode = 'regression';
+</script>
+
+#parse( "micro/regressionHeaders.vm" )
+
+#if ($!analysis.getTableParser().getTopTable())
+<table class="matrix" border="0" summary="" id="tabell">
+        #foreach ($row in $!analysis.getTableParser().getTopTable())
+  <tr>
+            #foreach ($cell in $!row)
+                #if ($cell.type == 'matrix')
+                    #set ($classname = 'matrix')
+                #else
+                    #set ($classname = 'stub')
+                #end
+    <td class="$!classname">$cell.label</td>
+            #end
+  </tr>
+        #end
+  <tr>
+    <td colspan="7" class="regressionspacer">&nbsp;</td>
+  </tr>
+        #foreach ($rowB in $!analysis.getTableParser().getBottomTable())
+  <tr>
+            #foreach ($cellB in $!rowB)
+               #if ($cellB.type == 'matrix')
+                    #set ($classname = 'matrix')
+                #else
+                    #set ($classname = 'stub')
+                #end
+    <td class="$!classname">$cellB.label</td>
+            #end
+    <td colspan="5" class="regressionspacer">&nbsp;</td>
+  </tr>
+        #end
+  <tr>
+    <td colspan="7" class="regressionspacer">&nbsp;</td>
+  </tr>
+</table>
+#end
+
+#if(!$!embed)
+    #if (!$!doprint)
+        #if ($!analysis.getTableInfo().getCorrelationLink())
+    <a class="remove" onclick="hideTheViewArea()" href="$!analysis.getTableInfo().getCorrelationLink()">$!i18n.regression_as_correlation</a>
+        #end
+
+    #end
+#end
+
+#end

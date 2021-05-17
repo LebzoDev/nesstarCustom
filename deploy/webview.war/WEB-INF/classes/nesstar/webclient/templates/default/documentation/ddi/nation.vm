@@ -1,0 +1,21 @@
+#macro(singlecountry $sub)
+    $!sub.Content
+	    #if ($!sub.Attributes.get('abbr'))
+    &nbsp;($!sub.Attributes.get('abbr'))
+    #end
+#end
+
+<h3 class="ddititle">
+	$!node.Name
+</h3>
+#if($!node.SubNodes.size() > 1)
+	<ul class="keywordnode">
+		#foreach ($sub in $!node.SubNodes)
+			<li>
+				#singlecountry($!sub)
+			</li>
+		#end
+	</ul>
+#else
+	#singlecountry($!node.SubNodes.get(0))
+#end

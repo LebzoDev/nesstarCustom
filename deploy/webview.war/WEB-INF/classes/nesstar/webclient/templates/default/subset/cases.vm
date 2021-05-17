@@ -1,0 +1,103 @@
+<form action="$!form_action" method="get" class="caseform">
+  <table width="300px">
+    <tr>
+      <td class="subsetheading"></td>
+      <td class="subsetheading">$!i18n.subset_variable</td>
+      <td class="subsetheading"></td>
+      <td class="subsetheading">$!i18n.subset_value</td>
+      <td class="subsetheading"></td>
+      <td class="subsetheading">$!i18n.subset_categories</td>
+    </tr>
+		#foreach ($line in $caseSubset.getLines())
+
+    <tr>
+      <td>
+				#if ($!line.classname == 'hide')
+        &nbsp;
+				#end
+        <span class="$!line.classname">
+					#if ($!line.cons)
+          <select id="ao$!{line.number}" onChange="changeCon('$!line.changecon','ao$!{line.number}')">
+						#foreach ($con in $!line.cons)
+						#if ($!con.selected)
+         <option selected="selected" value="$!con.universallabel">
+							$!con.label
+            </option>
+						#else
+         <option value="$!con.universallabel">
+							$!con.label
+            </option>
+						#end
+						#end
+          </select>
+					#end
+        </span>
+      </td>
+      <td>
+        <span class="$!line.classname">
+          <input type="text" class="textfield readonly" name="var$!{line.number}" value="$!line.label" title="$!line.label" readonly="true" size="15"/>
+        </span>
+      </td>
+      <td>
+        <span class="$!line.classname">
+          <select id="op$!{line.number}" onChange="changeOp('$!line.changeop','op$!{line.number}')">
+						#foreach ($type in $!line.types)
+						#if ($!type.selected)
+            <option selected="selected" value="$type.label">
+							$!type.label
+            </option>
+						#else
+            <option value="$type.label">
+							$!type.label
+            </option>
+						#end
+						#end
+          </select>
+        </span>
+      </td>
+      <td>
+        <span class="$!line.classname">
+          <input type="text" class="textfield readonly" name="cases$!{line.number}" value="$!line.cases" readonly="true" size="15"/>
+        </span>
+      </td>
+      <td>
+        <span class="$!line.classname">
+					#if ($!line.setit == '#')
+          <input type="button" name="add$!{line.number}" class="button" disabled="true" value="$!i18n.subset_add" onclick="setIt('#')"/>
+					#else
+          <input type="button" name="add$!{line.number}" class="button" value="$!i18n.subset_add" onclick="setIt('$!line.setit')"/>
+					#end
+        </span>
+      </td>
+
+			#if ($!line.number == '1')
+      <td bgcolor="#ffffff" width="40%" rowspan="$!caseSubset.getFields()">
+        <div width="150px" class="textfield noPadding">
+          <iframe src="$!caseSubset.getCategoriesUrl()" frameborder="0" style="width: 150px; overflow-x: hidden">
+
+          </iframe>
+        </div>
+      </td>
+			#end
+    </tr>
+		#end
+    <tr>
+      <td colspan="5">
+				#if ($!caseSubset.getMoreUrl() == '#')
+        <input type="button" name="more" class="button" disabled="true" value="$i18n.subset_more" onclick="return setUrl('$!caseSubset.getMoreUrl()')"/>
+				#else
+        <input type="button" name="more" class="button" value="$i18n.subset_more" onclick="return setUrl('$!caseSubset.getMoreUrl()')"/>
+				#end
+				#if ($!caseSubset.getLessUrl() == '#')
+        <input type="button" name="less" class="button" disabled="true" value="$i18n.subset_less" onclick="return setUrl('$!caseSubset.getLessUrl()')"/>
+				#else
+        <input type="button" name="less" class="button" value="$i18n.subset_less" onclick="return setUrl('$!caseSubset.getLessUrl()')"/>
+				#end
+        <input type="button" name="less" class="button" value="$i18n.subset_clear" onclick="return setUrlDialog('$!caseSubset.getClearUrl()', '$i18n.confirm_delete_subset?')"/>
+      </td>
+      <td style="text-align: right">
+        <input type="button" name="ok" class="button minWidth" value="$i18n.subset_ok" onclick="setUrl('$!caseSubset.getExecuteUrl()')"/>
+      </td>
+    </tr>
+  </table>
+</form>

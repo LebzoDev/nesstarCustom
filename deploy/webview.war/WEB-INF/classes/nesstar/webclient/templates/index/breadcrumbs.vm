@@ -1,0 +1,10 @@
+#macro (breadcrumb $list)
+   #foreach ($crumb in $!list)
+      <li class="floatleft smallpad smaller">&raquo; <a href="$!crumb.link">$!crumb.name</a></li>
+   #end
+#end
+
+<ul id="breadcrumbs" class="floatleft nomargins">
+   <li class="floatleft smallpad smaller"><a href="$!rooturl/index/">Index </a></li>
+   #breadcrumb ($!indexurls.getBreadcrumbList())
+</ul>

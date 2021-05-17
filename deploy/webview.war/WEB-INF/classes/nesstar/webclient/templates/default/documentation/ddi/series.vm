@@ -1,0 +1,14 @@
+#if ($!node.HasContent)
+<h3 class="ddititle">
+		#if($!node.ParentNode.URL)
+  <a href="$!node.ParentNode.URL" target="_new">
+        #end
+        $!node.Name
+        #if($!node.ParentNode.URL)
+  </a>
+        #end
+</h3>
+<p class="ddicontent">
+		$!node.Content
+</p>
+#end

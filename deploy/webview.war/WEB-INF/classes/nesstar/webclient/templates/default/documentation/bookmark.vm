@@ -1,0 +1,6 @@
+#set ($bookmark = $!documentation.getBookmark())
+<h3 class="ddititle">$!bookmark.getLabel()</h3>
+<p class="ddicontent">$!bookmark.getComment()</p>
+
+
+

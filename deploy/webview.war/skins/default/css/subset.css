@@ -1,0 +1,75 @@
+span.display {
+}
+
+span.hide {
+	display: none;
+}
+
+form.caseform {
+    margin: 0;
+    padding: 0;
+    margin-top: 10px;
+
+}
+
+div.padcontin {
+    margin-left: 2px;
+}
+
+
+form.caseform table {
+    vertical-align: top;
+	background-color:#efefef;
+	padding:10px;
+    border: none;
+	background-color:#F6F6F6;
+    border:1px solid #DDDDDD;
+}
+
+form.caseform table tr {
+    vertical-align: top;
+}
+
+div.variable {
+	border: 1px solid #CDCDCD;
+	height: 300px;
+	width: 400px;
+	overflow: auto;
+	margin-top: 10px;
+	font-size: 12px;
+}
+
+div.variable div {
+	padding: 2px 4px;
+}
+
+td.subsetheading {
+/*  font-weight: bold; */
+  font-size: 10px;
+}
+
+span.contintext {
+	font-weight: bold;
+}
+
+div.subsetHeader {
+	font-weight: bold;
+}
+
+
+.nopointer {
+	cursor: auto;
+}
+
+a.override {
+  color: #000000;
+  font-weight: bold;
+}
+
+a.override:link {
+  color: #000000;
+}
+
+a.override:visited {
+  color: #000000;
+}

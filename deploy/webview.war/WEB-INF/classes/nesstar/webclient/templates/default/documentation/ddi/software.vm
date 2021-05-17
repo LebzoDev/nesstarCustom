@@ -1,0 +1,20 @@
+#if ($!node.HasContent)
+<h3 class="ddititle">
+		$!node.Name
+</h3>
+<ul class="keywordnode">
+	<li>
+		$!node.Content
+	</li>
+	#if ($!node.getAttribute('version'))
+    <li>
+    	$!i18nDdi.version: $!node.getAttribute('version')
+    </li>
+	#end
+	#if ($!node.getAttribute('date'))
+		<li>
+			$!i18nDdi.date: $!node.getAttribute('date')
+		</li>
+	#end
+</ul>
+#end

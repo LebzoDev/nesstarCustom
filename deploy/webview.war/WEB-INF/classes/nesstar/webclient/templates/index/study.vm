@@ -1,0 +1,112 @@
+<div class="giveroom">
+<h2>
+   $!i18n.dataset
+   $!currentStudyLabel
+</h2>
+
+#if ($!study.getAbstractText())
+   <h3 class="ddititle">$!{i18nDdi.abstract}</h3>
+   <p class="ddicontent">$!utils.escapeHtml($!{study.getAbstractText()}, true)</p>
+#end
+</div>
+#if ($!study.numCubes == 0)
+   #if ($!study.getSections())
+      <h3 class="ddititle">$!i18nDdi.vargrp_pl</h3>
+      <ul>
+         #foreach ($section in $!study.getSections())
+            <li><a href="$!{indexurls.getLinkToObject($!section)}">$!section.label</a></li>
+         #end
+      </ul>
+   #else
+      <h3 class="ddititle">$!i18nDdi.var_pl</h3>
+      <ul>
+      #foreach ($!variable in $!study.variables)
+         <li><a href="$!{indexurls.getLinkToObject($!variable)}">$!variable.label</a></li>
+      #end
+      </ul>
+   #end
+#end
+#if ($!multinode)
+  #set ($currentnodes = $!multinode)
+#else
+  #set ($currentnodes = $!documentation.getDDINodes())
+#end
+
+#foreach ($node in $currentnodes)
+   #if ($!node.Tag == 'docDscr')
+      <h3 class="ddititle">$!i18nDdi.docdscr</h3>
+      #set ($docDscrAdded = true)
+   #end
+   #if ($!docDscrAdded && $!node.Tag == 'stdyDscr')
+      <h3 class="ddititle">$!i18nDdi.stdydscr</h3>
+   #end
+  #if ($!node.class.name == 'nesstar.client.app.explorer.ExtLinkNode')
+  #parse( "documentation/ddi/ExtLink.vm" )
+  #elseif ($!node.class.name == 'nesstar.webclient.metadata.AuthEntyNode')
+  #parse( "documentation/ddi/AuthEnty.vm" )
+  #elseif ($!node.class.name == 'nesstar.client.app.explorer.KeywordNode')
+  #parse( "documentation/ddi/KeyWord.vm" )
+  #elseif ($!node.class.name == 'nesstar.client.app.explorer.FileTxtNode')
+  #parse( "documentation/ddi/FileTxt.vm" )
+  #elseif ($!node.class.name == 'nesstar.client.app.explorer.NesstarAbstractNode')
+  #parse( "documentation/ddi/Abstract.vm" )
+  #elseif ($!node.class.name == 'nesstar.client.app.explorer.MaterialNode')
+  #parse( "documentation/ddi/Material.vm" )
+  #elseif ($!node.class.name == 'nesstar.webclient.metadata.StudyMaterialParent')
+  #parse( "documentation/ddi/MaterialParent.vm" )
+  #elseif ($!node.class.name == 'nesstar.client.app.explorer.OtherMatNode')
+  #parse( "documentation/ddi/OtherMat.vm" )
+  #elseif ($!node.class.name == 'nesstar.client.app.explorer.DistributorNode')
+  #parse( "documentation/ddi/Distributor.vm" )
+  #elseif ($!node.class.name == 'nesstar.client.app.explorer.TimePeriodNode')
+  #parse( "documentation/ddi/TimePeriod.vm" )
+  #elseif ($!node.class.name == 'nesstar.webclient.metadata.Distributor')
+  #parse( "documentation/ddi/Distributor.vm" )
+  #elseif ($!node.class.name == 'nesstar.client.app.explorer.VirtualNode')
+  #if ($!node.Tag == 'fundAg')
+  #parse ("documentation/ddi/FundAg.vm")
+  #elseif ($!node.Tag == 'distrbtr')
+  #parse ("documentation/ddi/Distributor.vm")
+  #elseif ($!node.Tag == 'depositr')
+  #parse ("documentation/ddi/Distributor.vm")
+  #elseif ($!node.Tag == 'contact' || $!node.Tag == 'contactStudy' || $!node.Tag == 'contactDoc')
+  #parse ("documentation/ddi/contact.vm")
+  #elseif ($!node.Tag == 'depDate')
+  #parse ("documentation/ddi/date.vm")
+  #elseif ($!node.Tag == 'distDate')
+  #parse ("documentation/ddi/date.vm")
+  #elseif ($!node.Tag == 'othId')
+  #parse( "documentation/ddi/OtherId.vm" )
+  #elseif ($!node.Tag == 'nation')
+  #parse( "documentation/ddi/nation.vm" )
+  #elseif ($!node.Tag == 'producer')
+  #parse( "documentation/ddi/Producer.vm")
+  #elseif ($!node.Tag == 'dataCollector')
+  #parse( "documentation/ddi/dataCollector.vm")
+  #elseif ($!node.Tag == 'accsPlac')
+  #parse( "documentation/ddi/accsPlac.vm")
+  #else
+  #parse( "documentation/ddi/DocNode.vm" )
+  #end
+  #else
+  #if ($!node.Tag == 'software')
+  #parse( "documentation/ddi/software.vm" )
+  #elseif ($!node.Tag == 'serName')
+  #parse ("documentation/ddi/series.vm")
+  #elseif ($!node.Tag == 'version')
+  #parse ("documentation/ddi/version.vm")
+  #elseif ($!node.Tag == 'verResp')
+  #parse ("documentation/ddi/verResp.vm")
+  #elseif ($!node.Tag == 'holdings')
+  #parse ("documentation/ddi/holdings.vm")
+  #elseif ($!node.Tag == 'setAvail')
+  #parse ("documentation/ddi/setAvail.vm")
+  #elseif ($!node.Tag == 'confDec' || $!node.Tag == 'specPerm')
+  #parse ("documentation/ddi/confDec.vm")
+  #else
+  #parse( "documentation/ddi/DocNode.vm" )
+  #end
+  #end
+#end
+
+#if($!downloadStudyURL) <p class="download"><a href="$!downloadStudyURL">$!i18n.download</a></p> #end

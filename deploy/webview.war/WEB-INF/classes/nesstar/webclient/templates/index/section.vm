@@ -1,0 +1,47 @@
+
+<div class="giveroom">
+   <h2><span id="topspan">
+   $!i18n.dataset $!currentStudyLabel
+   </h2>
+   $!i18nDdi.vargrp: $!section.getLabel()
+</div>
+
+#if ($!section.Universe)
+   <h3 class="ddititle">$!i18nDdi.universe</h3>
+   <p>$!utils.escapeHtml($!section.Universe, true)</p>
+#end
+
+#if ($!section.Definition)
+   <h3 class="ddititle">$!i18nDdi.defntn</h3>
+   <p>$!utils.escapeHtml($!section.Definition, true)</p>
+#end
+
+#if ($!section.Comment)
+   <h3 class="ddititle">$!i18nDdi.comment</h3>
+   <p>$!utils.escapeHtml($!section.Comment, true)</p>
+#end
+
+#if ($!section.Notes)
+   <h3 class="ddititle">$!i18nDdi.notes</h3>
+   <p>$!utils.escapeHtml($!section.Notes, true)</p>
+#end
+
+
+#if ($!section.getSubSections().size() > 0)
+   <h3 class="ddititle">$!i18nDdi.vargrp_pl</h3>
+      <ul>
+         #foreach ($!subsection in $!section.getSubSections())
+            #set ($class = $!indexutils.getTypeFromRDF($!subsection))
+            <li class="$!class"><a href="$!{indexurls.getLinkToObject($!subsection)}">$!subsection.label</a></li>
+         #end
+      </ul>
+#elseif($!section.variables.size() > 0)
+      <h3 class="ddititle">$!i18nDdi.var_pl</h3>
+      <ul>
+         #foreach ($!variable in $!section.variables)
+            <li class="var"><a href="$!{indexurls.getLinkToObject($!variable)}">$!variable.label</a></li>
+         #end
+      </ul>
+#end
+
+#if($!downloadStudyURL) <p class="download"><a href="$!downloadStudyURL">$!i18n.download</a></p> #end

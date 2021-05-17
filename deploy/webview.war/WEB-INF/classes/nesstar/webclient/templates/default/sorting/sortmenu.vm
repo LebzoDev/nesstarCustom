@@ -1,0 +1,13 @@
+<div class="menu" id="var${element.subcode}sorting">
+  <ul class="testmenu">
+    <li class="m">
+      <a href="$!element.asc" class="menulinks" onclick="hideTheViewArea()">$!i18n.sort_asc</a>
+    </li>
+    <li class="m">
+      <a href="$!element.desc" class="menulinks" onclick="hideTheViewArea()">$!i18n.sort_desc</a>
+    </li>
+    <li class="m">
+      <a href="$!element.none" class="menulinks" onclick="hideTheViewArea()">$!i18n.sort_none</a>
+    </li>
+  </ul>
+</div>

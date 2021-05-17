@@ -1,0 +1,137 @@
+#macro (menuentry $entry)
+    #if ($!entry.hasChildren())
+    <li class="parentmenu">
+    #else
+    <li>
+    #end
+      #if ($!entry.isEnabled())
+             <a $!entry.getClasses() href="$!entry.getLink()" $!entry.onclick>$!entry.getLabel()</a>
+      #else
+             <span $!entry.getClasses()>$!entry.getLabel()</span>
+      #end
+      #if ($!entry.numChildren() > 0) 
+      <ul>
+        #foreach ($chuld in $!entry.getChildren())
+          #menuentry($chuld)
+        #end
+      </ul>
+      #end
+    </li>
+#end
+
+#if(!$!props.hideMenus())
+   #if ($!cube.getDimensionChooser())
+    #set ($dimensionchooser = $!cube.getDimensionChooser())
+   #else
+    #set ($dimensionchooser = $!analysis.getDimensionChooser())
+   #end
+
+   <script type="text/javascript" src="skins/default/javascript/dimensionchooser.js?$!props.getTimestamp()"></script>
+
+   <script type="text/javascript">
+     xAddEventListener(document, 'click',closeCombo,false);
+
+## Hashing for DHTML-menu's
+     #if (!$!nojs)
+        #set ($bases = $dimensionchooser.urlBases)
+        #foreach ($key in $bases.keySet())
+          baseurls.aX$key='$bases.get($key)';
+        #end
+
+        #set ($menus = $dimensionchooser.sliceMenus)
+        #foreach ($key in $menus.keySet())
+          menuhash.aX$key='$menus.get($key)';
+        #end
+
+      #set ($groupMenus = $dimensionchooser.groupingMenus)
+       #foreach ($key in $groupMenus.keySet())
+         menuhash.aX$key='$groupMenus.get($key)';
+       #end
+
+       #set ($calcMenus = $dimensionchooser.calcMenus)
+       #foreach ($key in $calcMenus.keySet())
+         menuhash.aX$key='$calcMenus.get($key)';
+       #end
+
+     #end
+   </script>
+
+   <form method="get" id="hiddenform" action="$!form_action">
+     #foreach ($field in $!hiddenform.getForm())
+     <input type="hidden" name="$field.name" value="$field.value"/>
+     #end
+   </form>
+
+   #parse( "cube/subsetiframe.vm" )
+
+   #if (!$!doprint)
+
+   <div id="drop">
+     #foreach ($dimension in $dimensionchooser.getDimensions())
+       #if ($dimensionchooser.shouldVariableBeDraggable($!dimension.getCode()))
+       <div class="layerlabel" id="var$!dimension.getCode()div" style="width: auto; display: none; position: absolute; left: 0px; right:0px; z-index: 500;">$!dimension.getEllipsisizedLabel()#if ($!dimension.hasSelection()):<span class="sliceselection">$!dimension.getEllipsisizedSelected()</span>#end</div>
+       #end
+     #end
+     #set ($dimensions = $dimensionchooser.getDimensions())
+     #if ($dimensions.size() > 0)
+        <ul id="mainmenu"#if($!nojs) class="jai"#end >
+          #set ($combocount = 1)
+          #foreach ($dimension in $dimensions)
+          <li id="li-$!dimension.getCode()" $!dimension.getClasses()>
+          #set ($combocount = $combocount + 1)
+          #if ($dimensionchooser.shouldVariableBeDraggable($!dimension.getCode()))
+          <span title="$!i18n.canmovetotable" id="var$!dimension.getCode()" class="layerlabel">&nbsp;</span>
+          #end
+          <a class="combolink" id="anchor-var$!dimension.getCode()" title="$!dimension.getLabel()#if ($!dimension.hasSelection()): $!dimension.getFullSelected()#end">$!dimension.getEllipsisizedLabel()#if ($!dimension.showSelectionLabel()): <span class="sliceselection">$!dimension.getEllipsisizedSelected()</span>#end</a>
+            <ul id="combo-$!dimension.getCode()">
+              #set ($entrycount = 1)
+              #foreach ($child in $!dimension.getChildren())
+                #if ($!child.hasChildren())
+                <li class="parentmenu menuentry$entrycount" $!child.getExtraAttrs()>
+                #else
+                <li class="menuentry$entrycount">
+                #end
+               #if ($!child.isEnabled() && !$!child.hasChildren())
+                <a $!child.getClasses() $!child.getLevelId() $!child.getOnclick() href="$!child.getLink()"> $!child.getLabel()</a>
+               #else
+                <span $!child.getClasses() $!child.getExtraAttrs()>$!child.getLabel()</span>
+               #end
+               #if ($!child.numChildren() > 0)
+                  #if ($!child.wantDynamicSubmenu && !$!nojs)
+                      #set ($submenuIsDynamic = true)
+                  #else
+                      #set ($submenuIsDynamic = false)
+                  #end
+
+               <ul id="menuX$!child.getCode()"#if($!submenuIsDynamic) style="display: none"#end>
+                 #if (!$!submenuIsDynamic)
+                   #foreach ($chuld in $!child.getChildren())
+                     #menuentry($chuld)
+                   #end
+                 #end
+               </ul>
+               #end
+                </li>
+                #set ($entrycount = $entrycount + 1)
+              #end
+            </ul>
+            <script type="text/javascript">
+              element=document.getElementById("anchor-var$!dimension.getCode()");
+              if (element != null) {
+                 xAddEventListener(element, 'click', function() { toggleCombo("combo-$!dimension.getCode()")  }, false);
+              }
+              disableHoverPopup("combo-$!dimension.getCode()");
+              #if ($dimensionchooser.shouldVariableBeDraggable($!dimension.getCode()))
+              makeDraggable('var$!dimension.getCode()');
+              tooLargeHash.$!dimension.getCode() = $!dimension.isTooLarge();
+              #end
+            </script>
+          </li>
+          #end
+        </ul>
+      #end
+   </div>
+   #end
+   <!-- <script type="text/javascript" src="skins/default/javascript/fixfftips.js?$!props.getTimestamp()"></script>-->
+   #parse( "micro/tableinfo.vm" )
+#end

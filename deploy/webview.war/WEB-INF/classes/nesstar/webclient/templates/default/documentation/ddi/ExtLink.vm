@@ -1,0 +1,35 @@
+#if ($!node)
+	#set ($theNode = $node)
+#end
+
+#if ($!sub)
+	#set ($theNode = $sub)
+#end
+
+#if ($!theNode.Attributes.containsKey("title"))
+	#set ($title = $!theNode.escapeNotCData($!theNode.Attributes.get('title')))
+#end
+
+#if ($!theNode.Attributes.containsKey("URI"))
+	#set ($url = $!theNode.Attributes.get('URI'))
+#end
+
+#if ($!theNode.Attributes.containsKey("role"))
+	#set ($role = $!theNode.escapeNotCData($!theNode.Attributes.get('role')))
+#end
+
+##If not title is set, use the uri as title it it exsists
+#if (!$!title)
+	#set ($!title = $!url)
+#end
+<div class="ddicontent">
+#if ($!url)
+  <a href="$!url" target="_new">$!title</a>
+#else
+	$!title
+#end
+
+#if ($!role)
+  <div>$!i18nDdi.role $!role</div>
+#end
+</div>

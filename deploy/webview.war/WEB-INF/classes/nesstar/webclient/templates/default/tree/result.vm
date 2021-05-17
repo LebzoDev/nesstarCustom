@@ -1,0 +1,78 @@
+#macro (traverse $node $level $i18n $searchView $utils)
+  ##Increment counter
+  #set ($thislevel = $level + 1)
+  #set ($margin = -15)
+	#set ($margin = $margin * $thislevel)
+	<ul style="margin-left: ${margin}px" class="browsetree">
+		#foreach ($child in $!node.children())
+      #if ($thislevel > 0)
+				#set ($padding = (( $thislevel + 1 )  * 15) )
+			#else
+				#set ($padding = 0)
+			#end
+
+      #if ($!child.getIsStudy())
+        #set ($class = 'studyclosed')
+      #else
+        #set ($class = 'insidestudy')
+      #end
+
+      <li style="padding-left: ${padding}px" class="$!class">
+        #if ($!child.getIsVariable())
+        <img src="skins/default/images/variable.gif" />
+        #else
+          <img src="skins/default/images/dataset.gif" onclick="toggleVisibility(this)"/>
+        #end
+        #if ($!child.getIsVariable())
+        <a href="" onclick="$!child.getOnClick()">
+        #end
+        $!child.getLabel()
+         #if ($!child.getIsVariable())
+        </a>
+        #end
+        #if ($!child.getIsVariable())
+          <a href="$!{searchView.getRequestUrl()}$!utils.encode($!child.getObjUrl())" class="advancedsearch" target="$!child.getObjUrl()">[$!i18n.openInContext]</a>
+        #end
+        #if (!$!child.isLeaf())
+          #if ($!child.getIsStudy())
+            ($!child.getChildCount() $!{i18n.hits})
+          #end
+          <div style="display: none">
+          #traverse($child $thislevel $i18n $searchView $utils)
+          </div>
+        #end
+      </li>
+    #end
+   </ul>
+#end
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		#parse ("cache/cacheHeader.vm")
+  </head>
+  <body onload="copyTree()">
+    <div id="topcopy">
+      <a onclick="toggleVisibility(this)"><img border="0" src="skins/default/images/open.gif" />$!i18n.variablesfound</a>
+      <div style="display: block">
+      #traverse($result.getRoot() 1 $i18n $searchView $utils)
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      function copyTree() {
+					var name = '${result.getParentId()}divinsert';
+					var to = parent.document.getElementById(name);
+					if (!to) {
+						to = parent.content.tree.document.getElementById(name);
+					}
+					var from = document.getElementById('topcopy');
+					if (to && from) to.innerHTML = from.innerHTML;
+					try {
+						parent.setScrollableSize();
+					} catch (error) {
+					}
+         }
+    </script>
+</body>
+</html>

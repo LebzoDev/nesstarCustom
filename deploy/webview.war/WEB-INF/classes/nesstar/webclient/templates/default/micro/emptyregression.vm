@@ -1,0 +1,63 @@
+<div class="regressionHead">$!i18n.regressionHeader</div>
+
+#parse( "micro/regressionHeaders.vm" )
+
+<table class="matrix" border="0" summary="" id="tabell">
+  <tr>
+    <td class="stub"></td>
+    <td class="stub" id="l0" axis="stats">$i18n.reg_B</td>
+    <td class="stub" id="l1" axis="stats">$i18n.reg_SEB</td>
+    <td class="stub" id="l2" axis="stats">$i18n.reg_Beta</td>
+    <td class="stub" id="l3" axis="stats">$i18n.reg_T</td>
+    <td class="stub" id="l4" axis="stats">$i18n.reg_Sig</td>
+    <td class="stub" id="l5" axis="stats">$i18n.reg_Tol</td>
+  </tr>
+  <tr>
+    <td class="stub" id="l6" axis="variables"> </td>
+    <td class="matrix" headers="l6 l0">-</td>
+    <td class="matrix" headers="l6 l1">-</td>
+    <td class="matrix" headers="l6 l2">-</td>
+    <td class="matrix" headers="l6 l3">-</td>
+    <td class="matrix" headers="l6 l4">-</td>
+    <td class="matrix" headers="l6 l5">-</td>
+  </tr>
+
+  <tr>
+    <td colspan="7" class="regressionspacer">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td class="stub" scope="row">$i18n.reg_Int</td>
+    <td class="matrix">-</td>
+  </tr>
+  <tr>
+    <td class="stub" scope="row">$i18n.reg_Val</td>
+    <td class="matrix">-</td>
+  </tr>
+  <tr>
+    <td class="stub" scope="row">$i18n.reg_MULR</td>
+    <td class="matrix">-</td>
+  </tr>
+  <tr>
+    <td class="stub" scope="row">$i18n.reg_MULRSQ</td>
+    <td class="matrix">-</td>
+  </tr>
+  <tr>
+    <td class="stub" scope="row">$i18n.reg_ADJRSQ</td>
+    <td class="matrix">-</td>
+  </tr>
+  <tr>
+    <td class="stub" scope="row">$i18n.reg_FVAL</td>
+    <td class="matrix">-</td>
+  </tr>
+  <tr>
+    <td class="stub" scope="row">$i18n.reg_FSIG</td>
+    <td class="matrix">-</td>
+  </tr>
+
+</table>
+
+<script type="text/javascript">
+            mode = 'regression';
+</script>
+

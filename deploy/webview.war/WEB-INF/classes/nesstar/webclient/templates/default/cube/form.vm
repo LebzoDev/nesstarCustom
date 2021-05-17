@@ -1,0 +1,79 @@
+<form method="get" id="hiddenform" action="$!form_action">
+  #foreach ($field in $!hiddenform.getForm())
+  <input type="hidden" name="$field.name" value="$field.value"/>
+  #end
+</form>
+  #parse( "cube/subsetiframe.vm" )
+
+  #if (!$!doprint)
+
+    #if ($!cube.getTableMenu())
+      #set ($tablemenu = $!cube.getTableMenu())
+    #else
+      #set ($tablemenu = $!analysis.getTableMenu())
+    #end
+  #end
+
+
+  #if (!$!doprint)
+<form id="drop" class="cubemenu">
+  #set ($counter = 0)
+  #if ($!cube.getTableMenu())
+  #set ($tablemenu = $!cube.getTableMenu())
+  #else
+  #set ($tablemenu = $!analysis.getTableMenu())
+  #end
+
+  #foreach ($select in $!tablemenu.getCubeMenu())
+  #if ( ($!tablemenu.getHasMeasure() || $!tablemenu.getHasTableOptions())
+  && ($counter == ($!tablemenu.getCubeMenu().size() - 2) ))
+    #set ($fieldclass = "lastmenu")
+    #elseif ($!select.isMeasure)
+    #set ($fieldclass = "measure")
+    #else
+    #set ($fieldclass = "default")
+    #end
+  <fieldset class="$!fieldclass">
+    #if ($select.isLayer && $!tablemenu.getSubMode() == 'table')
+    <legend id="var$!select.code" title="$!i18n.canmovetotable" class="headlabel">
+      $utils.escape($!{select.label})</legend>
+
+    <div class="movingcell" id="var$!{select.code}div" style="display:none; position: absolute; left: 0px; right:0px">
+      $!utils.escape($select.label)
+    </div>
+
+    <script language="javascript" type="text/javascript">
+      makeDraggable('var$!{select.code}');
+    </script>
+    #else
+    <legend>$!utils.escape($select.label)</legend>
+    #end
+
+    <select onChange="changeForm(this,'$!select.link','$!select.code',$!select.HasMap)" id="select_$!select.code" >
+      #foreach ($option in $select.options)
+      #if ($option.selected)
+      <option selected="$!option.selected" id="$!option.id" value="$!option.value">
+        $!utils.escape($option.label)</option>
+      #else
+      <option id="$!option.id" value="$!option.value">$!utils.escape($option.label)</option>
+      #end
+      #end
+    </select>
+    <script type="text/javascript">
+       select=xGetElementById("select_$!select.code"); 
+       select.name=select.selectedIndex;
+    </script>
+  </fieldset>
+  #set ($counter = $counter + 1)
+  #end
+</form>
+  #end
+
+  #parse( "micro/tableinfo.vm" )
+
+## This should not be placed here!!!
+#if($!parameters.showFeedback())
+  <script type="text/javascript">
+    hideComboBoxes();
+  </script>
+#end

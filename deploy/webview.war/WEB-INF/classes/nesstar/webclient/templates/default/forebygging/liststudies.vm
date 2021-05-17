@@ -1,0 +1,10 @@
+<h2>Listen over datasett:</h2>
+<span class="studylist">
+  <ul>
+	#foreach ($study in $!forebygging.getStudies())
+    <li>
+      <a href="$!{request.requestURI}?mode=forebygging&submode=getallvariables&study=$!{study.ID}">$!study.label</a>
+    </li>
+	#end
+  </ul>
+</span>

@@ -1,0 +1,63 @@
+#if ($!analysis)
+#set ($tableinfo = $!analysis.getTableInfo())
+#else
+#set ($tableinfo = $!cube.getTableInfo())
+#end
+
+#if ($!map.isSvgPrint())
+   #set ($styleinfo = 'class="tableinfo"')
+#end
+
+#set ($toptitle = $!menuClass.getTopTitle())
+
+<div id="tableinfo" $!styleinfo>
+#if(!$!props.showPrintPreviewVariablesInline())
+  #if ($!doprint || $!map.isSvgPrint())
+  #if ($!props.printShowVariableInfo())
+      #if ($!tableinfo.getStubVars().size() > 0)
+      <div class="varHeading">
+        <div class="layerVarHead">$!{i18n.variablesInStub}:</div>
+        #foreach ($stub in $!tableinfo.getStubVars())
+        <div class="layerVar">$stub.Label</div>
+        #end
+      </div>
+      #end
+
+      #if ($!tableinfo.getHeaderVars().size() > 0)
+      <div class="varHeading">
+        <div class="layerVarHead">$!{i18n.variablesInHeader}:</div>
+        #foreach ($header in $!tableinfo.getHeaderVars())
+        <div class="layerVar">$header.Label</div>
+        #end
+      </div>
+      #end
+  #end
+
+  #if ($!tableinfo.getLayerVars().size() > 0)
+  #if (!$!props.useInteractiveTitles())
+  <div class="varHeading">
+    <div class="layerVarHead">$!{i18n.variablesInLayers}:</div>
+    #foreach ($layer in $!tableinfo.getLayerVars())
+    <div class="layerVar">$layer</div>
+    #end
+  </div>
+  #end
+  #end
+
+  #if ($!tableinfo.getCellType())
+  <div class="layerVarHead">$!{i18n.get("tab.type")}:</div>
+
+  <div class="layerVar">$!tableinfo.getCellType()</div>
+  #end
+  #end
+
+
+  #if ($!tableinfo.getMeasureVariable())
+     #if ($!doprint)
+        <div class="layerVarHead">$!{i18n.meas}:</div>
+
+        <div class="layerVar">$!tableinfo.getMeasureVariable()</div>
+     #end
+  #end
+#end
+</div>

@@ -1,0 +1,169 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>Shoppingcart</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		#parse ("cache/cacheHeader.vm")
+
+    <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/documentation.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/shoppingcart.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript">
+        var skinPath = '$!{props.getSkinPath()}';
+    </script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/bookmark.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/cube.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript">
+    	function toggleCartView(cartid) {
+    	   cart=xGetElementById("cartnum_"+cartid);
+    	   toggle=xGetElementById("toggle_"+cartid);
+    	   if (toggle.checked){
+    	      cart.style.display="block";
+   	   } else {
+    	      cart.style.display="none";
+    	   }
+    	}
+
+    	function registerCartToggle(cartid) {
+    	    cart=xGetElementById("toggle_"+cartid);
+    	    if (browser.isIE) {
+    	    	//IE sends the onchange property too late, but it generates onclick when clicking on the label, so it is equivalent.
+    	    	cart.onclick=function() {toggleCartView(cartid);};
+    	    } else {
+    	    	cart.onchange=function() {toggleCartView(cartid);};
+    	    }
+    	}
+
+    	//Filter function to tell the tree if the addToCart menu should be shown for a given object
+    	function displayCartMenuFor(obj) {
+    	    return obj.indexOf("fSection") >= 0;
+ 	}
+    </script>
+    #parse( "header.vm" )
+    #if ($!doprint)
+      #set ($onload = "window.print()")
+    #else
+      #set ($onload = "setScrollableSize()")
+    #end
+  </head>
+  #if ($!doprint)
+  #set ($onload = "window.print()")
+  #else
+  #set ($onload = "setScrollableSize()")
+  #end
+  <script type="text/javascript">
+      mode = 'shoppingcart';
+  </script>
+  <body onload="$!onload">
+
+    #parse( "menu/menu.vm" )
+    <div class="mozview bodypadder" id="exploder">
+    #parse( "toptitle.vm" )
+    #parse( "loading.vm" )
+    #if ($!viewer.getIsLogin())
+      #parse ("login/loginform.vm")
+    #elseif ($!errormessage)
+      <div class="errormessage">$utils.escape($!{errormessage})</div>
+    #end
+       <div class="shoppingcart">
+
+         <h2 class="giveroom">$!i18n.shoppingcart_title</h2>
+         #if ($cart.isPopulated())
+
+          ## -- Variable cart --
+          <ul class="cartMasterList">
+             #set ($studycount = 0)
+             #foreach ($entry in $cart.getShoppingCarts())
+                #set ($studyUrl = $entry.getStudyURL())
+                #set ($varGroups = $entry.getVargroupsParam())
+                #set ($studyvars = $entry.getCartObjs())
+                #set ($studyname = $entry.getStudyName())
+                #set ($studyID=$entry.getStudyID())
+                #set ($subSet=$entry.getVarSubset())
+                #set ($studyheaderprinted=false)
+                #set ($studycount = $studycount + 1)
+                #foreach ($variable in $studyvars)
+                   #if ($studyheaderprinted != true)
+                      <li>
+                         <ul class="cartcontrols">
+                         #if($!props.downloadShoppingCartAsExcel())
+                         ##Download shopping cart as Excel-list
+                            <li>
+                               <a title="$!i18n.shoppingcart_download_one" class="downloadCart" href="$!cart.baseUrl&amp;mode=shoppingcart&amp;downloadCart=spreadsheet&amp;cartFor=$studyID&amp;gzip=false">$!i18n.shoppingcart_download_one</a>
+                            </li>
+                            <li>
+                              <a title="$!i18n.shoppingcart_clear_one" class="removeCart" onclick="return(confirm ('$!i18n.shoppingcart_confirm_clear_one $studyname?'))" href="$!cart.baseUrl&amp;mode=shoppingcart&amp;clearCart=true&amp;cartFor=$studyID">$!i18n.shoppingcart_clear_one</a>
+                            </li>
+
+                         #else
+                         ##Go to real dataset download
+                            <li style="width:auto;">
+                               <a class="downloadStudy" title="$!i18n.shoppingcart_download_study" href="$!cart.baseUrl&amp;cartFor=$studyID&amp;gzip=false&amp;mode=download&amp;study=$!variable.studyUrl">
+                                  $!i18n.shoppingcart_download_study
+                               </a>
+                            </li>
+                            <li>
+                               <a title="$!i18n.shoppingcart_download_one" class="downloadCart"
+                                   href="$!cart.baseUrl&amp;cartFor=$studyID&amp;gzip=false&amp;mode=download&amp;study=$!variable.studyUrl&amp;s=$!subSet&amp;gs=$!varGroups">
+                               </a>
+                            </li>
+                            <li><a title="$!i18n.shoppingcart_clear_one" class="removeCart"
+                                   onclick="return (confirm ('$!i18n.shoppingcart_confirm_clear_one $studyname?'))"
+                                   href="$!cart.baseUrl&amp;mode=shoppingcart&amp;clearCart=true&amp;cartFor=$studyID&amp;study=$entry.getStudyURL()">$!i18n.shoppingcart_clear_one</a>
+                            </li>
+                          #end
+                         </ul>
+                         <h3 class="cartTitle">$!i18n.shoppingcart_for $studyname <span class="numvars">($studyvars.size() $!i18n.shoppingcart_numvars)</span>
+                         </h3>
+
+                         <form class="contenttoggle">
+                            <input type="checkbox"
+                                   id="toggle_$studycount" #if ($cart.numberOfCarts == 1 || $cart.recentActivity == $studyname)
+                                   checked="checked" #end />
+                            <label for="toggle_$studycount">$!i18n.shoppingcart_show_contents</label>
+                         </form>
+                         <ul class="shoppingCartList" id="cartnum_$studycount">
+                            #set ($studyheaderprinted = true)
+                   #end
+                   <li><a href="$!cart.baseUrl&amp;mode=shoppingcart&amp;removeVariableFromCart=$variable.Id&amp;cartFor=$studyID" class="removeVarFromCart"
+                          title="$!i18n.shoppingcart_remove_variable">X</a>
+                      <h4>$!variable.varLabel</h4>
+                      <p>
+                      <dl>
+                         <dt>$!i18n.shoppingcart_study:</dt>
+                         <dd>$!variable.study&nbsp;</dd>
+                         <dt>$!i18n.shoppingcart_vargroup:</dt>
+                         <dd>$!variable.varGroupLabel&nbsp;</dd>
+                      </dl>
+                   </li>
+                #end
+                   </ul>
+                   <script type="text/javascript">
+                      <!--
+                      registerCartToggle("$studycount");
+                      toggleCartView("$studycount");
+                           -->
+                   </script>
+                </li>
+             #end
+          </ul>
+          ## -- /end of Variable cart --
+
+            #if ($cart.numberOfCarts > 1)
+            <p>
+            <a id="emptyallcarts" onclick="return (confirm ('$!i18n.shoppingcart_confirm_clear_all'))" href="$!cart.baseUrl&amp;mode=shoppingcart&amp;clearCart=true">$!i18n.shoppingcart_clear_all</a>
+            </p>
+            #end
+         #else
+         <div class="hint">
+            $!i18n.shoppingcart_guide
+	 </div>
+         #end
+       </div>
+    </div>
+  </body>
+</html>

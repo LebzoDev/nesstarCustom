@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE web-app
+   PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+   "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+   <filter>
+      <filter-name>CrossSiteScripting Filter</filter-name>
+      <filter-class>nesstar.webclient.filters.CrossSiteScriptingFilter</filter-class>
+   </filter>
+
+   <filter>
+      <filter-name>Compression Filter</filter-name>
+      <filter-class>nesstar.webclient.filters.GZIPFilter</filter-class>
+   </filter>
+
+
+   <filter>
+      <filter-name>Encoding Filter</filter-name>
+      <filter-class>nesstar.webclient.filters.EncodingFilter</filter-class>
+   </filter>
+
+
+<!--
+ <filter>
+      <filter-name>Cache Filter</filter-name>
+      <filter-class>nesstar.webclient.filters.CacheFilter</filter-class>
+   </filter>
+-->
+
+   <filter>
+      <filter-name>Output Filter</filter-name>
+      <filter-class>nesstar.webclient.filters.PdfFilter</filter-class>
+   </filter>
+
+   <filter>
+      <filter-name>SessionQueue Filter</filter-name>
+      <filter-class>nesstar.webclient.filters.SessionQueueFilter</filter-class>
+   </filter>
+   <filter-mapping>
+      <filter-name>CrossSiteScripting Filter</filter-name>
+      <url-pattern>/velocity</url-pattern>
+   </filter-mapping>
+   <filter-mapping>
+      <filter-name>CrossSiteScripting Filter</filter-name>
+      <url-pattern>*.jsp</url-pattern>
+   </filter-mapping>
+   <filter-mapping>
+      <filter-name>Encoding Filter</filter-name>
+      <url-pattern>/*</url-pattern>
+   </filter-mapping>
+
+<!--
+<filter-mapping>
+      <filter-name>Cache Filter</filter-name>
+      <url-pattern>/velocity</url-pattern>
+   </filter-mapping>
+
+-->
+   <filter-mapping>
+      <filter-name>Compression Filter</filter-name>
+      <url-pattern>/velocity</url-pattern>
+   </filter-mapping>
+
+   <filter-mapping>
+       <filter-name>SessionQueue Filter</filter-name>
+       <url-pattern>/velocityembedded</url-pattern>
+    </filter-mapping>
+
+   <filter-mapping>
+      <filter-name>SessionQueue Filter</filter-name>
+      <url-pattern>/velocity</url-pattern>  
+   </filter-mapping>
+   
+   <filter-mapping>
+      <filter-name>SessionQueue Filter</filter-name>
+      <url-pattern>/mapLegendItem</url-pattern>
+   </filter-mapping>
+   
+   <servlet>
+      <servlet-name>velocity</servlet-name>
+      <display-name>velocity</display-name>
+      <servlet-class>nesstar.webclient.velocity.servlet.MainServlet</servlet-class>
+      <load-on-startup>0</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>temporary</servlet-name>
+      <display-name>temporary</display-name>
+      <servlet-class>nesstar.webclient.velocity.servlet.TempOutputServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>pdf</servlet-name>
+      <display-name>pdf</display-name>
+      <servlet-class>nesstar.webclient.velocity.servlet.PdfOutputServlet</servlet-class>
+      <load-on-startup>0</load-on-startup>
+   </servlet>
+
+   <servlet>
+      <servlet-name>mapimage</servlet-name>
+      <display-name>mapimage</display-name>
+      <servlet-class>nesstar.webclient.velocity.servlet.ImageServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet>
+       <servlet-name>index</servlet-name>
+       <display-name>index</display-name>
+       <servlet-class>nesstar.webclient.velocity.servlet.IndexServlet</servlet-class>
+       <load-on-startup>0</load-on-startup>
+   </servlet> 
+
+   <servlet>
+      <servlet-name>mapLegendItem</servlet-name>
+      <display-name>Map Legend Item Servlet</display-name>
+      <servlet-class>nesstar.webclient.velocity.servlet.WMSLegendItemServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet-mapping>
+      <servlet-name>velocity</servlet-name>
+      <url-pattern>/velocity</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>temporary</servlet-name>
+      <url-pattern>/temp/*</url-pattern>
+   </servlet-mapping>
+
+
+   <servlet-mapping>
+      <servlet-name>velocity</servlet-name>
+      <url-pattern>/velocity/xml.zip</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>velocity</servlet-name>
+      <url-pattern>/velocity/api.js</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>pdf</servlet-name>
+      <url-pattern>/pdf</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>mapimage</servlet-name>
+      <url-pattern>/mapimage</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>mapimage</servlet-name>
+      <url-pattern>/velocity/mapimage</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+       <servlet-name>velocity</servlet-name>
+       <url-pattern>/velocityembedded</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+       <servlet-name>index</servlet-name>
+       <url-pattern>/index/*</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>mapLegendItem</servlet-name>
+      <url-pattern>/mapLegendItem</url-pattern>
+   </servlet-mapping>
+
+   <session-config>
+      <session-timeout>15</session-timeout>
+   </session-config>
+
+   <!-- error mapping --> 
+   <error-page> 
+      <error-code>404</error-code> 
+      <location>/error/404.jsp</location>
+   </error-page> 
+
+   <error-page> 
+      <error-code>500</error-code> 
+      <location>/error/500.jsp</location>
+   </error-page> 
+
+   <error-page> 
+      <exception-type>java.lang.Exception</exception-type> 
+      <location>/error/generic.jsp</location>
+   </error-page> 
+
+
+</web-app>

@@ -1,0 +1,21 @@
+#if ($!node.HasContent)
+<h3 class="ddititle">
+		$!node.Name
+</h3>
+<div class="ddicontent">
+   <table class="doctable" border="1">
+      <tr>
+         <th>$!i18nDdi.timeprdStart</th>
+         <th>$!i18nDdi.timeprdEnd</th>
+         <th>$!i18nDdi.timeprdCycle</th>
+      </tr>
+	#foreach ($period in $!node.Periods)
+	  <tr>
+	     <td>$!period.StartDate</td>
+	     <td>$!period.EndDate</td>
+	     <td>$!period.StartCycle</td>
+      </tr>
+	#end
+	</table>
+</div>
+#end

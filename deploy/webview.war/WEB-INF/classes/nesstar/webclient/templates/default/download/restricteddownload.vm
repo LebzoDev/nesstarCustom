@@ -1,0 +1,105 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    #parse ("cache/cacheHeader.vm")
+
+    <link href="$!{props.getSkinPath()}css/microtable.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/subset.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/cases.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript">
+        var skinPath = '$!{props.getSkinPath()}';
+    </script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/cube.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/bookmark.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery-1.8.2.min.js?$!props.getTimeStamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery.cookie.js?$!props.getTimestamp()"></script>
+    <title>$!i18n.print_download_title</title>
+    #parse( "header.vm" )
+    <style>
+    	label {
+    		font-weight: bold;
+    		display: block;
+    		margin-top: 1em;
+    		
+    	}
+    	
+    	input, textarea {
+    		width: 300px;
+    		border: 1px solid #888;
+    	}
+    	
+    	input:focus, textarea:focus {
+    		border: 1px solid black;
+    	}
+    	
+    	input.submit {
+    		display: block;
+    		width: auto;
+    	}
+    	
+    </style>
+  </head>
+  <body onload="setScrollableSize()">
+  	<script type="text/javascript">
+	#if ($!download.getSubmode() == 'cases')
+		mode = 'cases';
+	#elseif ($!download.getSubmode() == 'variables')
+		mode = 'variables';
+	#else
+		mode = 'download';
+	#end
+		inDownload = true;
+    	</script>
+	
+	#parse( "menu/menu.vm" )
+    
+    	<div class="mozview bodypadder" id="exploder">
+		#parse( "toptitle.vm" )
+		#if ($!viewer.getIsLogin())
+		    #parse ("login/loginform.vm")
+		#else
+            	    #if ($!errormessage)
+	        <div class="errormessage">$!errormessage</div>
+                    #end      
+            	#end            
+		#if (!$!nomail)
+			<div class="errormessage">You do not have the required privileges to download this data.</div>
+		#elseif ($!mailsent)
+		<h1>Thank you</h1>
+		
+		<p>
+			You data order has been sent to the site administrator. 
+		</p>
+		#else		
+		<h1>Download restricted</h1>
+		
+		<p>
+			You do not have permission to download this data. However, you order the data offline 
+			by filling out your E-Mail address below and then clicking the order button.
+		</p>
+		
+		<form method="post" action="">
+			<label for="email">E-Mail address</label>
+			<input type="text" class="textfield" name="email" id="email" />
+			<label for="note">Any message you want to leave for the administrator</label>
+			<textarea name="note" id="note" rows="10"></textarea>
+			<input class="button" type="button" value="Order" onclick="if (validate(this.form)){this.form.submit();}" /> 
+		</form>
+		<script  type="text/javascript">
+			document.getElementById("email").focus();
+		</script>
+		#end
+		
+		<div class="footer">
+		#include( "static/footer.html" )
+		</div>
+		#parse( "help/help.vm" )
+    	</div>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+ ##Free indicator selection##
+  #macro (indicatorentry $indicators $close $context $outputmode)
+   ##Checkbox for visible form elements, hidden otherwise
+   #set($type = "type='checkbox' ")
+   #if($!{props.getKHPSelectionVisibility()} == "hidden")
+      #set($type = "type='hidden' ")
+   #end
+   #if ($!close)
+      #set ($class = 'class="closed"')
+       #set ($liid = '')
+   #else
+      #set ($class = 'class="top"')
+      #set ($liid = 'id="indicators"')
+   #end
+
+    #if ($!indicators.isOpen() )
+     #set ($style= ' style="display:block"')
+   #else
+      #set ($style = '')
+   #end
+
+<ul $!class $!style>
+   #foreach ($child in $!indicators.children())
+<li $!liid>
+   #if (!$!child.isLeaf())
+
+    #if ($!child.isOpen())
+      #set ($image = 'minus.gif')
+   #else
+      #set ($image = 'plus.gif')
+   #end
+
+   <img onclick="toggle(this)" src="$!context/skins/default/images/$!{image}" alt="Neste niv&aring;"/>
+   <span>$child.getLabel()</span>
+   #else
+      ##Indicators always checked when visibility is hidden 
+      #if ($!child.isSelected() || ($!{props.getKHPSelectionVisibility()} == "hidden" && !$!child.noSpider()))
+         #set ($selected = 'checked="checked"')
+      #else
+         #set ($selected = '')
+      #end
+   <input type="checkbox" $!selected name="cube" id="$!child.getCode()" value="$child.getId()" class="checkbox"/>
+   <label for="$!child.getCode()" id="$!child.getCode()lab">$child.getLabel()</label>
+   <script type="text/javascript">
+      tooltips[tooltips.length] = new YAHOO.widget.Tooltip("$!{child.getCode()}MyTipLab", { context:"$!child.getCode()lab", text:'$!child.getAbstractText()', showDelay:500, iframe:false, container:"tooltipcontainer" } );
+   </script>
+   #end
+
+   #if (!$!child.isLeaf())
+   #indicatorentry($!child true $context $outputmode)
+   #end
+</li>
+   #end
+   </ul>
+#end
+
+
+## Set-based indicator selection ##
+#macro (setentry $barometers $close $context $outputmode)
+##Radio buttons for visible form elements (catalogs)
+
+#if ($!close)
+   #set ($class = 'class="closed"')
+   #set ($liid = '')
+#else
+   #set ($class = 'class="top"')
+   #set ($liid = 'id="indicators"')
+#end
+
+#set ($style= ' style="display:block"')
+
+#set ($isfirstset = "true")
+<ul $!class $!style $!liid>
+   #foreach ($child in $!barometers.children())
+      #if ($!child.isSelected() || ($!{props.getKHPSelectionVisibility()} == "hidden" && $!isfirstset == "true"))
+         #set ($selected = 'checked="checked"')
+      #else
+         #set ($selected = '')
+      #end
+   <li>
+      <input type="radio" $!selected name="setselectioncatalog" id="$!child.getId()" value="$child.getId()" class="checkbox"/>
+      <label for="$!child.getId()" id="$!child.getId()lab">$child.getLabel()</label>
+   </li>
+
+   #set ($isfirstset = "false")
+   #end
+</ul>
+#end
+##END MACRO setentry##
+

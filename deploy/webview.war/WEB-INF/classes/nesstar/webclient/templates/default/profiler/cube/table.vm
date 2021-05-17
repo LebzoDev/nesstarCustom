@@ -1,0 +1,72 @@
+<table class="matrix" border="0" id="tabell">
+   #foreach ($row in $table)
+   <tr>
+      #foreach ($element in $row)
+      #set ( $rowspan = $element.rowspan )
+      #set ( $colspan = $element.colspan )
+      #set ( $class = $element.type)
+
+      #if ($class == 'stublabel')
+      #set ($title = '')
+      #elseif ($class == 'headlabel')
+      #set ($title = '')
+      #else
+      #set ($title = '')
+      #end
+
+      #if ($!element.code == 'droptoheader')
+      #set ($class = 'empty')
+      #set ($title = "")
+      #elseif ($!element.code == 'droptostub')
+      #set ($class = 'emptystub')
+      #set ($title = "")
+      #end
+
+      #if ($class == 'stublabel' || $class == 'headlabel' || $class == 'empty' || $class == 'emptystub')
+      <td class="$!class" id="var$!element.code" title="$!title" rowspan="$!rowspan" colspan="$!colspan">
+         #if ($!element.label && $!element.label.length() > 0)
+         $!element.label
+         #else
+         &nbsp;
+         #end
+         #if (!$!doprint && !$!isReferenceCube)
+         <div class="$!class" id="var${element.code}div"
+              style="display:none; position: absolute; left: 0px; right:0px; z-index: 500;">
+            $element.label
+         </div>
+         #end
+      </td>
+      #else
+
+      #if ($!class != 'matrix')
+      #set ($currentclass = $!class)
+      #else
+      #set ($currentclass = "")
+      #end
+
+      #if ($!element.itemmetadata && !$!doprint)
+      #if ($!currentclass != "")
+      #set ($space = " ")
+      #else
+      #set ($space = "")
+      #end
+      #set ($item = 'item')
+      #set ($currentclass = "$!{currentclass}$!{space}$!{item}")
+      #end
+
+      <td #if ($!currentclass != "") class="$!currentclass"#end #if ($!class != 'matrix') rowspan="$!rowspan" colspan="$!colspan"#end #if ($!element.itemmetadata) id="$!element.itemid" #end>
+      #if ($!element.subset && !$!doprint && !$!isReferenceCube)
+      $element.label
+      #else
+      #if ($!element.label && $!element.label.length() > 0)
+      $!element.label
+      #else
+      &nbsp;
+      #end
+      #end
+   </td>
+   #end
+   #end
+</tr>
+#end
+</table>

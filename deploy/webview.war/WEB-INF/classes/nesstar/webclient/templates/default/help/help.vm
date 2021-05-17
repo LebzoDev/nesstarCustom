@@ -1,0 +1,10 @@
+<script type="text/javascript">
+  var domTT_selectElements;
+  #parse("help/jstranslations.vm")
+  #parse("tree/jsproperties.vm")
+</script>
+
+## Fork specific includes
+#parse ("documentation/ddi/inline-ddi.vm")
+#parse ("extra.vm")
+#parse('static/stats.html')

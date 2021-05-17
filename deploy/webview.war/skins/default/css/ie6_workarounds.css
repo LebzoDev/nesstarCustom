@@ -1,0 +1,291 @@
+/* Menus */
+
+label {
+   cursor: hand;
+}
+
+a.hand {
+   cursor: hand;
+}
+
+td.metadata {
+   align: center;
+}
+
+td.metadata a {
+   cursor: hand;
+}
+
+img.sortimage {
+   cursor: hand;
+}
+
+img.sortimageHead {
+   cursor: hand;
+}
+
+img.sortimageOpen {
+   cursor: hand;
+}
+
+div.legend {
+   valign: middle;
+}
+
+div.legend div.empty span {
+    margin-right: 8px;
+}
+
+#dropzone,
+   #toptitle {
+   background: transparent;
+}
+
+#dropzone {
+    height: 100%;
+}
+
+#exploder {
+   position: relative;
+   width: 100%;
+   height: 100%;
+}
+
+#mainmenu li ul li ul li:hover,
+   #mainmenu li ul li ul li ul li:hover,
+   #mainmenu li ul li ul li ul li ul li:hover,
+   #mainmenu li ul li ul li ul li ul li ul li:hover {
+   background-color: #eee;
+}
+
+#mainmenu li ul li ul,
+   #mainmenu li ul li ul li ul,
+   #mainmenu li ul li ul li ul li ul,
+   #mainmenu li ul li ul li ul li ul li ul {
+   left: 100%;
+   width: 200px;
+   position: absolute;
+   display: block;
+   visibility: hidden;
+   top: 1.5em;
+}
+
+#mainmenu li ul li a:hover,
+   #mainmenu li ul li ul li a:hover,
+   #mainmenu li ul li ul li ul li a:hover,
+   #mainmenu li ul li ul li ul li ul li a:hover {
+   background-color: #eee;
+}
+
+/* hide from IE5-mac \*/
+* html #top {
+   height: 1%;
+}
+
+/* end hide */
+
+.hint {
+   filter: alpha( opacity = 90 );
+   height: 30px;
+}
+
+#rubberBand {
+   background-image: none;
+   background-color: #B0A483;
+   filter: alpha( opacity = 50 );
+}
+
+.hideClass {
+   background-image: none;
+   background-color: white;
+   filter: alpha( opacity = 90 );
+}
+
+#mapImage {
+   behavior: url( "../../../htc/pngbehavior.htc" );
+}
+
+ul.shoppingCartList li a.removeVarFromCart {
+   left: -40px;
+   height: 50px;
+}
+
+
+#mainmenu {
+   height: 20px;
+   margin-left: 0;
+}
+
+#mainmenu li {
+   position: relative;
+}
+
+
+#mainmenu li ul {
+   width: 200px;
+   background: white;
+}
+
+/**
+This section is very important in order to get rid of the problems described
+in bug #4314
+**/
+#mainmenu li span.movingcelllayer,
+   #mainmenu li span.layerlabel,
+   #mainmenu li span.mouseoverlayer {
+   margin-right: -20px;
+}
+
+#mainmenu li.layercombo a.combolink {
+   margin-left: 8px;
+   cursor: hand;
+}
+
+/**
+End bug 4314-section
+**/
+
+/* Inline metadata */
+
+div.metadata {
+   /*
+     bottom: 0px;
+     position: absolute;
+   */
+}
+
+div#metacontent {
+   top: 0px;
+}
+
+ul#metadatamenu {
+   position: relative;
+   background: transparent;
+}
+
+div#metacontent {
+   position: relative;
+}
+
+ul#metadatamenu li {
+   position: relative;
+   width: 1px;
+   margin-top: 1px;
+   margin-bottom: -1px;
+}
+
+ul#metadatamenu li.menunotchosen {
+   border-bottom: none;
+}
+
+ul#metadatamenu li.menuchosen {
+   margin-bottom: -1px;
+}
+
+div.hidemetadata {
+   margin-bottom: -3.7em;
+}
+
+a.hidemetadatalink {
+   cursor: hand;
+}
+
+ul#metadatamenu li.menuchosen {
+   margin-top: 0px;
+}
+
+/* End Inline metadata */
+
+/** Workaround for IE and bookmarks **/
+li.studyopen {
+   padding: 0px 0 1px 0;
+}
+
+div.metadata {
+  margin-left: 0px;
+  width: 100%;
+}
+
+a.nodetext {
+  cursor: hand;
+}
+
+div.link {
+	cursor: hand;
+}
+
+/**
+ * YUI-panel fix start
+ * For fixing the width of the YUI-panel header in IE6
+ * Without this, the panel itself will be much bigger than the header (.hd) and its contents.
+ * Note that the panel-width is 8 pixels wider than the .hd width. This is because we need to make room for the
+ * scrollbar to the right
+ */
+.yui-panel {
+   width: 300px;
+}
+
+.yui-panel .hd {
+   width: 100%;
+}
+/** YUI-panel fix end **/
+
+/**
+ * Fixing margins and paddings in the the subset-tree
+ */
+ul#topCategoryMenu {
+   margin-top: -0px;
+}
+
+
+ul#topCategoryMenu li a {
+   margin-left: 0px;
+}
+
+ul#topCategoryMenu li input {
+   margin-left: 0px;
+}
+
+div.subsetsearch{
+   padding-left: 0;
+   padding-right:0;
+}
+
+/** Subset-tree margin-fix end **/
+
+/**
+ * Fixing the position of the autocomplete-container.
+ * Without this, the container is displayed a bit below the search-input-field
+ */
+#autocomplete-trix-agg-ie6{position:absolute;top:62px;}
+#autocomplete-trix-sub-ie6{position:absolute;top:26px;}
+/** Autocomplete-container-fix end **/
+
+/* Feedbackform */
+
+#feedbackformbody #maincontent {
+  margin: 20px;    
+}
+
+form#feedbackform input#submit {
+   cursor: hand;
+}
+
+/* End feedbackform */
+
+/* ESCC Area profiles */
+div#wardpostcodeautocomplete {
+	position: fixed;
+}
+/* End ESCC Area profiles */
+div#wardpostcodeautocomplete {
+	position: fixed;
+}
+
+.yui-panel-container .floatingpanel .hd {
+	 width: 100%;
+}
+
+.minWidth{
+   width:40px;
+}

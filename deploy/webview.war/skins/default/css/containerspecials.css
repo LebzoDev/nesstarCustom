@@ -1,0 +1,11 @@
+.yui-tt {
+   border: 1px solid #000;
+   background-color: #fffee9;
+   margin-left: 10px;
+   margin-right: 4px;
+   padding-left: 10px;
+}
+
+.yui-panel .hd {
+	background-color: #aaa;
+}

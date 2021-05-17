@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- The NESSTAR embedded database JCA connection factory config
+$Id: nesstar-ds.xml 32874 2013-12-09 10:27:19Z or $ -->
+
+<datasources>
+   <!--
+     max-pool-size:
+     Specifies the maximum number of connections for a pool.
+     No more than the max-pool-size number of connections will be created in a pool.
+     This defaults to 20.
+
+     blocking-timeout-millis:
+     Specifies the maximum time in milliseconds to block while waiting for a connection
+     before throwing an exception. Note that this blocks only while waiting for a permit
+     for a connection, and will never throw an exception if creating a new connection takes
+     an inordinately long time.
+   -->
+
+   <!-- The default MySQL datasource used by NESSTAR objects -->
+   <!-- The datasource used by SECURITY objects -->
+   <local-tx-datasource>
+      <jndi-name>nesstarDS</jndi-name>
+      <connection-url>jdbc:mysql://localhost:33306/nesstar?useUnicode=true&amp;characterEncoding=UTF-8</connection-url>
+      <driver-class>org.gjt.mm.mysql.Driver</driver-class>
+      <user-name>nesstar</user-name>
+      <password>passer</password>
+      <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.MySQLExceptionSorter
+      </exception-sorter-class-name>
+      <metadata>
+         <type-mapping>mySQL</type-mapping>
+      </metadata>
+   </local-tx-datasource>
+
+   <local-tx-datasource>
+      <jndi-name>securityDS</jndi-name>
+      <connection-url>jdbc:mysql://localhost:33306/nesstar?useUnicode=true&amp;characterEncoding=UTF-8</connection-url>
+      <driver-class>org.gjt.mm.mysql.Driver</driver-class>
+      <user-name>nesstar</user-name>
+      <password>passer</password>
+       <metadata>
+         <type-mapping>mySQL</type-mapping>
+      </metadata>
+   </local-tx-datasource>
+</datasources>

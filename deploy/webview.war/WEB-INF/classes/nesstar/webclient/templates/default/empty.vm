@@ -1,0 +1,7 @@
+#set( $level = $level - 1 )
+#if( $level > 0 )
+<td>
+  <img src="$!{props.getSkinPath()}images/empty.gif" alt="a spacer"/>
+</td>
+    #parse( "empty.vm" )
+#end

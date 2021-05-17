@@ -1,0 +1,5 @@
+<!--
+This is a workaround for IE to make caching mechanism follow what the meta tag says. It seems that IE does not
+follow the caching set in the meta tags before the page has reached 64 bytes. This is why this text should be over 64
+bytes in size.
+-->

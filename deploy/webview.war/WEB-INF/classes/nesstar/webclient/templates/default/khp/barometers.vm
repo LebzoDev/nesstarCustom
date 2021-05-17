@@ -1,0 +1,41 @@
+############################
+##START MACRO barometerentry
+############################
+#macro (barometerentry $barometers $close $context $browselistmode)
+##Radio buttons for visible form elements (catalogs)
+#set($type = "type='radio' ")
+#if ($!close)
+   #set ($class = 'class="closed"')
+   #set ($liid = '')
+#else
+   #set ($class = 'class="top"')
+   #set ($liid = 'id="indicators"')
+#end
+
+#set ($style= ' style="display:block"')
+
+<ul $!class $!style $!liid>
+   #foreach ($child in $!barometers.children())
+      #if ($!child.isSelected())
+         #set ($selected = 'checked="checked"')
+      #else
+         #set ($selected = '')
+      #end
+   <li>
+      <input $type $!selected name="setcatalog" id="$!child.getId()" value="$child.getId()" class="checkbox"/>
+      <label for="$!child.getId()" id="$!child.getId()lab">$child.getLabel()</label>
+   </li>
+   #end
+</ul>
+#end
+############################
+##END MACRO barometerentry
+############################
+<li class="label">
+   <div id="indorigo"><span class="origotitle">$!i18n.barometer</span>
+   </div>
+
+##Calling the barometerentry macro with the root barometer catalog
+#barometerentry($!barometers.getRoot() false $context $browselistmode)
+<input type="hidden" name="multibarometer" value="true"/>
+</li>

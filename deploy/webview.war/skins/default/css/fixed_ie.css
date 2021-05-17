@@ -1,0 +1,35 @@
+body {
+   overflow: hidden;
+}
+
+#exploder {
+   margin-top: 0px;
+   overflow: auto;
+}   
+
+div.giveroom {
+   padding-top: 8px;
+}
+
+div.emptytext {
+   margin: 0px;
+   padding: 0px;
+   font-size: 10pt;
+}
+
+div.metadata {
+   position: absolute;
+   bottom: 0px;
+   width: 100%;
+   margin: 0px;
+   margin-left: -9px;
+}
+
+/**
+For the submit-buttons in e.g. /khp only
+**/
+#controller {
+   position: absolute;
+   bottom: -1px;
+}
+

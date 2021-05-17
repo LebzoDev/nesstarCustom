@@ -1,0 +1,26 @@
+$!node.toHtml()
+#if ($!node.HasContent)
+<h3 class="ddititle">
+		$!node.Name
+</h3>
+<p class="ddicontent">
+		$!node.Content
+</p>
+#end
+
+#if ($!node.AllNodes)
+	#foreach ($sub in $!node.AllNodes)
+		#if ($!sub.class.name == 'nesstar.client.app.explorer.ExtLinkNode')
+			#parse( "documentation/ddi/ExtLink.vm" )
+		#else
+			#if ($!sub.HasContent)
+<h3 class="ddititle">
+					$!sub.Name
+</h3>
+<p class="ddicontent">
+					$!sub.Content
+</p>
+			#end
+		#end
+	#end
+#end

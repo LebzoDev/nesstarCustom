@@ -1,0 +1,17 @@
+#if ($!request.getParameter('mode') == 'regression')
+    #parse ("micro/analysis.vm")
+
+	
+#else
+<script type="text/javascript">
+	mode = 'table';
+</script>
+
+<div style="position: relative;">
+  <img src="$!{props.getSkinPath()}images/table_start.jpg" id="diagram"/>
+  <div class="emptytext" style="position: absolute; top: 60px; left: 12px; width: 55px" id="row">$!i18n.rowStart</div>
+  <div class="emptytext" style="position: absolute; top: 15px; left: 90px" id="col">$!i18n.colStart</div>
+  <div class="emptytext" style="position: absolute; top: 70px; left: 90px; width: 351px" id="measure">$!i18n.measStart</div>
+</div>
+
+#end

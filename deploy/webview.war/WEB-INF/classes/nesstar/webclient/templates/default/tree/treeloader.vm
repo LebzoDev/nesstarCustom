@@ -1,0 +1,54 @@
+<script type="text/javascript">
+				function endDrag(e) {
+					try {
+						if (parent.parent.rightsidemainframe.rightside) {
+							 if(!e)
+        						e=window.event;
+   							if (e.target)
+        						target=e.target;
+    						else if (e.srcElement)
+        						target=e.srcElement;
+
+							parent.parent.rightsidemainframe.rightside.endDragOtherFrame(e);
+						}
+					} catch (error) {
+						//alert(error.description);
+					}
+				} 
+
+
+				function copyTree() {
+					var name = '${document.ParentId}divinsert';
+					var to = parent.document.getElementById(name);
+					if (!to) {
+						to = parent.content.tree.document.getElementById(name);
+					}
+					var from = document.getElementById('topcopy');
+					if (to && from) to.innerHTML = from.innerHTML;
+					try {
+						parent.setScrollableSize();
+					} catch (error) {
+					}
+					//Set the bookmark sources
+					parent.setSources();
+
+					if (reset) {
+						//Reset the login frame
+						this.location.href = '$!{props.getSkinPath()}jsp/empty.jsp';
+					}
+
+				}
+				function topLevel() {
+                    if (isLogin) {
+                        parent.parent.content.tree.location.href = parent.parent.content.tree.location.href;
+                    }
+					setSources();
+				}
+				#if ($!preload)
+					$!preload
+					pics[11] = new Image();
+					pics[11].src  = "$!{props.getSkinPath()}images/plusblue.gif";
+					pics[12] = new Image();
+					pics[12].src  = "$!{props.getSkinPath()}images/plusblue_open.gif";
+				#end
+</script>

@@ -1,0 +1,28 @@
+#if ($!doprint)
+	#if ($!filter || $!weight)
+<div id="filterweight" style="padding-top: 10px">
+	#end
+	#if ($!filter)
+  <div class="filtermessage">$!{i18n.table_Filter}: $!utils.escape($!filter)</div>
+	#end
+	#if ($!weight)
+  <div class="weightmessage">$!{i18n.table_Weight}: $!utils.escape($!weight)</div>
+	#end
+	#if ($!filter || $!weight)
+</div>
+	#end
+#else
+    #if ($!analysis.getTableParser().getErrors())
+        #foreach ($removed in $!analysis.getTableParser().getErrors())
+<div class="filter">$!utils.escape($!removed)</div>
+        #end
+<br/>
+    #end
+
+	#if ($!filter)
+<div class="filtermessage" title="$!utils.escape($!filter)">$!i18n.table_Filter_On</div>
+	#end
+	#if ($!weight)
+<div class="weightmessage" title="$!utils.escape($!weight)">$i18n.table_Weight_On</div>
+	#end
+#end

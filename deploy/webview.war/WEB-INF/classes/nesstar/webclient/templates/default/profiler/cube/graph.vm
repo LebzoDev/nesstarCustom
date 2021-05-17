@@ -1,0 +1,21 @@
+<div id="diagram">
+               #if ($!src)
+               ##Remove when the new cube implementation comes
+               <img src="$!src" usemap="#chart"/>
+               #elseif ($!multigraphs)
+               <dl id="multigraphs">
+                  #foreach ($image in $!multigraphs)
+                  <dt>$!image.getLabel()</dt>
+                  <dd>
+                     <img src="$!image.getImage()" />
+                  </dd>
+                  #end
+               </dl>
+               #elseif ($!graphimage)
+               <img src="$!graphimage" usemap="#$!graph.getKey()"/>
+               #else
+               <img src="$!graph.getImage()" usemap="#$!graph.getKey()"/>
+               #end
+
+   $!graph.getMap()
+</div>

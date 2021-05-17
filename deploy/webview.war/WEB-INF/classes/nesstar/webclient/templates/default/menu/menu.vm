@@ -1,0 +1,293 @@
+#if ($!map.isSvgPrint())
+<script type="text/javascript">
+   var finished = false;
+   window.onbeforeprint = beforePrinted;
+   window.onafterprint = afterPrinted;
+
+   function beforePrinted() {
+      //Make sure the javscript does not resize it
+      finished = true;
+      var atlas = xGetElementById('svg');
+      if (atlas) {
+      atlas.style.width = "630px";
+      atlas.style.height = "450px";
+      }
+   }
+
+   function afterPrinted() {
+      //Allow the javascript to resize the map again
+      finished = false;
+      adjustLayout();
+   }
+</script>
+#end
+
+#set ($language = $!request.getParameter("language"))
+#set ($firstseparator = false)
+#set ($secondseparator = false)
+#set ($thirdseparator = false)
+
+#if (!$!menuClass.getIsHidden())
+   #if (!$!doprint)
+
+   #set ($colspan = 0)
+
+<div class="header" id="topstrip">
+   #parse ( "menu/leftmost.vm" )
+   <table class="menutable" border="0" cellspacing="0" cellpadding="0">
+      <tr class="mainmenu">
+         #parse ( "menu/leftmenu.vm" )
+            #if (!$!hideimagetable || $!hideimagetable != "true")
+                #if ($!menuClass.isInsideStudy())
+                	<td class="menubackground">
+                	#if ($!menuClass.getTableUrl())
+                		<a id="imagetable" href="$!menuClass.getTableUrl()" onclick="hideTheViewArea()" title="$!i18n.Table"></a>
+                	#else
+                		<span id="imagetable" class="menuimagedisabled"></span>
+					#end
+					</td>
+					#set ($!colspan = $!colspan + 1)
+                	#set ($firstseparator = true)
+                #end
+           #end
+            #if (!$!hideimagegraph || $!hideimagegraph != "true")
+                #if ($!menuClass.isInsideStudy())
+                    #if (!$!menuClass.getIsInRegression())
+                    	<td class="menubackground">
+                    	  #set ($graphTypes = $!menuClass.getGraphTypes())
+                       #if ($!graphTypes && !$!disableGraph && !$!menuClass.timeOnly())
+                          #set ($theurl = '#')
+                          #set ($onclick = 'return openChartIcons()')
+                          <a id="imagegraph" href="$!menuClass.getGraphUrl()" onclick="$!onclick" title="$!i18n.Barchart">
+                          </a>
+                          <div id="charticons">
+                            <ul class="charticons">
+                               #foreach ($type in $graphTypes)
+                               <li>
+                                  <a id="image$!type.name" href="$!type.href" onclick="hideTheViewArea()" title="$!type.alt">
+                                     <img class="images" src="$!type.src" border="0" title="$!type.alt" alt=""/>
+                                  </a>
+                               </li>
+                               #end
+                            </ul>
+                          </div>
+                       #else
+                        <span id="imagegraph" class="menuimagedisabled"></span>
+                       #end
+                       </td>
+                       #set ($!colspan = $!colspan + 1)
+                       #set ($firstseparator = true)
+                    #end
+                #end
+            #end
+            #if (!$!hideimagetimeline || $!hideimagetimeline != "true")
+                #if ($!menuClass.isInsideStudy())
+                	<td class="menubackground">
+                   #if ( $!request.getParameter('mode') == 'regression' || $!request.getParameter('analysismode') == 'regression'|| $!isScatterPlot)
+                      #if ($!menuClass.getScatterPlotUrl() && !$!menuClass.disableScatterPlot())
+                      <a id="imagescatterplot" href="$!menuClass.getScatterPlotUrl()" onclick="hideTheViewArea()"
+                         title="$!i18n.scatterplot_chart"></a>
+                      #else
+                      <span id="imagescatterplot" class="menuimagedisabled"></span>
+                      #end
+                   #else
+                   #if ($!menuClass.getTimelineUrl())
+                   <a id="imagetimeline" href="$!menuClass.getTimelineUrl()" onclick="hideTheViewArea()" title="$!i18n.timeline"></a>
+                   #else
+                   <span id="imagetimeline" class="menuimagedisabled"></span>
+                   #end
+                   </td>
+                   #set ($!colspan = $!colspan + 1)
+                   #set ($firstseparator = true)
+                #end
+              #end
+           #end
+           
+           #if ($!props.enableSpiderwebCharts())
+              <td class="menubackground">
+              #if ($!menuClass.isSpiderAvailable())
+                 <a id="imagespider" href="$!menuClass.getSpiderUrl()" onclick="hideTheViewArea()" title="Spider chart"></a>
+              #else
+                 <span id="imagespider" class="menuimagedisabled"></span>
+              #end
+              </td>
+              #set ($!colspan = $!colspan + 1)
+           #end
+           
+           #if (!$!hideimagetimeline || $!hideimagetimeline != "true")
+             #if ($!menuClass.isInsideStudy())
+                #if ($!menuClass.getIsMapEnabled())
+                   <td class="menubackground">
+					#if ($!menuClass.getMapUrl())
+						<a id="imagemap" href="$!menuClass.getMapUrl()" onclick="hideTheViewArea()" title="$!i18n.Map"></a>
+					#else
+						<span id="imagemap" class="menuimagedisabled"></span>
+					#end
+					</td>
+                   #set ($!colspan = $!colspan + 1)
+                #end
+             #end
+           #end
+
+            #if (!$!hideimageclear || $!hideimageclear != "true")
+                #if ($!menuClass.isInsideStudy())
+                	<td class="menubackground">
+                   #if ($!analysis.getClearUrl())
+                   <a id="imageclear" href="$!analysis.getClearUrl()" onclick="hideTheViewArea()" title="$!i18n.clear"></a>
+                   #elseif ($!cube.getClearUrl())
+                   <a id="imageclear" href="$!cube.getClearUrl()" onclick="hideTheViewArea()" title="$!i18n.cube_default_table"></a>
+                   #else
+                   <span id="imageclear" class="menuimagedisabled"></span>
+                   #end
+                   </td>
+                   #set ($!colspan = $!colspan + 1)
+                   #set ($secondseparator = true)
+                #end
+              #end
+         
+         	#if ( $!secondseparator || $!secondseparator )
+         		<td class="separated">
+         		 <img id="secondseparator" src="$!{props.getSkinPath()}images/menu_separator.png" title="" alt="separator"/>
+         		</td>
+         		#set ($!colspan = $!colspan + 1)
+         	#end
+         
+            #if ($!menuClass.getWeightUrl())
+            <td class="menubackground">
+            <a id="imageweight" href="$!menuClass.getWeightUrl()" title="$!i18n.weight"></a>
+            </td>
+            #set ($!colspan = $!colspan + 1)
+            #set ($thirdseparator = true)
+            #end
+
+            #if ($!menuClass.getSubsetUrl())
+            <td class="menubackground">
+            <a id="imagesubset" href="$!menuClass.getSubsetUrl()" title="$!i18n.subset"></a>
+            </td>
+            #set ($!colspan = $!colspan + 1)
+            #set ($thirdseparator = true)
+            #end
+
+         #if ($!allowCalculations)
+            #if ($!menuClass.getComputeUrl())
+            <td class="menubackground">
+            <a id="imagetoolbox" href="$!menuClass.getComputeUrl()" title="$!i18n.compute"></a>
+            </td>
+            #set ($!colspan = $!colspan + 1)
+            #set ($thirdseparator = true)
+            #end
+         #end
+         
+         #if ($!thirdseparator)
+         	<td class="separated">
+         		 <img id="thirdseparator" src="$!{props.getSkinPath()}images/menu_separator.png" title="" alt="separator"/>
+         	</td>
+         #end
+         
+         
+         #if ($!menuClass.getDownloadUrl() && !$!props.shoppingCartEnabled())
+            <td class="menubackground">
+            <a id="imagedownload" href="$!menuClass.getDownloadUrl()" title="$!i18n.download"></a>
+            </td>
+            #set ($!colspan = $!colspan + 1)
+         #end
+
+         
+
+         #if ( ( ( ($!request.getParameter('mode') == 'regression' && $!menuClass.getTableUrl()) ||  ($!request.getParameter('mode') == 'table' && $!menuClass.getTableUrl()) ) || $!request.getParameter('mode') == 'cube' || $!request.getParameter('mode') == 'area') && $!menuClass.getSpreadsheetUrl()  )
+         	<td class="menubackground">
+            <a id="imagespreadsheet" href="$!menuClass.getExecuteSpreadsheetURL()" title="$!i18n.excel"></a>
+            </td>
+            #set ($!colspan = $!colspan + 1)
+         #end
+
+         
+         #if ($!menuClass.isInsideStudy())
+            <td class="menubackground">
+            #if ($!menuClass.getPdfUrl())
+         	   <a id="imagepdf" href="$!menuClass.getPdfExecutionURL()" title="$!i18n.pdf"></a>
+            #else
+            	<span id="imagepdf" class="menuimagedisabled"></span>
+            #end
+            </td>
+            #set ($!colspan = $!colspan + 1)
+         #end
+
+         #if ($!menuClass.getIfHasGettingStartedButton())
+	         <td class="menubackground">
+	            <a id="imagegetting_started" href="$!menuClass.getGettingStartedUrl()" target="started" title="$!i18n.getting_started"></a>
+	         </td>
+	         #set ($!colspan = $!colspan + 1)
+         #end
+         
+         <td class="menubackground">
+
+            #if ($!map.isSvgPrint())
+            <a id="imageprint" style="cursor: hand" onclick="printPage()" target="print" title="$!i18n.print"></a>
+            #else
+            <a id="imageprint" href="$!menuClass.getPrintUrl()" target="print" title="$!i18n.print">
+            </a>
+            #end
+            #set ($!colspan = $!colspan + 1)
+         </td>
+         
+         <td class="separated">
+         	<img src="$!{props.getSkinPath()}images/menu_separator.png" title="" alt="separator"/>
+         </td>
+         
+         #if ($!parameters.hasEMailObject() && !$!viewer.getIsLogin() && !$!parameters.showEMail())
+         	<td class="menubackground">
+         		<a id="imageemail" href="$!menuClass.getCurrentVelocityUrl()&amp;showEmail=true" onclick="return openEmailWindow('$!i18n.message_1');" title="$!i18n.message_1"></a>
+	         </td>
+    	     #set ($!colspan = $!colspan + 1)
+    	 #end
+         
+         <td class="menubackground">
+            <a id="imagebookmark" href="" onclick="return openBookmarkDialog();" title="$!i18n.bookmark" target="_top"></a>
+         </td>
+         #set ($!colspan = $!colspan + 1)
+
+        #if ($!availableLanguages && $!showLanguageMenu)
+         <td class="menubackground">
+            <a id="imagelanguage" class="imagelanguage_$!currentlyActiveLanguageISO" href="$!menuClass.getCurrentViewUrl()" onclick="return showLanguageMenu();" title="$!i18n.changeLanguage ($!i18n.currentLanguage: $!currentlyActiveLanguage)"></a>
+            <div id="languagemenu">
+                <ul class="testmenu">
+                #foreach ($langkey in $availableLanguages.keySet())
+                    #if ($!currentlyActiveLanguageISO == $!langkey)
+                        <li class="m greyout">
+                        	    <div>($!langkey) $!availableLanguages.get($!langkey)</div>
+                        	</li>
+                    #else
+                        <li class="m">
+                            <a href="$!menuClass.getCurrentViewWithLanguage($!langkey)" target="_top">($!langkey) $!availableLanguages.get($!langkey)</a>
+                        </li>
+                    #end
+                #end
+                </ul>
+            </div>
+         </td>
+         #set ($!colspan = $!colspan + 1)
+        #end
+        
+        #if(!$!props.hideHelpIcon())
+            <td class="menubackground">
+               <a id="imagehelp" href="$!help.getHelpFile($!currentlyActiveLanguageISO)" target="helpwin" title="$!i18n.Help"></a>
+            </td>
+            #set ($!colspan = $!colspan + 1)
+         #end
+         #parse ( "menu/menuaddons.vm" )
+         <td class="menubackground menubackgroundlast">&nbsp;</td>
+         #set ($!colspan = $!colspan + 1)
+      </tr>
+      #if ($!menuClass.getSubmenu())
+      #parse ("menu/submenu.vm")
+      #end
+   </table>
+</div>
+   #parse("menu/referer.vm")
+   #parse("menu/email.vm")
+   #if($!props.useInlinePopups())
+      #parse( "inlinePopups.vm" )
+   #end
+   #end
+   #end

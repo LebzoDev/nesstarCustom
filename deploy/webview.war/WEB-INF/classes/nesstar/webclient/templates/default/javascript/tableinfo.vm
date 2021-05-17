@@ -1,0 +1,58 @@
+#if ($!analysis)
+#set ($tableinfo = $!analysis.getTableInfo())
+#else
+#set ($tableinfo = $!cube.getTableInfo())
+#end
+
+#if ($!map.isSvgPrint())
+   #set ($styleinfo = 'class="tableinfo"')
+#end
+
+
+#if(!$!props.showPrintPreviewVariablesInline())
+  #if ($!doprint || $!map.isSvgPrint())
+  #if ($!tableinfo.getStubVars().size() > 0)
+  items[items.length] = '<div class="varHeading">';
+    items[items.length] = '<div class="layerVarHead">$!{i18n.variablesInStub}:</div>';
+    #foreach ($stub in $!tableinfo.getStubVars())
+    items[items.length] = '<div class="layerVar">$stub.Label</div>';
+    #end
+  items[items.length] = '</div>';
+  #end
+
+  #if ($!tableinfo.getHeaderVars().size() > 0)
+  items[items.length] = '<div class="varHeading">';
+    items[items.length] = '<div class="layerVarHead">$!{i18n.variablesInHeader}:</div>';
+    #foreach ($header in $!tableinfo.getHeaderVars())
+    items[items.length] = '<div class="layerVar">$header.Label</div>';
+    #end
+  items[items.length] = '</div>';
+  #end
+
+  #if ($!tableinfo.getLayerVars().size() > 0)
+  items[items.length] = '<div class="varHeading">';
+    items[items.length] = '<div class="layerVarHead">$!{i18n.variablesInLayers}:</div>';
+    #foreach ($layer in $!tableinfo.getLayerVars())
+    items[items.length] = '<div class="layerVar">$layer</div>';
+    #end
+  items[items.length] = '</div>';
+  #end
+
+  #if ($!tableinfo.getCellType())
+  items[items.length] = '<div class="layerVarHead">$!{i18n.get("tab.type")}:</div>';
+
+  items[items.length] = '<div class="layerVar">$!tableinfo.getCellType()</div>';
+  #end
+  #end
+
+
+  #if ($!tableinfo.getMeasureVariable())
+     #if (!$!doprint)
+       items[items.length] = '<div class="measureVar">$!{i18n.meas}: $!tableinfo.getMeasureVariable()</div>';
+     #else
+        items[items.length] = '<div class="layerVarHead">$!{i18n.meas}:</div>';
+
+        items[items.length] = '<div class="layerVar">$!tableinfo.getMeasureVariable()</div>';
+     #end
+  #end
+#end

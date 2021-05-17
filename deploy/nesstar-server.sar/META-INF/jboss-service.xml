@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE server>
+<!-- $Id: jboss-service.xml 21816 2004-12-09 15:50:59Z sh $ -->
+
+<!-- ===================================================================== -->
+<!--                                                                       -->
+<!--  JBoss Server Configuration                                           -->
+<!--                                                                       -->
+<!-- ===================================================================== -->
+<server>
+
+  <mbean code="nesstar.server.service.jboss.NesstarService" name="nesstar:service=NesstarService">
+  </mbean>
+
+</server>

@@ -1,0 +1,26 @@
+##Dont add the menues in print
+   #if (!$!doprint && !$!isReferenceCube)
+      #if ($!class == 'stub')
+         #set ($imageclass = 'sortimage')
+      #else
+         #set ($imageclass = 'sortimageHead')
+      #end
+      #if ($!element.desc && $!element.asc )
+         #set ($alt = 'sort')
+         #if ($!element.sorted_asc || $!element.sorted_desc)
+            ##Dont allow a second sort image if there already is one
+            #set ($alt = '')
+         #end
+         #if ($!element.sorted_asc)
+<img src="$!{props.getSkinPath()}images/sortup.gif" onMouseOver="showSortingImage(this, 'var${element.subcode}sorting')"
+     onMouseOut="hideSortingImageUp(this)" class="$imageclass sortimageOpen"/>
+         #elseif ($!element.sorted_desc)
+<img src="$!{props.getSkinPath()}images/sortdown.gif"
+     onMouseOver="showSortingImage(this, 'var${element.subcode}sorting')" onMouseOut="hideSortingImageDown(this)"
+     class="$imageclass sortimageOpen"/>
+         #end
+<img src="$!{props.getSkinPath()}images/updown.gif" onclick="openMenu('var${element.subcode}sorting')"
+     title="$!i18n.applySort" class="$imageclass" alt="$!alt"/>
+         #parse( "sorting/sortmenu.vm" )
+      #end
+   #end

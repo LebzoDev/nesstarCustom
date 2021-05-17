@@ -1,0 +1,7 @@
+#if ($!{props.getBackLinkHref()})
+  #set ($targetAttribute = "_self")
+  #if($!{props.getBackLinkTarget()})
+    #set ($targetAttribute = "$!{props.getBackLinkTarget()}")
+  #end
+ <a id="referer" href="$!{props.getBackLinkHref()}" target="$!{targetAttribute}">$!i18n.backlink_text</a>
+#end

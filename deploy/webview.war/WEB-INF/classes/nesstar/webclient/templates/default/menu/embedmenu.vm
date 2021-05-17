@@ -1,0 +1,86 @@
+#if ($!showTableButton || $!showGraphButton || $!showScatterButton || $!showMapButton || $!showScatterPlotButton)
+   <table border="0" cellspacing="0" cellpadding="0">
+      <tr>
+   #if ($!showTableButton)
+         <td class="menubackground">
+            #if ($!menuClass.getTableUrl())
+               <a id="imagetable" href="$!menuClass.getTableUrl()" onclick="hideTheViewArea()" title="$!i18n.Table">
+                  <img class="images" border="0" src="$!{props.getSkinPath()}images/menu/table_double.png"
+                        title="$!i18n.Table" alt=""/>
+               </a>
+            #else
+               <span>
+                  <img class="images" border="0" src="$!{props.getSkinPath()}images/menu/table_disabled.png"
+                  title="$!i18n.table_disabled" alt=""/>
+               </span>
+            #end
+         </td>
+   #end
+
+   #if ($!showGraphButton)
+         <td class="menubackground">
+             #if ($!menuClass.getGraphUrl() && !$!disableGraph)
+                #set ($graphTypes = $!menuClass.getGraphTypes())
+                #set ($theurl = '#')
+                #set ($onclick = 'return openChartIcons()')
+                <a id="imagegraph" href="$!menuClass.getGraphUrl()" onclick="$!onclick" title="$!i18n.Barchart"></a>
+
+               #if ($!graphTypes)
+               <div id="charticons">
+                <ul class="charticons">
+                   #foreach ($type in $graphTypes)
+                   <li>
+                      <a id="image$!type.name" href="$!type.href" onclick="hideTheViewArea()" title="$!type.alt">
+                         <img class="images" src="$!type.src" border="0" title="$!type.alt" alt=""/>
+                      </a>
+                   </li>
+                   #end
+                </ul>
+               </div>
+               #end
+            #else
+               <span>
+                  <img class="images" border="0" src="$!{props.getSkinPath()}images/menu/graph_disabled.png"
+                       title="$!i18n.barchart_disabled" alt=""/>
+               </span>
+            #end
+         </td>
+   #end
+
+   #if ($!showTimelineButton)
+         <td class="menubackground">
+            <a id="imagetimeline" href="$!menuClass.getTimelineUrl()" onclick="hideTheViewArea()"
+             title="$!i18n.timeline">
+             <img class="images" src="$!{props.getSkinPath()}images/menu/timeline.png" border="0"
+                  title="$!i18n.timeline"
+                  alt=""/>
+            </a>
+         </td>
+   #end
+
+   #if ($!showMapButton)
+      #if ($!menuClass.isInsideStudy())
+         #if ($!menuClass.getIsMapEnabled())
+            <td class="menubackground">
+               <a id="imagemap" href="$!menuClass.getMapUrl()" onclick="hideTheViewArea()" title="$!i18n.Map">
+                  <img class="images" src="$!{props.getSkinPath()}images/menu/map.png" border="0"
+                  title="$!i18n.map" alt=""/>
+               </a>
+            </td>
+         #end
+      #end
+   #end
+
+   #if ($!showScatterPlotButton)
+        <td class="menubackground">
+            <a id="imagescatterplot" href="$!menuClass.getScatterPlotUrl()" onclick="hideTheViewArea()"
+               title="$!i18n.scatterplot_chart">
+             <img class="images" src="$!{props.getSkinPath()}images/menu/scatterplot.png" border="0"
+                  title="$!i18n.scatterplot_chart" alt=""/>
+            </a>
+        </td>
+   #end
+
+      </tr>
+   </table>
+#end

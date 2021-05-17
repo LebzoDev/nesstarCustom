@@ -1,0 +1,231 @@
+td.sum	{
+	background-color: #E1E1E1;
+	text-align: right;
+	font-family: verdana, arial;
+	padding-left: 4px;
+   font-size:11px;
+
+}
+
+td.spaceout {
+	padding: 25px;
+	padding-bottom: 0px;
+	padding-top: 0px;
+}
+
+/** The old table classes. Soon to be removed */
+
+/** A class for the table element */
+td {
+	color: #000000;
+}
+
+table.matrix td.regressioncorner{
+   background-color: #ffffff;
+   border: none;
+}
+
+table.matrix td.regressionspacer{
+   background-color: #ffffff;
+   border: none;
+}
+
+
+/* Classes for altering the analysis table */
+
+td.tablehead	{
+	background-color: #cbd4dd;
+	font-weight: normal;
+	text-align: left;
+	color: #000000;
+	padding-right: 2px;
+}
+
+td.sumcol	{
+	background-color: #E1E1E1;
+	text-align: right;
+	font-family: verdana, arial;
+}
+
+td.sumrow {
+	background-color: #E1E1E1;
+	text-align: right;
+	font-family: verdana, arial;
+}
+
+td.rowhead	{
+	background-color: #cbd4dd;
+    text-align: left;
+}
+
+td.tabdat	{
+	background-color: #F5F5F7;
+	text-align: right;
+}
+
+td.colhead	{
+	background-color: #fdd298;
+	font-weight: normal;
+	text-align: left;
+}
+
+th.tabdat {
+	background-color: #F5F5F7;
+	text-align: right;
+}
+
+div.tablevariableheader {
+	margin-bottom: 10px;
+}
+
+div.tabdelimited {
+	margin-top: 10px;
+}
+
+form.tableoptions {
+	margin: 0;
+	padding: 0;
+	margin-top: 10px;
+}
+
+div.copyright {
+    clear: both;
+    float: bottom;
+	padding-top: 10px;
+}
+
+table.labels {
+	margin-left: 4px;
+	margin-bottom: 10px;
+}
+
+td.clearimage {
+	padding-left: 10px;
+}
+
+th.clearimage {
+	padding-left: 20px;
+}
+
+
+
+div.regressionHead {
+	color: #000000;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+div.regressionHead a{
+	font-weight: normal;
+}
+
+div.correlationtype{
+    color: #000000;
+	font-weight: bold;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+div.dep {
+	font-weight: bold;
+}
+
+div.emptytext {
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	color: #333333;
+}
+div.regressionHeader{
+	color: #000000;
+}
+
+ul.tableinfo{
+    color: #000000;
+    margin-top: 0px;
+    padding-top: 0px;
+    padding-left: 0px;
+    margin-left: 0px;
+    list-style: none;
+}
+
+span.correlationSubHead{
+    color: #000000;
+    font-weight: bold;
+    padding-left: 0px;
+}
+
+td.legend{
+    border: 1px solid #000;
+}
+
+#corr_table_options {
+    margin-top: 20px;
+    clear: both;
+}
+
+#corr_table_options label {
+	font-size: 11px;
+}
+
+#corr_table_options ul {
+    list-style: none;
+    margin: 0px;
+    padding: 10px 30px 10px 15px;
+}
+
+#corr_table_options fieldset, #legend {
+	border: 1px solid #dfdfdf;
+}
+
+/** The display options fieldset */
+#corr_header fieldset{
+    text-valign: top;
+    display: block;
+    height: 130px;
+}
+
+/** Float the table left */
+#correlation{
+    float: left;
+}
+
+#legend {
+    padding: 5px 10px
+}
+
+/* Negative top margin should help aligning the matrix with the legend next to it */
+.matrix {
+	margin: -2px 10px 10px 0;
+}
+
+/* Padding on the legend label */
+td.legend_label{
+    padding-left: 3px;
+	font-size:10px;
+}
+
+td.padder{
+    width: 1px;
+}
+
+/* The border under each variable */
+td.border{
+   border-bottom: 2px solid #CDCDCD;
+}
+
+table.downloadformtable {
+	margin-bottom: 1.4em;
+   margin-top: 10px;
+}
+
+
+table.downloadformtable td{
+   vertical-align:top;   
+}
+
+table.matrix td.corr_stub {
+   padding-right: 5px;
+}
+.downloadform {
+    display: inline;
+}

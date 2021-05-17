@@ -1,0 +1,28 @@
+#if ($!compute.getDerivedVariabes())
+<div>
+  <fieldset class="types compute">
+    <legend>$!i18n.compute_delete</legend>
+        <form action="$!form_action" method="GET" id="deleteComputeForm">
+      <select name="derived" onchange="submit()">
+        <option value="disabled">$!i18n.compute_choose_variable</option>
+	    #foreach ($derived in $!compute.getDerivedVariabes())
+            #if ($!request.getParameter('derived').equals($!derived.getID().toString()))
+        <option selected="selected" value="$!utils.escape($!derived.getID().toString())">$utils.escape($!{derived.Label})</option>
+				#set ($found = 'true')
+            #else
+              <option value="$!derived.ID">$utils.escape($!derived.Label)</option>
+            #end
+        #end
+      </select>
+     #if ($!found)
+      <input type="button" name="delete" class="button formbutton" onclick="return deleteComputeDialog('$i18n.confirm_delete_compute?');" value="$!i18n.compute_delete"/>
+    #else
+      <input disabled="disabled" type="submit" name="delete" value="$!i18n.compute_delete" class="button formbutton" />
+    #end
+	#foreach ($field in $!compute.getForm())
+      <input type="hidden" name="$field.name" value="$field.value"/>
+	#end
+    </form>
+  </fieldset>
+</div>
+#end

@@ -1,0 +1,24 @@
+#if ($!parameters.hasEMailObject() && !$!viewer.getIsLogin())
+<div id="emailDialog" #if(!$!parameters.showEMail()) style="display: none" #end >
+  <div class="bd">
+  <form id="feedbackform" action="$!form_action" method="get" onSubmit="return validate(this)">
+    <p>$!i18n.message_4</p>
+    #if ($!hiddenform.getForm())
+    #foreach ($field in $!hiddenform.getForm())
+      <input type="hidden" name="$field.name" value="$field.value" style="display: none"/>
+    #end
+    #else
+      #foreach ($field in $!parameters.getUrlParameters())
+         <input type="hidden" name="$field.name" value="$field.value" style="display: none"/>
+      #end
+    #end
+    <input type="hidden" name="sobject" value="$!parameters.getEmailObject()" style="display: none"/>
+    <label for="email">$!i18n.message_2</label>
+    <input type="text" class="textfield" name="email" value="" id="email" size="35"/>
+    <input type="submit" name="subscribe" value="$!i18n.message_3" class="button" />
+    <input type="submit" name="unsubscribe" value="$!i18n.message_6" class="button" />
+    <div><a href="$!menuClass.getCurrentVelocityUrl()&amp;unsubscribeall=true&amp;sobject=$!{parameters.getEmailObject()}" onclick="return getAndValidateEmail('feedbackform', this)">$!i18n.message_7</a></div>
+  </form>
+  </div>
+</div>
+#end

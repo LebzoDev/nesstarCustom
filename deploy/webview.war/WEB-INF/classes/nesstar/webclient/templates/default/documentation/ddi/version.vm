@@ -1,0 +1,14 @@
+#if ($!node.HasContent)
+<h3 class="ddititle">
+		$!node.Name
+</h3>
+<div class="ddicontent">
+		$!node.Content
+#if ($!node.getAttribute('date'))
+  <p>$!i18nDdi.date: $!node.getAttribute('date')</p>
+		#end
+#if ($!node.getAttribute('type'))
+  <p>$!i18nDdi.type: $!node.getAttribute('type')</p>
+		#end
+</div>
+#end

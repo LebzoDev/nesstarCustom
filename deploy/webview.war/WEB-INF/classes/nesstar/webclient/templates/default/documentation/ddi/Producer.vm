@@ -1,0 +1,23 @@
+#macro (singlematerial $sub $i18nDdi)
+   <tr>
+   <td>$!sub.Content</td>
+   <td>$!sub.getAttribute('affiliation')</td>
+   <td>$!sub.getAttribute('abbr')</td>
+   <td>$!sub.getAttribute('role')</td>
+   </tr>
+#end
+<h3 class="ddititle">
+	$!node.Name
+</h3>
+<table class="doctable" border="1">
+   <tr>
+      <th>$!i18nDdi.name</th>
+      <th>$!i18nDdi.affiliation</th>
+      <th>$!i18nDdi.abbr</th>
+      <th>$i18nDdi.role</th>
+      
+   </tr>
+	#foreach ($sub in $!node.SubNodes)
+			#singlematerial($!sub $!i18nDdi)
+	#end
+</table>

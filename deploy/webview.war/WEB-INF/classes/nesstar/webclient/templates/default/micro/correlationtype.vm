@@ -1,0 +1,34 @@
+#if (!$!viewer.getIsLogin())
+
+    #if (!$!emptytable)
+<div id="corr_table_options">
+  <fieldset>
+    <legend>$!i18n.correlation_table_options</legend>
+    <form action="$!form_action" method="get">
+                #foreach ($input in $!tableinfo.getForm())
+      <input type="hidden" name="$!input.name" value="$!input.value"/>
+                #end
+      <ul>
+        <li>
+                        #if ($!tableinfo.getIsSignOn())
+          <input type="checkbox" name="sign" id="sign" checked="checked"/>
+                        #else
+          <input type="checkbox" name="sign" id="sign"/>
+                        #end
+          <label for="sign">$!i18n.correlation_significance</label>
+        </li>
+        <li>
+                        #if ($!tableinfo.getIsCasesOn())
+          <input type="checkbox" name="cases" id="cases" checked="checked"/>
+                        #else
+          <input type="checkbox" name="cases" id="cases"/>
+                        #end
+          <label for="cases">$!i18n.correlation_count</label>
+        </li>
+      </ul>
+      <div class="buttonpadder"><input type="submit" value="$!i18n.update" class="button" /></div>
+    </form>
+  </fieldset>
+</div>
+    #end
+#end

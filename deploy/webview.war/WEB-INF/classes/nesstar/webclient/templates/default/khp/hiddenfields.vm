@@ -1,0 +1,10 @@
+<input type="hidden" name="v" value="2"/>
+#if ($!startingpoint)
+   <input type="hidden" name="catalog" value="$!startingpoint"/>
+#end
+#if ($!refCube)
+   <input type="hidden" name="ref" value="$!refCube"/>
+#end
+
+<!-- Disabling cache for the resulting form -->
+<input type="hidden" name="cache" value="false"/>

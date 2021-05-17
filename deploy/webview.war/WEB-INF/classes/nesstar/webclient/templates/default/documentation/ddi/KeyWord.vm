@@ -1,0 +1,29 @@
+#macro(singlekeyword $keyword)
+  
+  #if ($!node.Tag == 'AuthEnty')
+    $!keyword
+    #if ($node.Attributes.get('affiliation'))
+    	, $node.Attributes.get('affiliation')
+    #end
+	#if ($node.Attributes.get('abbr'))
+		&nbsp;($node.Attributes.get('abbr'))
+	#end
+  #else
+    $!keyword
+  #end
+#end
+
+#if ($!node.Keywords)
+<h3 class="ddititle">$!node.Name</h3>
+	#if($!node.Keywords.size() > 1)
+		<ul class="keywordnode">
+		#foreach($keyword in $!node.Keywords)
+			<li>
+				#singlekeyword($!keyword)
+			</li>				
+		#end
+		</ul>
+	#else
+		#singlekeyword($!node.Keywords.get(0))
+	#end
+#end

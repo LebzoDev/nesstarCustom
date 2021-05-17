@@ -1,0 +1,44 @@
+#if ($!documentation.getSection())
+#set ($section = $!documentation.getSection())
+#set ($varURL = $section.getID().toString())
+#set ($addToCartURL = $utils.replaceParameter('addVariableToCart', "$varURL"))
+
+
+<ul class="variableActions">
+  #if ($!cart && !$!cart.isResourceInCart($varURL) )
+  <li><a onclick="return (confirm ('$!i18n.shoppingcart_add_group_confirm'))" href="$addToCartURL">$i18n.shoppingcart_add_group</a></li>
+  #end
+</ul>
+<div class="giveroom">$i18nDdi.vargrp $!section.Label</div>
+
+	#if ($!section.Universe)
+<div class="allnodes">$!i18nDdi.universe</div>
+<div>$!utils.escapeHtml($!section.Universe, true)</div>
+	#end
+
+	#if ($!section.Definition)
+<div class="allnodes">$!i18nDdi.definition</div>
+<div>$!utils.escapeHtml($!section.Definition, true)</div>
+	#end
+
+	#if ($!section.Comment)
+<div class="allnodes">$!i18nDdi.comment</div>
+<div>$!utils.escapeHtml($!section.Comment, true)</div>
+	#end
+
+	#if ($!section.Notes)
+<div class="allnodes">$!i18nDdi.notes</div>
+<div>$!utils.escapeHtml($!section.Notes, true)</div>
+	#end
+#end
+
+#if ($!documentation.getSectionChildren())
+<ul class="variablegroup">
+	#foreach ($element in $!documentation.getSectionChildren())
+  <li>
+    <a href="$!element.href">$!element.label</a>
+  </li>
+	#end
+</ul>
+
+#end

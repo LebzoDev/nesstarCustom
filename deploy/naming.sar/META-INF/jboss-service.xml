@@ -1,0 +1,37 @@
+<server>
+   <!-- ==================================================================== -->
+   <!-- JNDI                                                                 -->
+   <!-- ==================================================================== -->
+
+   <mbean code="org.jboss.naming.NamingService"
+      name="jboss:service=Naming"
+      xmbean-dd="resource:xmdesc/NamingService-xmbean.xml">
+      <!-- The call by value mode. true if all lookups are unmarshalled using
+      the caller's TCL, false if in VM lookups return the value by reference.
+      -->
+      <attribute name="CallByValue">false</attribute>
+      <!-- The listening port for the bootstrap JNP service. Set this to -1
+        to run the NamingService without the JNP invoker listening port.
+      -->
+      <attribute name="Port">-1</attribute>
+      <!-- The bootstrap JNP server bind address. This also sets the default
+      RMI service bind address. Empty == all addresses
+       -->
+      <attribute name="BindAddress">${jboss.bind.address}</attribute>
+      <!-- The port of the RMI naming service, 0 == anonymous -->
+      <attribute name="RmiPort">0</attribute>
+      <!-- The RMI service bind address. Empty == all addresses
+       -->
+      <attribute name="RmiBindAddress">${jboss.bind.address}</attribute>
+      <!-- The thread pool service used to control the bootstrap lookups -->
+      <depends optional-attribute-name="LookupPool"
+         proxy-type="attribute">jboss.system:service=ThreadPool</depends>
+   </mbean>
+
+   <mbean code="org.jboss.naming.JNDIView"
+   		name="jboss:service=JNDIView"
+   		xmbean-dd="resource:xmdesc/JNDIView-xmbean.xml">
+   </mbean>
+
+</server>
+

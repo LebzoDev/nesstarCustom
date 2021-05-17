@@ -1,0 +1,20 @@
+#macro (singleentity $entity)
+   <tr>
+      <td>$!entity.getContent()</td>
+      <td>$!entity.Attributes.get('affiliation')</td>
+   </tr>
+#end
+
+#if ($!node.getEntities())
+#set($entities = $!node.getEntities())
+<h3 class="ddititle">$!node.Name</h3>
+<table class="doctable" border="1">
+   <tr>
+      <th>$!i18nDdi.name</th>
+      <th>$!i18nDdi.affiliation</th>
+   </tr>
+   #foreach($entity in $!entities)
+   	#singleentity($entity)
+   #end
+</table>
+#end

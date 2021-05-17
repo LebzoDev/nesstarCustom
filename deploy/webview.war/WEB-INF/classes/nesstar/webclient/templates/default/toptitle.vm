@@ -1,0 +1,142 @@
+#if($!embed)
+   #if ($!menuClass.getTopTitle())
+      #set ($pagetitle = $!menuClass.getTopTitle())
+   #else
+      #set ($pagetitle = $!toptitle)
+   #end
+   <div class="giveroom" id="toptitle">
+      <span id="topspan">
+         $!{i18n.dataset} $utils.escape($!{pagetitle})
+         #if($!interactiveTitle)
+            <span id="topindicator">$utils.escape($!{interactiveTitle})</span>
+         #end
+      </span>
+   </div>
+#elseif($!cube.getHingedTitles() && $!{props.showHingedTopTitles()})
+  <div class="giveroom" id="toptitle">
+  #if($!parameters.isSpider())
+    $!{i18n.spider_title}
+  #else
+       #set ($cubeCounter = 0)
+          #foreach ($item in $!cube.getCubes())
+          <div>       
+             <span class="cubehingeitem">$!item.getLabel()</span>
+             #if (!$!doprint)
+                <a href="#" id="cubeTrigger_$!cubeCounter">$!{i18n.hinge_display_metadata}</a>
+             #end
+             #set ($cubeCounter = $!cubeCounter + 1)
+          </div>
+       #end
+  #end
+  </div>
+#elseif( $!toptitle || $!menuClass.getTopTitle())
+   #if ($!request.getSession().getAttribute("toptitle") && $!doprint)
+      #set ($pagetitle = $!request.getSession().getAttribute("toptitle"))
+   #else
+      #if ($!menuClass.getTopTitle())
+         #set ($pagetitle = $!menuClass.getTopTitle())
+      #else
+         #set ($pagetitle = $!toptitle)
+      #end
+   #end
+   #if($!menuClass.getSubTitle())
+      #set ($subtitle = $!menuClass.getSubTitle())
+   #end
+   #if($!menuClass.getAbstractText() && $!documentation.showAbstract())
+      #set ($abstractText = $!menuClass.getAbstractText())
+   #end
+   #if($!request.getParameter('mode') != 'shoppingcart')
+      #if ($!doprint)
+        <div class="giveroom" id="toptitle">
+            <h2><span id="topspan">
+               $!{i18n.dataset} $utils.escape($!{pagetitle})
+               #if($!interactiveTitle)
+                  <span id="topindicator">$utils.escape($!{interactiveTitle})</span>
+               #end
+            </span></h2>
+        </div>
+         #if ($!subtitle)
+            <h4 class="print">$utils.escape($!{subtitle})</h4>
+         #end
+      #else
+         <div class="giveroom" id="toptitle">
+            <h2><span id="topspan">
+               $!{i18n.dataset} $utils.escape($!{pagetitle})
+               #if($!interactiveTitle)
+                  <span id="topindicator">$utils.escape($!{interactiveTitle})</span>
+               #end
+            </span></h2>
+         </div>
+         #if ($!subtitle)
+            <h4 class="subtitle">$utils.escape($!{subtitle})</h4>
+         #end
+
+         #if ($!abstractText)
+            <h3 class="ddititle">$!{i18nDdi.abstract}</h3>
+            <p class="ddicontent">
+               $!utils.escapeHtml($!{abstractText}, true)            
+            </p>
+         #end
+      #end
+   #end
+#else
+  <div class="giveroom" id="toptitle"></div>
+#end
+#if ($!doprint && !$!viewer.getIsLogin())
+   #parse ("clipboard/clipboard.vm")
+#end
+#if ($!subscribed)
+      #if (!$!doprint && !$!viewer.getIsLogin())
+         <div>$!{subscribed}</div>
+      #end
+#end
+#if ($!openedBookmark && ($!openedBookmark.getLabel() || $!openedBookmark.getTooltip()))
+   <div class="hint bookmarkinfo">
+      <h3>$!i18n.bookmark_info:</h3>
+      #if ($!openedBookmark.getLabel())
+        <h4>$!openedBookmark.getLabel()</h4>
+      #end
+      #if ($!openedBookmark.getTooltip())
+        <div>$!openedBookmark.getTooltip()</div>
+      #end
+   </div>
+#end
+#if ($!menuClass.getCurrentViewUrlNoLanguage())
+   <script type="text/javascript">
+      bookmarkurlnolanguage = '$!menuClass.getCurrentViewUrlNoLanguage()';
+   </script>
+#end
+#set ($welcomePage = $!request.getParameter("welcomepageuri"))
+
+#if(!$!embed && !$!doprint && !$!welcomePage)
+   <a id="navhide" href="javascript:void(0);" class="navigationvisible" onclick="swapNavigation(this);" title="$!i18n.collapse_navigation_tree_tooltip"></a>
+   <script type="text/javascript">
+   var treeWidth = '$!props.getBrowselistWidth()';
+   var collapsor = xGetElementById("navhide");
+   var navigationFrame = top.frames.main.document.getElementById('set');
+   var className = "navigationvisible";
+   if (navigationFrame.cols) {
+        if (navigationFrame.cols.substring(0,navigationFrame.cols.indexOf('%')) == '0')
+            className = "navigationhidden";
+   }
+   collapsor.className = className;
+   </script>
+#end
+#if ($!bookmark.IfHasBeenAdded)
+  <script type="text/javascript">
+        var div = parent.parent.content.tree.bookmarkDiv;
+        var image = parent.parent.content.tree.bookmarkImage;
+        var link = parent.parent.content.tree.bookmarkLink;
+
+        if (div) {
+          if (xGetComputedStyle(div, 'display') == 'block') {
+
+            //close
+            if (image) parent.parent.content.tree.openImage(image);
+            div.style.display = 'none';
+            //Open it
+            parent.parent.content.tree.openDrilldownBookmark(image, link);
+          }
+        }
+  </script>
+#end

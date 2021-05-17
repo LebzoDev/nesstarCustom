@@ -1,0 +1,28 @@
+<server>
+   <!-- ==================================================================== -->
+   <!-- JBoss RMI Classloader - only install when available                  -->
+   <!-- ==================================================================== -->
+   <mbean code="org.jboss.util.property.jmx.SystemPropertyClassValue"
+      name="jboss.rmi:type=RMIClassLoader">
+      <attribute name="Property">java.rmi.server.RMIClassLoaderSpi</attribute>
+      <attribute name="ClassName">org.jboss.system.JBossRMIClassLoader</attribute>
+   </mbean>
+
+<!-- ==================================================================== -->
+   <!-- Class Loading                                                        -->
+   <!-- ==================================================================== -->
+
+   <mbean code="org.jboss.web.WebService"
+      name="jboss:service=WebService">
+      <attribute name="Port">0</attribute>
+      <!-- Should resources and non-EJB classes be downloadable -->
+      <attribute name="DownloadServerClasses">false</attribute>
+      <attribute name="Host">${jboss.bind.address}</attribute>
+      <attribute name="BindAddress">${jboss.bind.address}</attribute>
+      <!-- Use the default thread pool for dynamic class loading -->
+      <depends optional-attribute-name="ThreadPool"
+         proxy-type="attribute">jboss.system:service=ThreadPool</depends>
+   </mbean>
+
+</server>
+

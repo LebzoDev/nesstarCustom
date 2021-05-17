@@ -1,0 +1,20 @@
+#if ($!searchView.getCatalogs().size() > 1)
+<div class="searchforwhat" id="searchcatalogs">
+	<p>$!i18n.where:</p>
+	<ul>
+		#foreach ($object in $!searchView.getCatalogs())
+			<li>
+			#if ($!object.checked)
+  				<input type="checkbox" name="object" value="$!object.id" checked="checked" id="check-$!object.id" /><label for="check-$!object.id">$!object.label</label>
+			#else
+  				<input type="checkbox" name="object" value="$!object.id" id="check-$!object.id"  /><label for="check-$!object.id">$!object.label</label>
+			#end
+			</li>
+		#end
+	</ul>
+</div>
+#else
+  	#foreach ($object in $!searchView.getCatalogs())
+<input type="hidden" name="object" value="$!object.id"/>
+	#end
+#end

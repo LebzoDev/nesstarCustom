@@ -1,0 +1,72 @@
+#if ($!request.getParameter("language") )
+#set ($lang = 'language=')
+#set ($par = $!request.getParameter("language"))
+#set ($language = "$lang$par" )
+#end
+
+#set ($searchquery = $!request.getParameter("searchquery"))
+
+
+<div id="headerTree" class="headerTree">
+  <form id="thesearchform" class="searchform" accept-charset="UTF-8" onsubmit="return applySearch()"
+        target="hiddensearch" method="get" action="$!form_action">
+         #if ($!{props.showAdvancedSearchOnly()} && $!advancedSearchEnabled)
+         <a id="imageadvanced_search" class="advancedsearch" href="#"
+            onclick="openAdvancedSearch('$!form_action?mode=searchview&amp;searchtype=advanced&amp;$!utils.getArrayAsString($!request)&amp;$!language')"
+            title="$!i18n.advancedsearch"><img src="$!{props.getSkinPath()}images/advanced_search.png"
+                                               title="$!i18n.advancedsearch" alt="$!i18n.advancedsearch"/></a><a href="#"
+            onclick="openAdvancedSearch('$!form_action?mode=searchview&amp;searchtype=advanced&amp;$!utils.getArrayAsString($!request)&amp;$!language')"
+            title="$!i18n.advancedsearch">$!i18n.Search</a>
+         #else
+          #if ($!simpleSearchEnabled)
+          <input id="search_textinput" type="text" class="textfield" name="word" value="" size="25"/>
+          <a id="imagesearch_icon" title="$!i18n.Search" href="#"
+             onclick="applySearch();xGetElementById('thesearchform').submit();return false"><img
+            src="$!{props.getSkinPath()}images/search_icon.png" title="$!i18n.Search" alt="$!i18n.Search"/></a>
+          #end
+          #if ($!advancedSearchEnabled)
+          <a id="imageadvanced_search" class="advancedsearch" href="#"
+             onclick="openAdvancedSearch('$!form_action?mode=searchview&amp;searchtype=advanced&amp;$!utils.getArrayAsString($!request)&amp;$!language')"
+             title="$!i18n.advancedsearch"><img src="$!{props.getSkinPath()}images/advanced_search.png"
+                                                title="$!i18n.advancedsearch" alt="$!i18n.advancedsearch"/></a>
+          #end
+          #if (!$!request.getParameter('top') || $!request.getParameter('top').equals('yes') == false)
+          #if ($!request.getParameter("context"))
+          <input type="hidden" name="object" value="$!request.getParameter('context')"/>
+          #elseif ($!request.getParameterValues("object"))
+          #foreach ($item in $utils.wrapArray($!request.getParameterValues("object")))
+          <input type="hidden" name="object" value="$!item"/>
+          #end
+          #end
+          #end
+          #if ($!request.getParameter("language") )
+          <input type="hidden" name="language" value="$!request.getParameter('language')"/>
+          #end
+          <!--          <input style="padding: 0px; margin: 0px" type="image" src="$!{props.getSkinPath()}images/search_icon.png" title="$!i18n.Search"/> -->
+          <input type="hidden" id="lastClickInSearchIndicator" value="false"/>
+          <input type="hidden" id="currentSearchTerm" value=""/>
+          <input style="padding: 0px; margin: 0px" type="hidden" name="mode" value="searchresult"/>
+          <input style="padding: 0px; margin: 0px" type="hidden" name="id" value="search"/>
+          #end
+  </form>
+</div>
+#if ($!searchquery)
+<script type="text/javascript">
+   var queryForm = document.getElementById("thesearchform");
+   if(queryForm.onsubmit()) {
+      //This is needed in order to trigger the onsubmit-event for the form.
+      //A sole queryForm.submit() in the function below won't cut it
+      queryForm.submit();
+   }
+
+   function submitSearch(searchQuery){
+      //Get the query-input-field
+      var queryInputField = document.getElementById('search_textinput');
+      if(queryForm && queryInputField){
+        queryInputField.value = searchQuery;
+         queryForm.submit();
+      }
+   }
+   submitSearch('$!searchquery');
+</script>
+#end

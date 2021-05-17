@@ -1,0 +1,19 @@
+#if (!$!embed)
+##We're not embedding but prepare a few JavaScript variables for the dialog box
+<script type="text/javascript">
+    #if (!$!embeddableMode)
+    var embeddingMode = null;
+    #else
+    var embeddingMode = $!embeddableMode;
+    #end
+    var allowedEmbeddingModes = $!menuClass.getAllowedEmbedTypes();
+    var embeddingMeasureSwitchLimit = #if ($!{embeddingMeasureSwitchLimit}) true #else false #end;
+</script>
+#else
+   <div class="updated">
+      <a class="openorig" href="$!embeddingtrackback" target="_blank" title="$!i18n.embed_open_original_title">$!i18n.embed_open_original</a>
+      #if ($!objectCreationDate)
+          <span class="creationdate">$!i18n.embed_last_updated $!objectCreationDate</span>
+      #end
+   </div>
+#end

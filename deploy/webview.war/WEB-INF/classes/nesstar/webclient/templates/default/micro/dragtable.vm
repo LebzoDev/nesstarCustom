@@ -1,0 +1,116 @@
+<script type="text/javascript">
+	tabulation = true;
+	#if ($!urlPrefix)
+	urlPrefix = '$!urlPrefix';
+	#end
+	mode = 'table';
+</script>
+
+   #if ($!props.useNewMenus())
+      ## if this is embed, dimension menus shouldn't appear
+      #if(!$!embed)
+         #parse( "dimensionchooser.vm" )
+      #else #parse( "micro/tableinfo.vm" ) 
+      #end
+   #else
+      #parse( "micro/xmlform.vm" )
+   #end
+
+
+#if ($!analysis.getTableParser().getTable())
+## remove matrix div if embed. This just adds padding which we won't have in embedding.
+#if(!$!embed)
+   <div class="matrixdiv">
+#end
+  <table class="matrix" border="0" id="tabell">
+		#foreach ($row in $!analysis.getTableParser().getTable())
+    <tr>
+			#foreach ($element in $row)
+			#if ($!element.rowspan)
+			  #set ( $rowspan = $element.rowspan )
+			#else
+			  #set ($rowspan = 1)
+			#end
+			#if ($!element.colspan)
+			  #set ( $colspan = $element.colspan )
+			#else
+			  #set ( $colspan = 1 )
+			#end
+			#set ( $class = $element.type)
+
+			#if ($class == 'stublabel')
+			#set ($title = $!i18n.canmovetocolumn)
+			#elseif ($class == 'headlabel')
+			#set ($title = $!i18n.canmovetorow)
+			#else
+			#set ($title = "")
+			#end
+
+			#if ($!element.code == 'droptoheader')
+				#set ($class = 'empty')
+				#set ($title = "")
+			#elseif ($!element.code == 'droptostub')
+				#set ($class = 'emptystub')
+				#set ($title = "")
+			#end
+
+			#if ($class == 'stublabel' || $class == 'headlabel'  || $class == 'empty' || $class == 'emptystub')
+      <td class="$!class" id="var$element.code" title="$!title" rowspan="$!rowspan" colspan="$!colspan">
+					#if ($!element.label.trim().length() == 0)
+        &nbsp;
+					#else
+						$element.label
+					#end
+				#if (!$!doprint)
+        <div class="$!class" id="var${element.code}div" style="display:none; position: absolute; left: 0px; right:0px; z-index: 500;">
+						$element.label
+        </div>
+				#end
+      </td>
+
+				#if (!$!doprint)
+               #if (!$!embed)
+                  <script type="text/javascript">
+                     makeDraggable('var$!{element.code}');
+                  </script>
+               ## Make sure tableHighlight still works (is invoked by makeDraggable())
+               #else
+                  <script type="text/javascript">
+                     document.onclick = doTableHighlight;
+                  </script>
+               #end
+				#end
+			#else
+      <td#if ($!class != 'matrix') class="$!class" rowspan="$!rowspan" colspan="$!colspan"#end>
+				#if ($!element.subset && !$!doprint)
+        <a href="$!element.link" onclick="hideTheViewArea()">$element.label</a>
+				#else
+					$element.label
+				#end
+				#parse ("sorting/sorting.vm")
+
+      </td>
+			#end
+			#end
+    </tr>
+		#end
+  </table>
+  #if ($!tablemsg && !$!embed)
+   <div id="tablemsg">$!totalsmsg</div>
+  #end
+  #if ($!analysis.getTableParser().isMarkingInEffect())
+    <div id="cellmarkings">
+       <h4>$!i18n.cellMarkings</h4>
+       <dl>
+          <dt>$!props.getMicrodataTableNLimitMarkingSign()</dt>
+          <dd>$!i18n.cellMarkingsMicroNoteText</dd>
+       </dl>
+    </div>
+   #end
+
+## don't display this if matrixdiv isn't visible
+#if(!$!embed)
+   </div>
+#end
+#end
+

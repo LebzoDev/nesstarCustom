@@ -1,0 +1,8 @@
+#if ($!node.HasContent || $!node.getAttribute('media') )
+<h3 class="ddititle">
+		$!node.Name
+</h3>
+   #if ($!node.getAttribute('media'))
+   <p class="ddicontent">$!i18nDdi.media $!node.getAttribute('media')</p>
+   #end
+#end

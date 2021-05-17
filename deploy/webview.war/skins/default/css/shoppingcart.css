@@ -1,0 +1,145 @@
+div.shoppingcart {
+  margin: 1em;
+  margin-top: 0.5em;
+  margin-left: 0;
+  width: 95%;
+}
+
+ul.cartMasterList {
+   list-style-type: none;   
+   padding: 0px;
+   margin: 0px;  
+}
+
+ul.cartMasterList li {
+   border: 1px solid #555;
+   background-color: #f8f8f8;
+   padding-left: 20px;
+   padding-bottom: 1em;
+   margin-bottom: 0.5em;   
+}
+
+h3.cartTitle {
+   padding: 0px;
+   margin: 0px;
+   margin-top: 0.5em;
+}
+
+
+ul.shoppingCartList {
+	list-style-type: none;
+	padding: 0px;
+	margin-right: 2em;
+   margin-top: 1em;
+   margin-bottom: 1em;
+   display: none;
+}
+
+ul.shoppingCartList li {
+  position: relative;
+  background-color: rgb(238, 238, 238);
+  border: none;
+  padding: 5px;
+  margin-bottom: 0.5em;
+  padding-right: 50px;
+  margin-left: 0em;
+  margin-right: 0px;
+}
+
+li a.removeVarFromCart {
+  position: absolute;
+  right: 6px;
+  width: 12px;
+  height: 35px;
+  color: white;
+  text-decoration: none;
+  background-image: url('../images/deletecart.png');
+  background-repeat: no-repeat;
+  background-position: 0px 0px ;
+  font-size: 0px;
+}
+
+ul.cartcontrols{
+   margin: 0px;
+   padding: 0px;
+   margin-top: 0.5em;
+   list-style-type: none;
+   float: right;
+}
+
+ul.cartcontrols li{
+   margin: 0px;
+   padding: 0px;
+   margin-right: 5px;
+   border: none;
+   width: 13px;
+   height: 13px;
+   display: inline;
+   float: left;
+}
+
+ul.cartcontrols li .downloadStudy{
+   width:auto;
+   font-size:12px;
+   position:relative;
+}
+
+ul.cartcontrols li a {
+  position: absolute;
+  width: 13px;
+  height: 13px;;
+  text-decoration: none;
+  background-repeat: no-repeat;
+  background-position: 0px 0px ;
+  font-size: 0px;
+  color: "transparent";
+}
+
+a.downloadCart {
+  background-image: url('../images/downloadcart.png');  
+}
+
+
+a.removeCart {
+  background-image: url('../images/deletecart.png');
+}
+
+a#emptyallcarts {
+   color: red;
+   font-weight: bold;
+   text-decoration: none;
+   float: right;     
+}
+
+
+ul.shoppingCartList h4 {
+  font-size: 120%;
+  font-weight: bold;
+  margin: 0px;
+}
+
+ul.shoppingCartList li dl {
+  position: relative; 
+  width: 100%;
+}
+
+ul.shoppingCartList li dt {
+  font-weight: bold;
+  width: 10em; 
+  position: absolute; 
+  left: 0; 
+}
+
+ul.shoppingCartList li dd {
+  margin-left: 10em; 
+}
+
+form.contenttoggle {
+   clear: both;
+   display: block;
+}
+
+span.numvars {
+   color: #555;
+   font-size: 80%;   
+}

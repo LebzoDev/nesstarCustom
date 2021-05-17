@@ -1,0 +1,91 @@
+<ul id="calculationformelements">
+	<li>
+	#if ($!insertGroup.getSelectedType() != 'pcGrow')
+	
+		<label for="firstcategory">$i18n.group_category</label>  
+		#if (!$!insertGroup.getFirstNumber())
+        	<input type="radio" checked="checked" name="first" id="firstcategory"/>        
+		#else
+        	<input type="radio" name="first" id="firstcategory"/>        
+		#end	
+  	#end        
+        	<select id="firstCategoryList">
+	#foreach ($category in $!insertGroup.getFirstCategoryList())
+		#if ($!category.deleted)
+			#set ($deleted = $!i18n.get('group_deleted'))
+			#set ($className = 'deleted')
+		#else
+			#set ($deleted = '')
+			#set ($className = '')
+		#end
+		#if ($!category.selected)
+        		<option selected="selected" value="$!category.code" class="$!className">$!utils.escape($category.label) $!deleted</option>
+		#else
+	        	<option value="$!category.code" class="$!className">$!utils.escape($category.label) $!deleted</option>
+		#end
+	#end
+        	</select>
+        </li>
+	#if ($!insertGroup.getSelectedType() != 'pcTot')
+	
+		#if ($!insertGroup.getSelectedType() != 'pcGrow')
+	<li>
+		<label for="firstnumber">$i18n.group_number</label>
+			#if ($!insertGroup.getFirstNumber())
+        	<input type="radio" checked="checked" name="first" id="firstnumber"/>
+			#else
+        	<input type="radio" name="first" id="firstnumber"/>
+			#end
+        	<input type="text" class="textfield" id="firstnumberText" value="$!insertGroup.getFirstNumber()"/>
+        </li>
+		#end
+	<li class="conjunction">
+		#if ($!insertGroup.getSelectedType() == 'sub')
+      	$!i18n.group_minus
+		#elseif ($!insertGroup.getSelectedType() == 'div')
+      	$!i18n.group_div
+		#elseif ($!insertGroup.getSelectedType() == 'pc')
+      	$!i18n.group_pc
+		#elseif ($!insertGroup.getSelectedType() == 'pcGrow')
+      	$!i18n.group_pcGrow
+		#end
+	</li>
+	<li>
+		#if ($!insertGroup.getSelectedType() != 'pcGrow')	
+		<label for="secondcategory">$i18n.group_category</label>    
+			#if (!$!insertGroup.getTheSecondNumber())
+        	<input checked="checked" type="radio" name="second" id="secondcategory"/>        
+			#else
+        	<input type="radio" name="second" id="secondcategory"/>        
+			#end	
+	    	#end 	   
+        	<select id="secondCategoryList">
+		#foreach ($category in $!insertGroup.getSecondCategoryList())
+			#if ($!category.deleted)
+				#set ($deleted = $!i18n.get('group_deleted'))
+				#set ($className = 'deleted')
+			#else
+				#set ($deleted = '')
+				#set ($className = '')
+			#end
+			#if ($!category.selected)
+        		<option selected="selected" value="$!category.code" class="$!className">$!utils.escape($category.label) $!deleted</option>
+			#else
+        		<option value="$!category.code" class="$!className">$!utils.escape($category.label) $!deleted</option>
+			#end
+		#end
+        	</select>   
+        </li>     
+		#if ($!insertGroup.getSelectedType() != 'pcGrow')
+	<li>
+		<label for="secondnumber">$i18n.group_number</label>    
+			#if ($!insertGroup.getTheSecondNumber())        
+        	<input type="radio" checked="checked" name="second" id="secondnumber"/>        
+			#else                
+        	<input type="radio" name="second" id="secondnumber"/>
+			#end
+        	<input type="text" class="textfield" id="secondnumberText" value="$!insertGroup.getTheSecondNumber()"/>
+        </li>
+		#end
+	#end
+</ul>	

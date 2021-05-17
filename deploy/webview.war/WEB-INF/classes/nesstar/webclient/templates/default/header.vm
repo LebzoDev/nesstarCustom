@@ -1,0 +1,82 @@
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/browserdetect.js?$!props.getTimestamp()"></script>
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/x.js?$!props.getTimestamp()"></script>
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/common.js?$!props.getTimestamp()"></script>
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/highlight.js?$!props.getTimestamp()"></script>
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/language.js?$!props.getTimestamp()"></script>
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/embedmain.js?$!props.getTimestamp()"></script>
+
+<!-- YUI Dependencies -->
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/yui/yahoo-min.js?$!props.getTimestamp()"></script>
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/yui/dom-min.js?$!props.getTimestamp()"></script>
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/yui/event-min.js?$!props.getTimestamp()"></script>
+
+<!-- YUI Source file -->
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/yui/datasource-min.js?$!props.getTimestamp()"></script>
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/yui/animation-min.js?$!props.getTimestamp()"></script>
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/yui/connection-min.js?$!props.getTimestamp()"></script>
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/yui/autocomplete-min.js?$!props.getTimestamp()"></script>
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/yui/dragdrop-min.js?$!props.getTimestamp()"></script>
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/yui/container_core-min.js?$!props.getTimestamp()"></script>
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/yui/container-min.js?$!props.getTimestamp()"></script>
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/yui/logger.js?$!props.getTimestamp()"></script>
+
+<!-- YUI CSS -->
+<link rel="stylesheet" type="text/css" href="$!{props.getSkinPath()}css/yui/container.css?$!props.getTimestamp()"/>
+
+<!-- YUI CSS Subclassing-->
+<link rel="stylesheet" type="text/css" href="$!{props.getSkinPath()}css/containerspecials.css?$!props.getTimestamp()"/>
+
+<!-- Custom Style Sheet -->
+<link href="$!{props.getSkinPath()}css/custom.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+
+
+<!--<script type="text/javascript" src="$!{props.getSkinPath()}javascript/minmax.js?$!props.getTimestamp()"></script>-->
+<!--[if lte IE 7]>
+<link href="$!{props.getSkinPath()}css/ie7_workarounds.css?$!props.getTimestamp()" type="text/css" rel="stylesheet" />
+<![endif]-->
+<!--[if lte IE 6]>
+<link href="$!{props.getSkinPath()}css/ie6_workarounds.css?$!props.getTimestamp()" type="text/css" rel="stylesheet" />
+<![endif]-->
+
+#if ($!embed)
+<!-- Special stylesheets for embedding -->
+<link href="$!{props.getSkinPath()}css/embedding_workarounds.css?$!props.getTimestamp()" type="text/css" rel="stylesheet" />
+#end
+#if (!$!menuClass.getIsHidden())
+<!--[if lte IE 6]>
+<link href="$!{props.getSkinPath()}css/fixed_ie.css?$!props.getTimestamp()" type="text/css" rel="stylesheet" />
+<![endif]-->
+<!-- Common overrides - stuff that needs to be overridden from YUI etc -->
+<link rel="stylesheet" type="text/css" href="$!{props.getSkinPath()}css/common_overrides.css?$!props.getTimestamp()"/>
+
+#end
+#if ($!embed)
+<!-- Special stylesheets for embedding -->
+<!--[if lte IE 6]>
+<link href="$!{props.getSkinPath()}css/embedding_workarounds_ie6.css?$!props.getTimestamp()" type="text/css" rel="stylesheet" />
+<![endif]-->
+<!--[if gte IE 7]>
+<link href="$!{props.getSkinPath()}css/embedding_workarounds_ie7.css?$!props.getTimestamp()" type="text/css" rel="stylesheet" />
+<![endif]-->
+#end
+
+<script type="text/javascript">
+
+window.onresize = function() {
+   setScrollableSize();
+}
+
+document.onmousedown = doMouseDown;
+function doMouseDown(e) {
+   try {
+      setScrollableSize();
+      removeSubsetBox(e);
+   }
+   catch(error) {
+   }
+}
+var isEmbedded = 	#if ($!embed) 			true #else false #end;
+</script>
+<script type="text/javascript" src="$!{props.getSkinPath()}javascript/dialogs.js?$!props.getTimestamp()"></script>
+
+#parse("clientlogheaders.vm")

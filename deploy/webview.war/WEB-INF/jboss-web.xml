@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<jboss-web>
+    <context-root>/webview</context-root>
+    <class-loading java2ClassLoadingCompliance="false">
+        <loader-repository>
+            webview:loader=webview.war
+            <loader-repository-config>java2ParentDelegation=false</loader-repository-config>
+        </loader-repository>
+    </class-loading>
+</jboss-web>

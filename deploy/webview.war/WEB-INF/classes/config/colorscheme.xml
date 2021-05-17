@@ -1,0 +1,109 @@
+<NesstarColorSchemeConfig>
+   <scheme id="sky">
+      <font>
+         <family>SansSerif</family>
+         <style>PLAIN</style>
+      </font>
+
+      <name lang="en">Skies</name>
+      <name lang="no">Himmel</name>
+      <name lang="se">Himmel</name>
+
+      <backgroundcol>#ffffff</backgroundcol>
+      <gridcol>#cbd4df</gridcol>
+      <continouscols>
+         <color>#ADC7E7</color>
+         <color>#294173</color>
+      </continouscols>
+      <discretecols>
+         <!-- Good old Nesstar-colors -->
+         <color>#0072D2</color>
+         <color>#B6CDE5</color>
+         <color>#d98900</color>
+         <color>#445581</color>
+         <color>#7a9e99</color>
+         <color>#b35351</color>
+         <color>#283a5b</color>
+         <color>#b9cdc2</color>
+         <color>#ecd9d7</color>
+         <color>#a7580c</color>
+         <color>#d3958c</color>
+         <color>#dddddc</color>
+         <color>#006252</color>
+         <color>#a9a8a7</color>
+         <color>#d0cfda</color>
+         <color>#803837</color>
+         <color>#716f6e</color>
+         <color>#898fb3</color>
+         <color>#fcc78c</color>
+         <color>#24211d</color>
+         <color>#f99f3d</color>
+         <color>#D6DEF0</color>
+      </discretecols>
+      <!-- Width for curve lines and grid lines. Decimal numbers (e.g. 1.0, 2.4) 
+         required. -->
+      <graphs>
+         <curve-width>1.0</curve-width>
+         <grid-width>0.5</grid-width>
+      </graphs>
+      
+      <map-polylines>
+         <color>#ffffff</color>
+         <border-color>#000000</border-color>
+         <width>3</width>
+         <border-width>5</border-width>
+      </map-polylines>
+      <map-polylines>
+         <color>#f08010</color>
+         <border-color>#000000</border-color>
+         <width>1</width>
+         <border-width>3</border-width>
+      </map-polylines>
+      <map-polylines>
+         <color>#ff0000</color>
+         <border-color>#000000</border-color>
+         <width>1</width>
+         <border-width>3</border-width>
+      </map-polylines>
+      <map-polylines>
+         <color>#00ff00</color>
+         <border-color>#000000</border-color>
+         <width>1</width>
+         <border-width>3</border-width>
+      </map-polylines>
+      <map-points>
+         <color>#00ff00</color>         
+         <size>10</size>
+         <symbol>star</symbol>
+      </map-points>
+      <map-points>
+         <color>#0000ff</color>         
+         <size>10</size>
+         <symbol>square</symbol>
+      </map-points>
+      <map-points>
+         <color>#ff0000</color>         
+         <size>10</size>
+         <symbol>circle</symbol>
+      </map-points>
+
+      <map-nonthematicpolygons>
+        <color>#ffaaaa</color>
+        <border-color>#00000</border-color>
+        <border-width>1</border-width>
+        <alpha>0.5</alpha>
+      </map-nonthematicpolygons>
+      <map-nonthematicpolygons>
+        <color>#aaffaa</color>
+        <border-color>#00000</border-color>
+        <border-width>1</border-width>
+        <alpha>0.5</alpha>
+      </map-nonthematicpolygons>
+      <map-nonthematicpolygons>
+        <color>#aaaaff</color>
+        <border-color>#00000</border-color>
+        <border-width>1</border-width>
+        <alpha>0.5</alpha>
+      </map-nonthematicpolygons>
+   </scheme>
+</NesstarColorSchemeConfig>

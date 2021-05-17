@@ -1,0 +1,16 @@
+#if ($!doprint)
+  <h3>$!i18n.get("backlinklabel")</h3>
+#end
+#if ($!documentation && !$!embed && $!props.useLinkBacksToRelatedMaterials())
+	#set ($embedlinkbacks = $!documentation.getEmbedLinkback())
+	#if ($embedlinkbacks.size() > 0)
+	<div class="metacontentseparator">
+		$!i18n.get("backlink_text"):
+	</div>
+		<ul class="keywordlist">
+			#foreach ($linkback in $embedlinkbacks)
+				<li>$!linkback</li>
+			#end
+		</ul>
+	#end
+#end

@@ -1,0 +1,26 @@
+#if ($!colorschemeutil.displaySchemeChooser())
+<h4>$!i18n.select_colorscheme</h4>
+<div id="colorschememenu">
+   <span style="background-image: url($!colorschemeutil.selectedSchemeIconUrl)">$!colorschemeutil.selectedSchemeName</span>
+   #set ($selid = $!colorschemeutil.selectedSchemeId)
+   <ul id="colorschemecombo">
+      #foreach ($scid in $!colorschemeutil.schemeIds)
+      #if ($scid != $selid)
+      <li>
+         <a href="$!colorschemeutil.getSchemeLink($scid)">
+            <img src="$!colorschemeutil.getSchemeIconUrl($scid)"/>
+            $!colorschemeutil.getSchemeName($scid)
+         </a>
+      </li>
+      #end
+      #end
+   </ul>
+</div>
+<script type="text/javascript">
+    element=document.getElementById("colorschememenu");
+    if (element != null) {
+        xAddEventListener(element, 'click', function() { toggleCombo("colorschemecombo")  }, false);
+    }
+    disableHoverPopup("colorschemecombo");
+</script>
+#end

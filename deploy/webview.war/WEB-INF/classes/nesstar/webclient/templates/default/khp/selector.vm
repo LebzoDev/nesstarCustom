@@ -1,0 +1,21 @@
+<form action="kommune" method="get" autocomplete="off" class="kostraselector" id="hierarchyselector">
+
+   <input type="hidden" name="v" value="2"/>
+   #if ($!startingpoint)
+      <input type="hidden" name="catalog" value="$!startingpoint"/>
+   #end
+   Vis regioner&hellip;
+   <br />
+   <select name="ref" onChange="submit()">
+      #foreach ( $sel in $!selector)
+
+         #if ($!sel.getID().toString() == $!refCube)
+            #set ( $selected = 'selected="true"')
+         #else
+            #set ($selected = '')
+         #end
+
+         <option value="$!sel.getID()" $!selected>$!sel.getLabel()</option>
+      #end
+   </select>
+</form>

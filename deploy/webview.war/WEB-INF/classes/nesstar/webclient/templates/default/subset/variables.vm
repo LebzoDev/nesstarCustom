@@ -1,0 +1,12 @@
+<div class="variable">
+	#foreach ($variable in $!variableSubset.getVariables())
+  <div onclick="markForDeletion(this,'$!variable.remove')">$!utils.escape($!variable.label)</div>
+	#end
+</div>
+<div class="button_top_margin">
+   <form action="$!form_action">
+     <input type="submit" class="button" onclick="return removeOne()" value="$i18n.subset_removesel"/>
+     <input type="submit" class="button" onclick="return setUrl('$!variableSubset.getRemoveAllUrl()')" value="$i18n.subset_removeall"/>
+     <input type="submit" class="button minWidth" onclick="return setUrl('$!variableSubset.getOkUrl()')" value="$i18n.subset_ok"/>
+   </form>
+</div>

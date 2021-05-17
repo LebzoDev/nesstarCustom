@@ -1,0 +1,5 @@
+var openEgmsParam = '$!props.getEgmsOpenWindowParams()';
+var maxNumCellsParam = '$!props.getMaxNumCells()';
+var propMetadataVisible = '$!props.getMetadataVisible()';
+var servletContext = '$!context';
+var skinPath = '$!props.getSkinPath()';

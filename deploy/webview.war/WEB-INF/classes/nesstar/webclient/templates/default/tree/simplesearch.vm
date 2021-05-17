@@ -1,0 +1,18 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		#parse ("cache/cacheHeader.vm")
+    <script type="text/javascript" src="skins/default/javascript/treeview.js?$!props.getTimestamp()"></script>
+    <link href="skins/default/css/treeview.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="skins/default/css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="skins/default/javascript/common.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="skins/default/javascript/search.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="skins/default/javascript/browserdetect.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="skins/default/javascript/x.js?$!props.getTimestamp()"></script>
+
+    <title>The browselist</title>
+  </head>
+  <body id="body">
+     #parse ("tree/searchform.vm")
+  </body>
+</html>

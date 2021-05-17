@@ -1,0 +1,6 @@
+#if ($!map && $!menuClass.getIsHidden())
+  #set ($name = 'calculatesubsetpopup')
+#else
+  #set ($name = 'calculatesubset')
+#end
+<iframe name="$!name" frameborder="0" width="1px" height="1px" style="height: 0px;  border: none;  margin: 0px;  padding: 0px;  position: absolute;  bottom: 0px;  left: 0px;"></iframe>

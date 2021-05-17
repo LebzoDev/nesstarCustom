@@ -1,0 +1,13 @@
+<h3 class="ddititle">$node.Name</h3>
+<div class="ddicontent">
+
+#foreach ($sub in $node.AllNodes)
+	#if ($!sub.class.name == 'nesstar.client.app.explorer.ExtLinkNode')
+  <p class="abstractExtlink">
+		#parse( "documentation/ddi/ExtLink.vm" )
+  </p>
+	#else
+     <p>$!sub.Content</p>
+	#end
+#end
+</div>

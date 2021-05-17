@@ -1,0 +1,30 @@
+##if (!$!request.getParameter("regMod"))
+##parse ("micro/analysistype.vm")
+
+#if ($!request.getParameter("regMod") == 'reg')
+
+    #if ($!emptytable)
+       #parse( "micro/emptyregression.vm" )
+    #else
+       #parse( "micro/regression.vm" )
+    #end
+    #if ($!errormessage)
+        <div class="errormessage">$errormessage</div>
+	#end
+#else
+    #parse ("micro/correlationinfo.vm")
+
+    #if ($!errormessage)
+        <div class="errormessage">$errormessage</div>
+	#end
+
+     #if ($!emptytable)
+        #parse ( "micro/emptycorrelation.vm")
+    #else
+        #parse( "micro/correlation.vm" )
+    #end
+
+    #if(!$!embed)
+        #parse ( "micro/correlationtype.vm")
+    #end
+#end

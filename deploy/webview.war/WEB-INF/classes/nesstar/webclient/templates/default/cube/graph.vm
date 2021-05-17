@@ -1,0 +1,190 @@
+   #parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+   <head>
+      <title>$!frametitle</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      #parse ("cache/cacheHeader.vm")
+      <link href="$!{props.getSkinPath()}css/cube.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!{props.getSkinPath()}css/draganddrop.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!{props.getSkinPath()}css/documentation.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+      <script type="text/javascript">
+         var skinPath = '$!{props.getSkinPath()}';
+      </script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/cube.js?$!props.getTimestamp()"></script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/bookmark.js?$!props.getTimestamp()"></script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery-1.8.2.min.js?$!props.getTimeStamp()"></script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery.cookie.js?$!props.getTimestamp()"></script>
+
+      #parse( "header.vm" )
+   </head>
+   #if ($!doprint)
+      #set ($onload = "setScrollableSize();window.print()")
+   #else
+      #set ($onload = "setScrollableSize()")
+   #end
+   <body onload="$!onload">
+      ## Remove this if this is embed
+      #if (!$!embed)
+         #parse( "menu/menu.vm" )
+         <div class="mozview bodypadder" id="exploder">
+      #else
+         #if($!showTitle)
+            #parse ("toptitle.vm")
+         #end
+         #parse ("embedlink.vm")
+         #if ($!showGraphButton || $!showMapButton || $!showTableButton)
+            #if (!$!viewer.getIsLogin())
+               #parse ("menu/embedmenu.vm")
+            #end
+         #end
+      #end
+
+      ## Remove this if this is embed
+      #if (!$!embed)
+         #parse( "toptitle.vm" )
+         #parse ("embedlink.vm")
+         #parse( "loading.vm" )
+         <div id="hidearea">
+      #end
+      #if ($!viewer.getIsLogin())
+         #parse ("login/loginform.vm")
+      #else
+      ## Remove this if this is embed
+      #if (!$!embed)
+         #if ($!props.useNewMenus())
+            #parse( "dimensionchooser.vm" )
+         #else
+            #parse( "cube/form.vm" )
+         #end
+      #end
+            #if ($!graph.getIfToManyCells())
+               <div class="errormessage">$utils.escape($!{graph.getIfToManyCells()})</div>
+            #elseif ($!errormessage)
+               <div class="errormessage">$!errormessage</div>
+            #else
+               <div id="diagram">
+               #if ($!src)
+                  ##Remove when the new cube implementation comes
+                  <img src="$!src" usemap="#$!graph.getKey()"/>
+               #elseif ($!multigraphs && $!multigraphs.size()>1)
+                  <dl id="multigraphs">
+                  #set ($indicatorPanelCounter = 0)
+                     #foreach ($image in $!multigraphs)
+                     <dt>$!image.getLabel()
+                     #if ($!image.cubeID && $!props.enableIndicatorDocumentation() && !$!embed)
+                        <img src="$!{props.getSkinPath()}images/info.png" alt="Documentation" id="btn_$!{image.cubeID}_$!indicatorPanelCounter" class="indicatorlink"/>
+                        <script type="text/javascript">
+                           YAHOO.util.Event.addListener("btn_$!{image.cubeID}_$!indicatorPanelCounter","click", showIndicatorPanel, "$!image.cubeID");
+                        </script>
+                        #set ($indicatorPanelCounter = $!indicatorPanelCounter + 1)
+                     #end
+                     </dt>
+                     <dd>
+                        <img src="$!image.getImage()" />
+                     </dd>
+                     #end
+                  </dl>
+               #elseif ($!graphimage)
+                  <img src="$!graphimage" usemap="#$!graph.getKey()"/>
+               #else
+                  <img src="$!graph.getImage()" usemap="#$!graph.getKey()"/>
+               #end
+               </div>
+               $!graph.getMap()
+               <br/>
+               #if (!$!embed && $!suppression)
+                  <div id="suppressionmsg">
+                      $!i18n.suppression_missing_graph
+                      #if ($!menuClass.getLeftMenu().size() > 1)
+                        #foreach ($field in $!menuClass.getLeftMenu())
+                            #if ($field.id == "menudesc")
+                                <span>$!i18n.suppression_missing_table_reason_link <a href=$field.href>$field.label</a></span>
+                            #end
+                        #end
+                      #end
+                  </div>
+               #end
+            #if (!$!doprint && !$!embed && $!props.showResizeOption())       ## Don't show this if it's embedded or has prop set false
+               #if (($!src || $!graphimage || $!graph.getImage()) && !$!multigraphs && !$!parameters.isSpider())
+                  <div class="scaleadjust">
+                  <form action="$!form_action">
+                     #foreach ($field in $!hiddenform.getForm())
+                        #if ($!field.name != 'min' && $!field.name != 'max')
+                           <input type="hidden" name="$field.name" value="$field.value"/>
+                        #end
+                     #end
+                     #if ($!openedBookmarkURL)
+                      <input type="hidden" name="openBookmark" value="$!openedBookmarkURL"/>
+                     #end
+                     #if ($!min || $!max)
+                        ##Remove when the new cube implementation comes
+                        <input type="text" class="textfield" name="min" value="$!min" size="$!min.length()"/>
+                        <input type="text" class="textfield" name="max" value="$!max" size="$!max.length()"/>
+                     #else
+                        <input type="text" class="textfield" name="min" value="$!graph.getMin()" size="$!graph.getMin().length()"/>
+                        <input type="text" class="textfield" name="max" value="$!graph.getMax()" size="$!graph.getMax().length()"/>
+                     #end
+                     <input type="submit" class="button" value="$!i18n.Change"/>&nbsp;
+                  </form>
+                  <form action="$!form_action">
+                     <input type="submit" class="button" value="$!i18n.Reset"/>
+                     #foreach ($field in $!hiddenform.getForm())
+                        #if ($!field.name != 'min' && $!field.name != 'max')
+                           <input type="hidden" name="$field.name" value="$field.value"/>
+                           #if ($!openedBookmarkURL)
+                              <input type="hidden" name="openBookmark" value="$!openedBookmarkURL"/>
+                           #end
+                        #end
+                     #end
+                  </form>
+                  #parse( "colorschememenu.vm" )
+                  </div>
+               #end
+            #end
+            #if ($!graph.getScalingError())
+               <div class="errormessage">$utils.escape($!{graph.getScalingError()})</div>
+            #end
+         #end
+
+         ## Remove this if this is embed
+         #if (!$!embed)
+            #parse( "copyright/copyright.vm" )
+         #end
+      #end
+      </div>
+      #if(!$!doprint)
+            <div id="varnotes">
+               #foreach ($note in $!graph.getVariableNotes())
+                    <script type="text/javascript">
+                      var myTooltip = new YAHOO.widget.Tooltip("$!note.getName()tip", { context:"$!note.getName()", text:"<h1>$note.getLabel()</h1>$!utils.escapeHtml($note.getText(), true)", showDelay:$!{props.getTooltipShowDelay()}, autodismissdelay:$!{props.getAutoDismissDelay()},iframe:false, constraintoviewport:true, preventoverlap:false } );
+                    </script>
+               #end
+            </div>
+         #end
+      ## Remove this if this is embed
+      #if (!$!embed)
+         #if ($!props.inlineMetaData() && !$!doprint)
+           <div id="metaBuffer">&nbsp;</div>
+         #end
+         <div class="footer">
+         #include( "static/footer.html" )
+         </div>
+      #end
+      #parse( "help/help.vm" )
+   </div>
+
+   ## Remove this if this is embed
+   #if (!$!embed)
+      #if (!$!viewer.getIsLogin())
+         #if ($!props.inlineMetaData() || $!props.inlineMetaDataPrint())
+            #parse( "documentation/documentation2.vm" )
+         #end
+      #end
+   #end
+
+   </body>
+</html>

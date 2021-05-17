@@ -1,0 +1,63 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		#parse ("cache/cacheHeader.vm")
+    <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/error.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+    <title>test</title>
+    <script type="text/javascript">
+            function openStack(id) {
+                var element = document.getElementById(id);
+                if (element) {
+                    if (element.style.display == 'none') {
+                        element.style.display = 'block';
+                    }
+                    else element.style.display = 'none';
+                }
+            }
+    </script>
+		#parse( "header.vm" )
+  </head>
+  <body onload="setScrollableSize()">
+
+		 #parse( "menu/menu.vm" )
+
+    <div class="mozview bodypadder" id="exploder">
+
+      <center>
+
+        <div>Your request resulted in an error.</div>
+        <div>The error message is:</div>
+        <div>$utils.escape($!document.error)</div>
+        <br/>
+        <br/>
+        <table border="1">
+          <caption>Your request was</caption>
+					#foreach ($row in $table)
+          <tr>
+						#foreach ($cell in $row)
+            <td>$utils.escape($cell.label)</td>
+            <td>$utils.escape($cell.content)</td>
+						#end
+          </tr>
+					#end
+        </table>
+      </center>
+
+      <div>
+        <a onclick="openStack('stacktrace')">View details</a>
+      </div>
+      <div class="stacktrace" id="stacktrace" style="display: none">
+				#foreach ($element in $stack)
+        <span>$utils.escape($element.label)</span>
+        <br/>
+				#end
+      </div>
+    </div>
+  </body>
+</html>

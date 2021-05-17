@@ -1,0 +1,185 @@
+#set($specialiconclass = '')
+#if ($!thislevel == 1)
+   #if ($childCounter)
+     #set ($childCounter = $childCounter + 1)
+   #else
+     #set ($childCounter = 0)
+   #end
+
+   #if($!childCounter == 0)
+      #set($specialiconclass = 'specialicon0')
+   #elseif($!childCounter == 1)
+      #set($specialiconclass = 'specialicon1')
+   #elseif($!childCounter == 2)
+      #set($specialiconclass = 'specialicon2')
+   #elseif($!childCounter == 3)
+      #set($specialiconclass = 'specialicon3')
+   #end
+#end
+
+
+#if ($!child.getType() == 'Catalog')
+   #if ($!child.isOpen())
+      #set ($image = 'images/open.gif')
+   #else
+      #set ($image = 'images/closed.gif')
+   #end
+
+   #if ($!thislevel == 0)
+      #set ($closeDown = 'true')
+   #else
+      #set ($closeDown = 'false')
+   #end
+
+   <a class="icon" onclick="return openView(this, '$!child.getDrillDownLink()', $!closeDown)">
+   <img class="$!specialiconclass openIcon" src="$!{props.getSkinPath()}$!image"/></a>
+#elseif ($!child.getType() == 'Study')
+   #if ($!child.isOpen())
+      #set ($image = 'images/dataset_open.gif')
+   #else
+      #set ($image = 'images/dataset.gif')
+   #end
+   <a class="icon" href="$!child.getLink()" onclick="return openStudy(this, '$!child.getDrillDownLink()')"
+      target="rightside">
+   #if ($!child.isOpen())
+      <img src="$!{props.getSkinPath()}$!image" id="findimage" />
+      <script type="text/javascript">
+         previousImage = xGetElementById('findimage');
+      </script>
+   #else
+      <img src="$!{props.getSkinPath()}$!image"/>
+   #end
+   </a>
+#elseif ($!child.getType() == 'StudySearchWrapper')
+   #if ($!child.isOpen())
+      #set ($image = 'images/dataset_open.gif')
+   #else
+      #set ($image = 'images/dataset.gif')
+   #end
+<a class="icon" href="$!child.getLink()" target="rightside" onclick="openStudy(this, '$!child.getDrillDownLink()')"><img
+   src="$!{props.getSkinPath()}$!image"/></a>
+#elseif ($!child.getType() == 'Cube')
+   #set ($image = 'images/indicator.gif')
+   <a class="icon" title="$!theTooltip" href="$!child.getLink()"
+      onclick="return openCube(this, '$!child.getDrillDownLink()', '$!child.getID()', event)" target="rightside">
+   #if ($!child.isOpen())
+      <img id="findimage" src="$!{props.getSkinPath()}$!image" />
+      <script type="text/javascript">
+         previousImage = xGetElementById('findimage');
+      </script>
+   #else
+      <img src="$!{props.getSkinPath()}$!image"/>
+   #end
+   </a>
+#elseif ($!child.getType() == 'Variable')
+   <a class="icon"
+      onclick="return displayVariable(this, '$!child.getID()', '$!child.getFormat()', '$!child.getVarID()', false, event,'$!child.getSectionID()');"
+      title="$!theTooltip">
+   <img src="$!{props.getSkinPath()}images/variable.gif" class="varDdiIcon" />
+   </a>
+#elseif ($!child.getType() == 'Section')
+   #if ($!child.isOpen())
+      #set ($image = 'images/open.gif')
+   #else
+      #set ($image = 'images/closed.gif')
+   #end
+   <a class="icon" onclick="openView(this, '$!child.getDrillDownLink()', false)">
+      <img src="$!{props.getSkinPath()}$!image" class="openIcon" />
+   </a>
+#elseif ($!child.getType() == 'Metadata' && $!props.expandMetadataNode())
+   #if ($!child.isOpen())
+      #set ($image = 'images/open.gif')
+   #else
+      #set ($image = 'images/closed.gif')
+   #end
+   <a class="icon" onclick="openView(this, '$!child.getDrillDownLink()', false)">
+      <img src="$!{props.getSkinPath()}$!image" class="openIcon" />
+   </a>
+#elseif ($!child.getType() == 'metadataEntry')
+   #if ($!child.isOpen())
+      #set ($image = 'images/open.gif')
+   #else
+      #set ($image = 'images/closed.gif')
+   #end
+   <a class="icon" onclick="openView(this, '$!child.getDrillDownLink()', false)">
+      <img src="$!{props.getSkinPath()}$!image" class="openIcon" />
+   </a>
+#elseif ($!child.getType() == 'metadataEntryLeaf')
+   #if ($!child.isOpen())
+      #set ($image = 'images/ddileaf.gif')
+   #else
+      #set ($image = 'images/ddileaf.gif')
+   #end
+   <a class="icon" onclick="return displayDdi('$!child.getOrder()')">
+      <img src="$!{props.getSkinPath()}$!image" class="varDdiIcon" />
+   </a>
+#elseif ($!child.getType() == 'Bookmark')
+   #if ($!child.isOpen())
+      #set ($image = 'images/open.gif')
+   #else
+      #set ($image = 'images/closed.gif')
+   #end
+   <a class="icon" onclick="openDrilldownBookmark(this, '$!child.getDrillDownLink()')">
+      <img src="$!{props.getSkinPath()}$!image" class="openIcon" />
+   </a>
+#elseif ($!child.getType() == 'Resource')
+   #if ($!props.getUseControlledVocabOnEgms())
+      #set ($image = $!child.getEgmsResourceImages())
+   #else
+      #if ($!child.isOpen())
+         #set ($image = 'images/resource_selected.gif')
+      #else
+         #set ($image = 'images/resource.gif')
+      #end
+   #end
+  ##Note the difference between opening a EGMS-resource in a popup or in the rightside-frame
+   #if ($!props.openEgmsInPopup() && ($!child.getUri() || $!child.getFileUrl()))
+      #set ($theLink = '')
+      #if($!child.getUri())
+         #set ($theLink = $!child.getUri())
+      #elseif($!child.getFileUrl())
+         #set ($theLink = $!child.getFileUrl())
+      #end
+
+     <a class="icon" href="$!theLink" onclick="displayEGMSResource(this); return openEGMS('$!theLink');" target="EGMS">
+        <img src="$!{props.getSkinPath()}$!image" />
+     </a>
+  #else
+     <a class="icon" href="$!child.getLink()" onclick="return displayEGMSResource(this)" target="rightside">
+        <img src="$!{props.getSkinPath()}$!image"/>
+     </a>
+  #end
+#elseif ($!child.getType() == 'VariableDescription')
+   #if ($!child.isOpen())
+      #set ($image = 'images/open.gif')
+   #else
+      #set ($image = 'images/closed.gif')
+   #end
+   <a class="icon" onclick="openView(this, '$!child.getDrillDownLink()', false)">
+      <img src="$!{props.getSkinPath()}$!image" class="openIcon" />
+   </a>
+#elseif ($!child.getType() == 'Statement')
+   <a class="icon" title="$!theTooltip" href="$!child.getLink()" target="rightside"
+      onclick="return openBookmark(this);">
+      <img src="$!{props.getSkinPath()}images/variable.gif" class="varDdiIcon" />
+   </a>
+#elseif ($!child.getType() == 'UserDefined')
+   #if ($!child.isOpen())
+      #set ($image = 'images/open.gif')
+   #else
+      #set ($image = 'images/closed.gif')
+   #end
+   <a id="udNode-$!child.getStudyID()" class="icon" title="$!theTooltip" href="$!child.getDrillDownLink()" target="rightside"
+      onclick="return openUserDefined(this);">
+      <img src="$!{props.getSkinPath()}$!image" class="openIcon" />
+   </a>
+#elseif ($!child.getType() == 'searchResultNode')
+   #if ($!child.isOpen())
+      #set ($image = 'images/open.gif')
+   #else
+      #set ($image = 'images/closed.gif')
+   #end
+   <a class="icon" onclick="openView(this, '$!child.getDrillDownLink()', false)">
+      <img src="$!{props.getSkinPath()}$!image" class="openIcon" />
+   </a>
+#end

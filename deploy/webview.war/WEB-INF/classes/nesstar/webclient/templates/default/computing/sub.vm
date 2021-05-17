@@ -1,0 +1,128 @@
+<script type="text/javascript">
+	computetype = "sub";
+</script>
+
+<fieldset class="subtract compute">
+  <legend>
+		#if ($!compute.getComputeType() == 'sub')
+			$!i18n.compute_type_sub
+		#elseif ($!compute.getComputeType() == 'div')
+			$!i18n.compute_type_div
+		#elseif ($!compute.getComputeType() == 'pct')
+			$!i18n.compute_type_pct
+		#elseif ($!compute.getComputeType() == 'pcGrw')
+			$!i18n.compute_type_pctgrw
+		#end
+  </legend>
+  <form id="computeSub" name="computeSub" action="$!form_action">
+    <table cellspacing="0" cellpadding="0" border="0" class="numberLabel">
+      <tr>
+        <td>
+				#if ($!compute.getView().getFirstIsVar())
+          <input type="radio" checked="checked" name="first" id="firstVar" value="isVar"/>
+          <label for="firstVar">$i18n.compute_variable</label>
+				#else
+          <input type="radio" name="first" id="firstVar" value="isVar" onclick="submitForm()"/>
+          <label for="firstVar">$i18n.compute_variable</label>
+				#end
+        </td>
+        <td>
+				#if ($!compute.getView().getFirstVariable().getLabel())
+					#set ($text1 = $!compute.getView().getFirstVariable().getLabel())
+				#else
+					#set ($text1 = $!compute.getView().getFirstVariable().getName())
+				#end
+          <div class="variablebox">$utils.escape($!{text1})</div>
+        </td>
+      </tr>
+        #if ($!compute.getComputeType() != 'pcGrw')
+      <tr>
+        <td class="secondline">
+				#if ($!compute.getView().getFirstIsVar())
+          <input type="radio" name="first" value="isNum" id="thefirstNum" onclick="submitForm()"/>
+          <label for="thefirstNum">$i18n.compute_number</label>
+				#else
+          <input type="radio" checked="checked" name="first" value="isNum" id="thefirstNum"/>
+          <label for="thefirstNum">$i18n.compute_number</label>
+				#end
+        </td>
+        <td>
+          <div class="variablebox">
+            <input type="text" class="textfield" name="firstNum" value="$!compute.getView().getFirstNum()"/>
+          </div>
+        </td>
+      </tr>
+        #end
+      <tr>
+        <td colspan="2" class="subtract">
+			#if ($!compute.getComputeType() == 'sub')
+			$!i18n.compute_minus
+			#elseif ($!compute.getComputeType() == 'pct')
+			$!i18n.compute_pct
+            #elseif ($!compute.getComputeType() == 'pcGrw')
+			$!i18n.compute_pctgrw
+			#else
+			$!i18n.compute_divide
+			#end
+        </td>
+      </tr>
+      <tr>
+        <td>
+				#if ($!compute.getView().getSecondIsVar())
+          <input type="radio" checked="checked" name="second" value="isVar" id="theSecondVar"/>
+          <label for="theSecondVar">$i18n.compute_variable</label>
+				#else
+          <input type="radio" name="second" value="isVar" id="theSecondVar" onclick="submitForm()"/>
+          <label for="theSecondVar">$i18n.compute_variable</label>
+				#end
+        </td>
+        <td>
+				#if ($!compute.getView().getSecondVariable().Label)
+					#set ($text2 = $!compute.getView().getSecondVariable().getLabel())
+				#else
+					#set ($text2 = $!compute.getView().getSecondVariable().getName())
+				#end
+          <div class="variablebox">$utils.escape($!{text2})</div>
+        </td>
+      </tr>
+        #if ($!compute.getComputeType() != 'pcGrw')
+      <tr>
+        <td class="secondline">
+				#if ($!compute.getView().getSecondIsVar())
+          <input type="radio" name="second" value="isNum" id="thesecondNum" onclick="submitForm()"/>
+          <label for="thesecondNum">$i18n.compute_number</label>
+				#else
+          <input type="radio" checked="checked" name="second" value="isNum" id="thesecondNum"/>
+          <label for="thesecondNum">$i18n.compute_number</label>
+				#end
+        </td>
+        <td>
+          <div class="variablebox">
+            <input type="text" class="textfield" name="secondNum" value="$!compute.getView().getSecondNum()"/>
+          </div>
+        </td>
+      </tr>
+        #end
+      <tr class="subtractLabel">
+        <td>$!i18n.group_label</td>
+        <td class="pad">
+          <div class="variablebox">
+            <input type="text" class="textfield" id="varname_id" name="label" value="$utils.escape($!{compute.getLabel()})"/>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+	 #foreach ($field in $!compute.getView().getSubtractForm())
+    <input type="hidden" name="$field.name" value="$field.value"/>
+	#end
+    <div class="commands">
+	#if ($!compute.getIfCanBeExecuted())
+      <input class="button minWidth" onclick="return setExecuteBitSub()" type="submit" value="$i18n.group_create"/>
+    #else
+      <input disabled="disabled" class="button minWidth" type="submit" value="$i18n.group_create"/>
+    #end
+      <input class="button" onclick="setToCancelSub()" type="submit" value="$i18n.group_cancel"/>
+    </div>
+  </form>
+</fieldset>

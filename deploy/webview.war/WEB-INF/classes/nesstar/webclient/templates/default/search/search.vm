@@ -1,0 +1,43 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>Advanced Search</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		#parse ("cache/cacheHeader.vm")
+
+    <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/search.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+    <!--[if lte IE 7]>
+    <link href="$!{props.getSkinPath()}css/ie7_workarounds.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <![endif]-->
+    <!-- YUI Dependencies -->
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/yui/yahoo-min.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/yui/dom-min.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/yui/event-min.js?$!props.getTimestamp()"></script>
+
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/search.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/x.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript">
+   	function showSubmitWarning() {
+      var tooltip = xGetElementById("searchhelp");
+      tooltip.style.display = "block";
+    }
+    #if ($!searchView.isExecute())YAHOO.util.Event.onDOMReady(showSubmitWarning);#end
+   </script>
+		#parse( "help/help.vm" )
+  </head>
+  <body>
+  	#parse( "search/searchmenu.vm" )
+    <div class="bodypadder">
+    	<h1>$!i18n.advancedsearch</h1>
+			#if ($!errormessage)
+      			<div>$!errormessage</div>
+			#else
+				#parse( "search/advancedsearch.vm" )
+			#end
+    </div>
+  </body>
+</html>

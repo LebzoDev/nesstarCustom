@@ -1,0 +1,30 @@
+#macro (menuentry $entry)
+    <li>
+    #if ($!entry.childCount > 0 )
+      <a id="opener$!{entry.id}" href="javascript:onclick=toggle('$!{entry.id}');" title="$!i18n.clickopen" #if ($!entry.open) class="open" #else class="closed" #end >&nbsp;</a>
+    #else
+      <span class="invisibleplusminus"></span>
+    #end
+      <input type="checkbox" name="$!entry.name" id="$!entry.id" value="$!entry.value" #if ($!entry.selected) checked="checked" #end/>
+      <label for="$!entry.id" id="label$!entry.id">$!entry.label</label>
+    #if ($!entry.childCount > 0)	           
+      <ul #if ($!entry.open) class="open" #else class="closed" #end id="ul$entry.id">
+        #foreach ($chuld in $!entry.children())
+          #menuentry($chuld)          
+        #end
+      </ul>
+      #end
+    </li>
+#end
+
+#if ($!insertGroup.getCategories().getSize() > 0)
+	#set ($categories = $!insertGroup.getCategories())
+#else
+	#set ($categories = $!chooseCat.getCategories())
+#end
+
+<ul id="topCategoryMenu">
+     #foreach ($child in $!categories.children())
+          #menuentry($child)
+     #end	
+</ul>

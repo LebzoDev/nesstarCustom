@@ -1,0 +1,15 @@
+<h3 class="ddititle">
+	$!node.Name
+</h3>
+<div class="ddicontent">
+	#if ($!node.getAttribute('URI'))
+  <a href="$!node.getAttribute('URI')" target="_new">
+	#end
+	$!node.Content
+	#if ($!node.getAttribute('URI'))
+  </a>
+	#end
+	#if ($!node.getAttribute('formNo'))
+  <p>$!i18nDdi.formNo $!node.getAttribute('formNo')</p>
+	#end
+</div>

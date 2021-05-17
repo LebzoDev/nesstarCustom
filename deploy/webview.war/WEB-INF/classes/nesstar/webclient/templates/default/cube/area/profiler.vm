@@ -1,0 +1,74 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		#parse ("cache/cacheHeader.vm")
+
+    <link href="$!{props.getSkinPath()}css/cube.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/draganddrop.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/documentation.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/profiler.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!{request.getParameter("language")}" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript">
+        var skinPath = '$!{props.getSkinPath()}';
+    </script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/areaprofiler.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/bookmark.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery-1.8.2.min.js?$!props.getTimeStamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery.cookie.js?$!props.getTimestamp()"></script>
+
+
+		#parse( "header.vm" )
+
+  </head>
+	#if ($!doprint)
+		#set ($onload = "window.print()")
+	#else
+		#set ($onload = "setScrollableSize()")
+	#end
+  <body onload="$!onload">
+    <script type="text/javascript">
+      skinPath = '$!{props.getSkinPath()}';      
+      if (window.name) document.title=window.name;
+    </script>
+    <div id="dropzone">
+			#parse( "menu/menu.vm" )
+      <div class="mozview bodypadder" id="exploder">
+				#parse( "toptitle.vm" )
+        #parse( "loading.vm" )
+        <div id="hidearea">
+
+				#if ($!viewer.getIsLogin())
+					#parse ("login/loginform.vm")
+				#elseif ($!errormessage)
+          <div class="errormessage">$utils.escape($!{errormessage})</div>
+				#else
+          #parse ("cube/area/menu.vm")
+
+          <table class="matrix" border="0">
+          #foreach ($row in $profiler.getTable())
+            <tr>
+              #foreach ($element in $row)
+                <td class="$!element.type">$utils.escape($!{element.label})</td>
+              #end
+            </tr>
+          #end
+          </table>
+				#end
+
+				#parse( "copyright/copyright.vm" )
+        </div>
+        
+			<div class="footer">
+				#include( "static/footer.html" )
+		   </div>
+				#parse( "help/help.vm" )
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+			#if ($!element.subset)
+      <a href="$!element.link" onclick="hideTheViewArea()">$element.label</a>
+			#else
+				$element.label
+			#end
+    </td>
+    <td>
+			#if ($!element.desc || $!element.asc )
+      <img src="$!{props.getSkinPath()}images/updown.gif" title="$!i18n.applySort" class="sortimage" alt="sort"/>
+			#end
+    </td>
+  </tr>
+</table>

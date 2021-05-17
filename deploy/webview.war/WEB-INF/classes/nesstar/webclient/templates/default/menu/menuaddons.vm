@@ -1,0 +1,4 @@
+##For each of the menues added here, add to the colspan.
+##As in the example below.
+##This to get the regression/correlation submenu to behave properly
+##set ($colspan = $!colspan + 2)

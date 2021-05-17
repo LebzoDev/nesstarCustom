@@ -1,0 +1,279 @@
+html {
+  width: 100%;
+}
+
+body {
+	background: #fff url(../images/treeview_background.png) repeat-y top right;
+	font-family: verdana, helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+table {
+  padding: 0;
+  margin: 0;
+  font-size: 1.0em;
+}
+
+td {
+  font-family: verdana, helvetica, sans-serif;
+  color: #000000;
+}
+
+a {
+  text-decoration: none;
+  color: #000000;
+}
+
+a:visited {
+  color: #000000;
+}
+
+ul p {
+	margin: 0;
+	padding: 0;
+}
+	
+div.menu {
+  display: none;
+  position: absolute;
+}
+
+a.menulinks {
+  cursor: pointer;
+}
+
+a.menulinks:hover {
+  background-color: #cbd4dd;
+}
+
+div.variablesearched {
+  margin-left: 20px;
+}
+
+form#thesearchform {
+  padding-top: 3px;
+}
+
+input#search_textinput {
+  background-color:#fafafa;
+  display: inline;
+  margin-top: 0;
+  padding-top: 0;
+  padding-left:3px;
+  vertical-align: top;
+  border: 1px solid #aaaaaa;
+}
+
+a#imageadvanced_search img {
+  height: 16px;
+  width: 23px;
+  visibility: hidden;
+  padding: 0;
+  margin-left: 0;
+  border: none;
+}
+
+a#imageadvanced_search {
+  background: url(../images/advanced_search_double.png) no-repeat 0 0;
+  font-size: 17px !important;
+  padding: 0px;
+  margin-left: 3px;
+  display: inline;
+  vertical-align: top;
+}
+
+a#imageadvanced_search:hover {
+  background-position: 0px -34px;
+}
+
+a#imagesearch_icon img {
+  visibility: hidden;
+  border: none;
+}
+
+a#imagesearch_icon {
+  background: url(../images/search_icon_double.png) no-repeat 0 0;
+  margin-left: -2px;
+  font-size: 17px !important;
+  display: inline;
+  vertical-align: top;
+}
+
+a#imagesearch_icon:hover {
+  background-position: 0 -34px;
+}
+
+/* The style for the study */
+table.study {
+  background-color: #e9f4ff;
+  color: #003098;
+  font-weight: normal;
+}
+
+ul.browsetree {
+  list-style: none;
+  margin: 0;
+  padding: 0 2px 0 0;
+  line-height:130%;
+}
+
+ul.browsetree li {
+   margin-left: 15px;
+}
+
+.messageTable {
+   padding: 0;
+   margin: 0;
+   display: inline;
+}
+
+.openIcon {
+   padding-left: 2px;
+}
+
+.varDdiIcon {
+   padding-left: 3px;
+}
+
+.icon {
+  margin-left: -15px;
+}
+
+/**
+** This table might soon be deleted
+**/
+
+ul.browsetree table.text {
+  padding: 0;
+  margin: 0;
+  display: inline;
+  width: 100%;
+}
+
+ul.browsetree table.text td {
+  text-align: left;
+}
+
+ul.browsetree a {
+  cursor: pointer;
+}
+
+ul.browsetree a img {
+  border: none;
+}
+
+ul.browsetree img {
+  cursor: pointer;
+  margin: 0;
+}
+
+li.insidestudy {
+  background-color: #cbd4dd;
+  font-weight: normal;
+}
+
+li.insidestudy a {
+  font-weight: normal;
+}
+
+li.studyopen li {
+  font-weight: normal;
+}
+
+li.studyclosed {
+  background-color: #e6e7e8;
+}
+
+ul.browselist li a {
+  text-decoration: none;
+  font-weight: normal;
+  padding-left: 0;
+  cursor: pointer;
+}
+
+.nodetext {
+  color: #000000;
+}
+
+a.nodetextVariable {
+  color: #000000;
+}
+
+a.nodetextSelected {
+  border-bottom:1px dotted #555555;
+
+}
+
+.otherload {
+  color: #000000;
+  text-decoration: none;
+  font-weight: normal;
+  margin: 5px;
+}
+
+.studyload {
+  color: #000000;
+}
+
+div.topcopy {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+img.open {
+  cursor: pointer;
+}
+
+div.nextlevel {
+  display: none;
+}
+
+div.headerTree {
+  background-image:url(../images/menu/forlopning.jpg);
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  height: 22px;
+}
+
+div.mozview {
+  margin-top: 5px;
+  margin-left: 4px;
+  padding-left: 0;
+}
+
+div.nohits {
+  padding-left: 3px;
+  padding-top: 0;
+}
+
+.noicon{
+   margin-left: -12px;
+}
+
+.noexpand{
+   margin-left: -10px;
+}
+
+.nothitshelp {
+   margin-top: 1em;
+   margin-left: 0;
+   margin-right: 1em;
+   padding-left: 0;
+}
+
+.nothitshelp ul {
+   margin-left: 0;
+   padding-left: 1em;
+   margin-right: 1em;
+   margin-top: 1em;
+}

@@ -1,0 +1,167 @@
+<div class="menu" id="menu">
+  <ul class="testmenu">
+    <li class="m">
+      <a href="#" id="filter">
+        $!i18n.treemenu_subset
+      </a>
+    </li>
+    <li class="m">
+      <a href="#" id="docu">
+        $!i18n.treemenu_documentation
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="menu" id="varsubset">
+  <ul class="testmenu">
+    #if (!$!catalog.getIsComputed())
+    <li class="m">
+      <a href="#" id="varfilter">
+        $!i18n.treemenu_subset
+      </a>
+    </li>
+    #end
+    <li class="m">
+      <a href="#" id="vardocu">
+        $!i18n.treemenu_documentation
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="menu" id="weighting">
+  <ul class="testmenu">
+    <li class="m">
+      <a href="#" id="weight">
+        $!i18n.treemenu_weight
+      </a>
+    </li>
+    <li class="m">
+      <a href="#" id="weightdocu">
+        $!i18n.treemenu_documentation
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="menu" id="tabulation">
+  <ul class="testmenu">
+    <li class="m">
+      <a href="#" id="row">
+        $!i18n.treemenu_row
+      </a>
+    </li>
+    <li class="m">
+      <a href="#" id="col">
+        $!i18n.treemenu_col
+      </a>
+    </li>
+    <li class="m">
+      <a href="#" id="lay">
+        $!i18n.treemenu_layers
+      </a>
+    </li>
+    <li class="m">
+      <a href="#" id="measure">
+        $!i18n.treemenu_measure
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="menu" id="regression">
+  <ul class="testmenu">
+    <li class="m">
+      <a href="#" id="dep">
+        $!i18n.treemenu_dependent
+      </a>
+    </li>
+    <li class="m">
+      <a href="#" id="indep">
+        $!i18n.treemenu_independent
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="menu" id="correlation">
+  <ul class="testmenu">
+    <li class="m">
+      <a href="#" id="corr">
+        $!i18n.treemenu_correlation
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="menu" id="compAdd">
+  <ul class="testmenu">
+    <li class="m">
+      <a href="#" id="comAddVar">
+        $!i18n.compute_add
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="menu" id="compSub">
+  <ul class="testmenu">
+    <li class="m">
+      <a href="#" id="comSubVar1">
+        $!i18n.compute_sub1
+      </a>
+    </li>
+    <li class="m">
+      <a href="#" id="comSubVar2">
+        $!i18n.compute_sub2
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div class="menu" id="recode">
+  <ul class="testmenu">
+    <li class="m">
+      <a href="#" id="recodeVar">
+        $!i18n.recode_var
+      </a>
+    </li>
+  </ul>
+</div>
+ #if ($!props.enableHinging())
+<div class="menu" id="hinge">
+  <ul class="testmenu">
+    <li class="m">
+      <a href="#" id="displayCube" target="rightside">
+        $!i18n.getString('treemenu_display_cube')
+      </a>
+    </li>
+    <li class="m">
+      <a href="#" id="hingeCube" target="rightside">
+        $!i18n.treemenu_hinge_cube
+      </a>
+    </li>
+  </ul>
+</div>
+#end
+  
+<div class="menu" id="bookmark">
+  <ul class="testmenu">
+    <li class="m">
+      <a onclick="closeBookmarkMenu()" target="rightside" id="bookmarkapply">
+        $!i18n.apply_bookmark
+      </a>
+    </li>
+    <li class="m">
+      <a href="#" id="bookmarkremove" onclick="return removeBookmark(this, '$!utils.encode($!request.getParameter('id'))')">
+        $!i18n.remove_bookmark
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+<div class="menu" id="shoppingcart">
+  <p id="alertText" style="display: none;">$!i18n.shoppingcart_add_group_confirm</p>  
+  <ul class="testmenu">
+    <li class="m">
+      <a href="#" id="cart">
+        $!i18n.shoppingcart_add
+      </a>
+    </li>
+  </ul>
+</div>

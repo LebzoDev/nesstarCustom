@@ -1,0 +1,143 @@
+html{
+   margin: 0;
+   padding: 0;
+}
+
+body{
+   background-image: url('../images/menu/forlopning.jpg');
+   background-repeat: repeat-x;
+}
+
+#leftpanel {
+   margin: 22px 0 0 0;
+   background-color: #E6E6E6;
+   float: left;
+   width: 235px;
+   padding: 20px 20px 0 20px;
+   padding-top: 0;
+   color: #454545;
+}
+
+h1#metameta{
+   margin-top: 15px;   
+}
+
+#container {
+   position:absolute;
+   float: left;
+   padding:10px 0 0 20px;
+   left:270px;
+   min-width:700px;
+   max-width:1000px;
+}
+
+#nesstarlogo {
+   height: 20px;
+   width: 125px;
+   left: 30px;
+   margin-right: 40px;
+   margin-top: 5px;
+   position: relative;
+   top: 10px;
+}
+#nesstarpayoff {
+   height: 12px;
+   width: 173px;
+   position: relative;
+   top: 11px;
+}
+#metadata{
+   margin-top:3em;
+   clear:both;
+}
+a.external{
+   text-decoration:none;
+}
+.floatleft {
+   display: inline;
+   float: left;
+}
+.floatright {
+   display: inline;
+   float: right;
+}
+
+.pad {
+   margin-right: 2em;
+}
+
+.smallpad {
+   margin-right: .5em;
+}
+
+.small {
+   font-size: 90%;
+}
+.smaller {
+   font-size: 80%;
+}
+.nomargins {
+   margin: 0;
+   padding: 0;
+}
+.clear {
+   clear: both;
+}
+.right {
+   text-align: right;
+}
+.active {
+   border-bottom: 3px solid #DEDEDE;
+}
+li.noBullet{
+   list-style:none;
+}
+li.cube{
+   list-style-image: url(../images/indicator.gif);
+}
+li.study{
+   list-style-image: url(../images/dataset_open.gif);
+}
+li.egms{
+   list-style-image: url(../images/resource.gif);
+}
+li.var{
+   list-style-image: url(../images/variable.gif);
+}
+
+#explorecontainer {
+   float:right;
+   padding-right:10px;
+}
+
+.explorebutton {
+	margin: 0;
+	padding: 0;
+	background: url(../images/explore_right.png) no-repeat right top;
+}
+
+.explorebutton a {
+	display: block;
+	background: url(../images/explore_left.png) no-repeat left top;
+	padding: 7px 12px 10px 37px;
+	height: 29px;
+	text-decoration: none;
+	color: #707070;
+	font-weight: bold;
+	font-size: 12px;
+	text-transform: uppercase;
+}
+
+#footer {
+   clear: both;
+   margin-top: 40px;
+}
+
+#breadcrumbs a, #breadcrumbs a:active, #breadcrumbs a:visited{
+   color: #454545;
+   text-decoration: none;
+}
+
+p.download{
+   margin-top: 20px;
+}

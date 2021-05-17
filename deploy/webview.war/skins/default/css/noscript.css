@@ -1,0 +1,23 @@
+h1 {
+	text-align: center;
+	color: red;
+}
+
+
+/* A class for the copyright text */
+div.copyright {
+	color: #b3c0cd;
+}
+
+/* A class for the copyright text */
+div.copyright a {
+	color: #b3c0cd;
+}
+
+div.copyright a:link {
+	color: #b3c0cd;
+}
+
+div.copyright a:visited {
+	color: #b3c0cd;
+}

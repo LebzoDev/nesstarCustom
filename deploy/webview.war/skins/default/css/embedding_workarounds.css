@@ -1,0 +1,18 @@
+html, body {
+	height: 100%;
+}
+div.bodypadder {
+	padding-left: 0;
+   margin-top: 0;
+   padding-right: 0;
+}
+div.giveroom {
+   margin-bottom: 6px;
+}
+#toptitle {
+   margin-left: 2px;
+}
+div.mapping {
+   width: auto;
+}
+

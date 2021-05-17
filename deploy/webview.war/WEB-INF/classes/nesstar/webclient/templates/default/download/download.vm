@@ -1,0 +1,201 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		#parse ("cache/cacheHeader.vm")
+
+    <link href="$!{props.getSkinPath()}css/microtable.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/subset.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/cases.js?$!props.getTimestamp()"></script>
+    <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript">
+        var skinPath = '$!{props.getSkinPath()}';
+    </script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/cube.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/bookmark.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery-1.8.2.min.js?$!props.getTimeStamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery.cookie.js?$!props.getTimestamp()"></script>
+    <title>$!frametitle</title>
+		#if ($!download.downloadurl)
+    <meta http-equiv="Refresh" content="0;URL=$!download.downloadurl"/>
+		#end
+		#parse( "header.vm" )
+  </head>
+  <body onload="setScrollableSize()">
+    <script type="text/javascript">
+			#if ($!download.getSubmode() == 'cases')
+				mode = 'cases';
+			#elseif ($!download.getSubmode() == 'variables')
+				mode = 'variables';
+			#else
+				mode = 'download';
+			#end
+				inDownload = true;
+    </script>
+		#parse( "menu/menu.vm" )
+    <div class="mozview bodypadder" id="exploder">
+			#parse( "toptitle.vm" )
+
+			#if ($!viewer.getIsLogin())
+			    #parse ("login/loginform.vm")
+			#else
+                #if ($!errormessage)
+      <div class="errormessage">$!errormessage</div>
+                #end
+
+            #if ($!download.downloadurl)
+      <div class="download_auto">
+        <a href="$!download.downloadurl">$!i18n.download_automatic</a>
+      </div>
+            #end
+
+			#if ($!download.getIsDataDownloadAvailable())
+				#if ($!download.getSubmode() == 'cases' || $!download.getSubmode() == 'variables')
+			      <h3 class="subsetHeader">$!i18n.subsetdownload</h3>
+			      <div style="margin-top: 10px">
+								$!i18n.download_subset_help
+			      </div>
+				#else
+			      <h3 class="subsetHeader">$!i18n.download</h3>
+			      <div style="margin-top: 10px">
+									$i18n.download_help
+			      </div>
+				#end
+			#end
+
+
+				#if ($!download.getSubmode() == 'cases')
+					#parse ( "subset/cases.vm" )
+				#elseif ($!download.getSubmode() == 'variables')
+					#parse ( "subset/variables.vm" )
+				#else
+				#if ($!download.getIsDataDownloadAvailable())
+      <table class="downloadformtable">
+        <tr>
+          <td class="formbutton">
+            <form id="downloadform" name="downloadform" class="downloadform" action="$!form_action">
+              <select name="format" onchange="downloadform.submit()">
+									#foreach ($format in $!download.getDownloadTypes())
+										#if ($!format.selected)
+                <option value="$!format.value" selected="selected">$!utils.escape($!format.label)</option>
+										#else
+                <option value="$!format.value">$!utils.escape($!format.label)</option>
+										#end
+									#end
+              </select>
+               <br/>
+              #if($!props.allowCalculations())
+               <input type="checkbox" name="includeComputed" id="includeComputed" #if ($!download.includeComputed)checked="checked" #end />
+               <label for="includeComputed">$i18n.download_include_computed</label><br/>
+              #end
+               <input type="checkbox" name="includeDocumentation" id="includeDocumentation"
+                       #if(!$!request.getParameter("format") || $!download.getIncludeDocumentation())checked="checked" #end />
+               <label for="includeDocumentation">$i18n.download_include_documentation</label><br/>
+          </td>
+          <td class="formbutton">
+               <input type="hidden" id="executedownload" name="execute"/>
+               #if ($!request.getParameter("format") && $!request.getParameter("format").length() > 0 && $!download.canExecute() == true)
+              <input type="submit" onclick="setExecute()" class="button" value="$i18n.download_button"/>
+								#else
+              <input type="submit" onclick="setExecute()" disabled="disabled" class="button" value="$i18n.download_button"/>
+								#end
+
+								#if ($!download.getDDIFormat())
+              <input type="hidden" name="ddiformat" value="$!download.getDDIFormat()"/>
+								#end
+								#foreach ($element in $download.getForm())
+              <input type="hidden" name="$!element.name" value="$!element.value"/>
+		
+								#end
+   			</form>
+
+             ## Hide subsetbutton if shoppingcart is enabled             
+             #if(!$!props.shoppingCartEnabled())
+              <form method="get" id="downloadsubsetform" class="downloadform" action="$!form_action">
+              <input type="hidden" name="submode" value="variables"/>
+								#foreach ($element in $download.getForm())
+              <input type="hidden" name="$!element.name" value="$!element.value"/>
+								#end
+								#if ($!request.getParameter("format") )
+              <input type="hidden" name="format" value="$!request.getParameter('format')"/>
+								#end
+              <input type="submit" class="button" value="$i18n.download_subset_button"/>
+            </form>
+             #end
+          </td>
+        </tr>
+      </table>
+			#end
+			#if (!$!download.canExecute())
+      <div class="errormessage">$!i18n.subsetIsNotOk</div>
+			#end
+
+
+      <h3 class="subsetHeader">$!i18n.downloadddi</h3>
+      <div style="margin-top: 10px; margin-bottom: 10px">
+				$!i18n.download_ddi_help
+      </div>
+      <table cellspacing="0" cellpadding="0" border="0">
+        <tr>
+          <td>
+                        #if ($!download.getDDIFormats())
+            <form method="get" id="ddiform" name="ddiform" action="$!form_action" style="display: inline">
+              <select name="ddiformat" onchange="ddiform.submit()">
+                                #foreach ($format in $!download.getDDIFormats())
+									#if ($!format.selected)
+                <option value="$!format.value" selected="selected">$!utils.escape($!format.label)</option>
+									#else
+                <option value="$!format.value">$!utils.escape($!format.label)</option>
+									#end
+                                #end
+              </select>
+                            #foreach ($element in $download.getForm())
+              <input type="hidden" name="$!element.name" value="$!element.value"/>
+                            #end
+                            #if ($!request.getParameter("format") )
+              <input type="hidden" name="format" value="$!request.getParameter('format')"/>
+                            #end
+            </form>
+                        #end
+          </td>
+          <td style="padding-left: 4px">
+						#if ($!download.getDDIFormat() == 'xml')
+            <form method="GET" action="$!request.ContextPath/velocity/xml.zip$!download.getSessionId()" style="display: inline">
+            <input type="hidden" name="gzip" value="false"/>
+						#else
+            <form method="GET" action="$!form_action" style="display: inline">
+						#end
+              <input type="hidden" name="study" value="$!download.getDDIFile()"/>
+              <input type="hidden" name="format" value="$!download.getDDIFormat()"/>
+               ## Subset param               
+               #if($!request.getParameter("s") != "")
+               <input type="hidden" value="$!request.getParameter("s")" name="s">
+               #end
+               #if($!request.getParameter("gs") != "")
+               <input type="hidden" value="$!request.getParameter("gs")" name="gs">
+               #end
+               #if($!request.getParameter("language") != "")
+               <input type="hidden" name="language" value="$!request.getParameter("language")"/>
+               #end
+              <input type="hidden" name="mode" value="transform"/>
+              <input type="submit" class="button" value="$!i18n.download_button"/>
+            </form>
+          </td>
+        </tr>
+      </table>
+			#end
+			#end
+			#if ($!download.getFilterMessage())
+      <div class="filtermessage" title="$!utils.escape($!download.getFilterMessage())">Filter is on</div>
+			#end
+			<div class="footer">
+			#include( "static/footer.html" )
+			</div>
+			#parse( "help/help.vm" )
+    </div>
+  </body>
+</html>

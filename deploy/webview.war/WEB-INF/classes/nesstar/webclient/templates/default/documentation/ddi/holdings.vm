@@ -1,0 +1,20 @@
+#if ($!node.HasContent)
+<h3 class="ddititle">
+		$!node.Name
+</h3>
+<div class="ddicontent">
+        #if ($!node.getAttribute('URI'))
+  <a href="$!node.getAttribute('URI')" target="_new">
+        #end
+		$!node.Content
+        #if ($!node.getAttribute('URI'))
+  </a>
+        #end
+        #if ($!node.getAttribute('location'))
+  <p>$!i18nDdi.location: $!node.getAttribute('location')</p>
+		#end
+        #if ($!node.getAttribute('callno'))
+  <p>$!i18nDdi.callno: $!node.getAttribute('callno')</p>
+		#end
+</div>
+#end

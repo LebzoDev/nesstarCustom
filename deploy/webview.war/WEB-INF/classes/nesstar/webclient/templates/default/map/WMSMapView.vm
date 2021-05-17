@@ -1,0 +1,204 @@
+#if ($!request.isRequestedSessionIdFromCookie() == false)
+    #set ($sess = ";jsessionid=")
+    #set ($ionid = $!request.getSession().getId())
+    #set ($sessionid = "$!sess$!ionid")
+#end
+
+#set ($isAreaProfile = $!parameters.isInAreaProfileMode())
+
+<div class="mapping">
+    <script type="text/javascript" src="skins/default/javascript/mapControl.js?$!props.getTimestamp()"></script>
+    <form id="storeForm" name="storeForm" action="" method="get">
+        <input id="height" name="height" value="$!map.height" type="hidden" />
+        <input id="width" name="width" value="$!map.width" type="hidden" />
+        <input id="mapStartX" name="mapStartX" value="0" type="hidden" />
+        <input id="mapStartY" name="mapStartY" value="0" type="hidden" />
+        <input id="mapEndX" name="mapEndX" value="0" type="hidden" />
+        <input id="mapEndY" name="mapEndY" value="0" type="hidden" />
+        <input id="isPan" name="isPan" value="0" type="hidden" />
+        <input id="initbbox" id="initbbox" name="initbbox" value="$!map.initBoundingBox" type="hidden" />
+        <input id="mapmousex" name="mapmousex" value="-1" type="hidden" />
+        <input id="mapmousey" name="mapmousey" value="-1" type="hidden" />
+        <input id="mousex" name="mousex" value="-1" type="hidden" />
+        <input id="mousey" name="mousey" value="-1" type="hidden" />
+        <input id="tooltipworking" name="tooltipworking" value="false" type="hidden" />
+        <input id="panX" name="panX" value="-1" type="hidden" />
+        <input id="panY" name="panY" value="-1" type="hidden" />
+        <input id="coordinfourl" name="coordinfourl" value="getInfoFromCoords.jsp?url=$!map.mapServerHostUrl&bbox=$!map.boundingBox&width=$!map.width&height=$!map.height&layers=$!map.thematicLayerName" type="hidden" />
+        <input id="mapurlparams" name="mapuriparams" value="$!map.mapURIParams" type="hidden" />
+    </form>
+    <form id="mapForm" name="mapForm" action="" method="get">
+        <div id="mapdiv">
+#foreach ($field in $!hiddenform.getForm())
+    #if (! $map.mapRelatedFormFields.contains($field.name))
+            <input type="hidden" name="$field.name" value="$field.value"/>
+    #end
+#end
+
+#if ($!embed)
+            <input type="hidden" name="height" value="$!urlheight"/>
+            <input type="hidden" name="width" value="$!urlwidth"/>
+#end
+
+#if ($!openedBookmarkURL)
+            <input type="hidden" name="openBookmark" value="$!openedBookmarkURL"/>
+#end
+            <input type="hidden" id="getMapJSon" name="getMapJSon" value="true" />
+            <input type="hidden" id="bbox" name="bbox" value="$!map.boundingBox" />
+            <input type="hidden" id="maskratio" name="maskratio" value="$!parameters.maskRatio" />
+            <input type="hidden" id="maskorient" name="maskorient" value="$!parameters.maskOrient" />
+            <input id="fetchTooltipHash" name="fetchTooltipHash" value="true" type="hidden" />
+
+            <div id="mapImage" name="mapImage" style="height: $!{map.height}px; width: $!{map.width}px; " #if ($!doprint || $isAreaProfile) onclick="return false" #end>
+#if (!$!doprint && !$!isAreaProfile)
+                <div id="mapLoadingIndicator" class="mapMessageBox"><img src="skins/default/images/spinner-tiny-dark.gif"><span>$!i18n.waitmap</span></div>
+                <div id="mapLoadingTimeoutIndicator" class="mapMessageBox"><img src="skins/default/images/warning.png"><span>$!i18n.ajax_timeout</span></div>
+                <div id="genericMapErrorIndicator" class="mapMessageBox"><img src="skins/default/images/warning.png"><span></span></div>
+                ##Do not show map settings button in embedded view
+                #if (!$!embed)
+                    <button id="settings" class="map-button"><img src="skins/default/images/cog.png"/><span>$!i18n.map_settings_button</span></button>
+                #end
+                <button id="reset" class="map-button"><img src="skins/default/images/reload.png"/><span>$!i18n.Reset</span></button>
+#end
+            </div>
+
+#if (!($!removeMapLegend && $!removeMapControls))
+            <div id="sidebar">
+    #if (!$!removeMapLegend)
+                <div id="legend"></div>
+    #end
+            </div> <!-- sidebar -->
+#end
+
+
+#if (!$!removeMapControls)
+            <div id="mapcontrolpanel" class="controls" style="display: none">
+                <div class="hd">
+                    $!i18n.map_settings
+                </div>
+
+                <div class="bd">
+
+    #set ($groups=$!map.numberOfGroups)
+
+
+                    <script type="text/javascript" charset="utf-8">
+                        $(function() {
+                           $("#categoriesslider").slider({
+                              value: $!groups,
+                              min: 2,
+                              max: 2,
+                              slide: function(event, ui) {
+                                 $("#number-of-groups-label").text(ui.value);
+                              },
+                              stop: function(event, ui) {
+                                 setTimeout(function() {
+                                    $("#number-of-groups").attr("value", ui.value);
+                                    commitChanges();
+                                 }, 400);
+                              }
+                           });
+                        });
+                    </script>
+                    <h4>$!i18n.number_of_groups: <span id="number-of-groups-label">$!groups</span></h4>
+                    <div id="categoriesslider"></div>
+                    <input type="hidden" name="ngrp" id="number-of-groups" value="$!groups"/>
+
+
+                    <h4>$!i18n.wmsGroupsHeadline</h4>
+                    <ul class="classification" id="classificationtype-selector">
+                        <li>
+                            <input type="radio" id="shader0" name="shaderType" value="0" #if ($!map.groupingType == 0) checked="checked" #end/>
+                            <label id="equal-interval" for="shader0" class="sprite#if ($!map.groupingType == 0) selected#end">$!i18n.wmsEqualInterval</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="shader1" name="shaderType" value="1" #if ($!map.groupingType == 1) checked="checked" #end/>
+                            <label id="equal-groups" for="shader1" class="sprite#if ($!map.groupingType == 1) selected#end">$!i18n.wmsEqualGroups</label>
+                        </li>
+                    </ul>
+                    <h4>$!i18n.wmsLabelsHeadline</h4>
+                    <ul class="labels" id="labels-selector">
+                        <li>
+                            <input type="checkbox" id="labelname" name="nlbl" #if ($!map.nameLabelsEnabled == "true") checked="checked"#end />
+                            <label id="show-labels" for="labelname" class="sprite#if ($!map.nameLabelsEnabled == "true") selected#end">$!i18n.wmsDisplayFeatureNames</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="labelval" name="vlbl"  #if ($!map.valueLabelsEnabled == "true") checked="checked"#end/>
+                            <label id="show-values" for="labelval" class="sprite#if ($!map.valueLabelsEnabled == "true") selected#end">$!i18n.wmsDisplayFeatureValues</label>
+                        </li>
+                    </ul>
+    #parse( "colorschememenu.vm" )
+
+    #set ($layerInfo = $!map.layerInfoForAllLayers)
+    #if ($!layerInfo.size() > 1)
+                    <h4>$!i18n.wmsSetVisibleLayers</h4>
+                    <ul class="layers" id="layers-selector">
+        #foreach ($layer in $!layerInfo)
+            #if ($!layer.thematicLayer == "true")
+                        <li class="hidden">
+                            <input type="hidden" name="visibleLayer" id="checkbox-$!layer.id" value="$!layer.id">
+                        </li>
+            #else
+                        <li>
+                            <input type="checkbox" name="visibleLayer" id="checkbox-$!layer.id" value="$!layer.id" #if ($!layer.visible == "true") checked="checked"#end>
+                            <label for="checkbox-$!layer.id">$!layer.label</label>
+                        </li>
+            #end
+        #end
+                    </ul>
+    #end
+
+                </div> <!-- body -->
+            </div> <!-- mapcontrolpanel -->
+#end
+        </div><!-- mapdiv -->
+    </form>
+#if (!$!doprint && !$!embed && !$!isAreaProfile)
+    <div class="hint">$!i18n.wmsZoomInstructions<span id="wmsPanInstructions"> $!i18n.wmsPanInstructions</span>
+    </div>
+#end
+
+#if($map.abstractText)
+    <div class="mapAbstract">$!map.abstractText</div>
+#end
+
+#if ($!doprint || $!isAreaProfile)
+     <div style="clear: both;">&nbsp;</div>
+    <script type="text/javascript">
+        commitChanges();
+    </script>
+#else
+    <input type="hidden" name="embedBaseurl" id="embedBaseUrl" value="" />
+    <script type="text/javascript">
+    registerTooltip($('#mapImage'));
+    registerRubber($('#mapImage'));
+    $("#mapForm").submit(function(){return false;});
+
+    $(document).ready(function() {
+       $("#classificationtype-selector input").each(function(index, element) {
+          $(element).on("change", changeMapSettings);
+       });
+
+       $("#labels-selector input").each(function(index, element) {
+          $(element).on("change", changeMapSettings);
+       });
+
+       $("#layers-selector input").each(function(index, element) {
+          $(element).on("change", commitChanges);
+       });
+
+       if (jQuery.browser.msie) {
+          $(".classification label, .labels label").each(function(index, element) {
+             $(element).on("click", function() {
+                var input = $(this).siblings("input");
+                input.prop("checked", !input.prop("checked"));
+                input.change();
+                });
+             });
+       }
+    });
+
+    commitChanges();
+    </script>
+#end
+</div>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<Server>
+
+   <!-- Use a custom version of StandardService that allows the
+   connectors to be started independent of the normal lifecycle
+   start to allow web apps to be deployed before starting the
+   connectors.
+   -->
+   <Service name="jboss.web"
+            className="org.jboss.web.tomcat.tc5.StandardService">
+
+      <!-- A HTTP/1.1 Connector -->
+      
+      <Connector port="8080" address="127.0.0.1"
+                 maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
+                 enableLookups="false" acceptCount="100"
+                 connectionTimeout="60000" disableUploadTimeout="true" URIEncoding="UTF-8"
+                 bufferSize="4096" debug="0" maxHttpHeaderSize="100000"/>
+      
+
+      <!-- SSL/TLS Connector configuration using the admin devl guide keystore -->
+      <!--
+      <Connector port="443" address="127.0.0.1"
+                 maxThreads="100" minSpareThreads="5" maxSpareThreads="15"
+                 scheme="https" secure="true" clientAuth="false"
+                 keystoreFile="C:\Nesstar-Server-4.0.8.3\config/../config/ssl//keystore.jks" keyAlias="localhost"
+                 keystorePass="changeit" sslProtocols = "TLSv1,TLSv1.1,TLSv1.2"
+                 enableLookups="false" acceptCount="100"
+                 connectionTimeout="60000" disableUploadTimeout="true" URIEncoding="UTF-8"
+                 bufferSize="4096" debug="0" maxHttpHeaderSize="100000"
+                 SSLImplementation="org.apache.tomcat.util.net.jsse.JSSEImplementation"/>
+      -->
+
+      <Engine name="jboss.web" defaultHost="localhost">
+         <Host name="localhost"
+               autoDeploy="false" deployOnStartup="false" deployXML="false">
+            <!-- Access logger apache combined-->
+            <Valve className="nesstar.log.AccessLogValve"
+            prefix="localhost_access." suffix=".log"
+            pattern="combined" directory="${jboss.server.log.dir}"
+            resolveHosts="false"/>
+
+           <!-- <Valve className="org.apache.catalina.valves.FastCommonAccessLogValve"
+                   prefix="localhost_access." suffix=".log"
+                   pattern="common" directory="${jboss.server.log.dir}"
+                   resolveHosts="false"/>
+-->
+            <!-- Default context parameters -->
+            <DefaultContext cookies="true" crossContext="true" override="true"/>
+         </Host>
+      </Engine>
+   </Service>
+
+
+</Server>

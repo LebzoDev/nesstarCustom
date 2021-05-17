@@ -1,0 +1,25 @@
+<script type="text/javascript">
+      var isLogin = false;
+			var frameset = parent.document.getElementById('set');
+			var loggedinsize = loginframesize;
+			if (!loggedinsize) {
+				loggedinsize = parent.loginframesize;
+			}
+
+			if (!loggedinsize) {
+                if (parent.content) {
+				    if (parent.content.tree) loggedinsize = parent.content.tree.loginframesize;
+                }
+			}
+			var reset = false;
+			if (loggedinsize) {
+				//parent.rightsidemainframe.rightside.location.href = parent.rightsidemainframe.rightside.location.href;
+				reset = true;
+				frameset.cols = loggedinsize;
+               isLogin = true;
+			}
+			loggedinsize = null;
+			loginframesize = null;
+			parent.loginframesize = null;
+			if (parent.content && parent.content.tree) parent.content.tree.loginframesize = null;
+</script>

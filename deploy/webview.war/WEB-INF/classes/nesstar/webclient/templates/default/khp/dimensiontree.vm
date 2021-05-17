@@ -1,0 +1,18 @@
+#parse("khp/dimensionmacro.vm")
+
+#foreach ($dimension in $dimensions)
+   <li class="label">
+      <div id="dimorigo"><span class="origotitle">$!i18n.region</span>
+         #if ($!$dimension.isGeo())
+         <span class="searchcombo">
+         <input id="search_textinput" type="text" size="25" tabindex="0" value="$!i18n.sok_region" onfocus="javascript: this.value = '';"/>
+         </span>
+         <div class="autocomplete-trix">
+         <a class="formresetter" title="$!i18n.deselect" onclick="uncheckAll('dimensions');">$!i18n.deselect</a>
+         <div id="search_textinput_container"></div>
+         </div>
+         #end
+      </div>
+      #menuentry($dimension.getRoot() false $!dimension $context $!{props.getKHPOutput()} 1)
+   </li>
+#end

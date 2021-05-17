@@ -1,0 +1,172 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+   <head>
+      <title>$!frametitle</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      #parse ("cache/cacheHeader.vm")
+      <link href="$!{props.getSkinPath()}css/cube.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!{props.getSkinPath()}css/draganddrop.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!{props.getSkinPath()}css/documentation.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+      <link href="$!{props.getSkinPath()}jquery-ui-1.9.0.custom/css/ui-lightness/jquery-ui-1.9.0.custom.css" type="text/css" rel="stylesheet" title="jQuery UI" />
+
+      <script type="text/javascript">
+         var skinPath = '$!{props.getSkinPath()}';
+      </script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/cube.js?$!props.getTimestamp()"></script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/bookmark.js?$!props.getTimestamp()"></script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery-1.8.2.min.js?$!props.getTimeStamp()"></script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery.cookie.js?$!props.getTimestamp()"></script>
+     <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery.imagesloaded.min.js?$!props.getTimestamp()"></script>
+     <script src="$!{props.getSkinPath()}/jquery-ui-1.9.0.custom/js/jquery-ui-1.9.0.custom.js" type="text/javascript" charset="utf-8"></script>
+     
+   #if (!$!map.getIfRemoveMenues())
+      #parse( "header.vm" )
+   #end
+   <script type="text/javascript" charset="utf-8">
+      var mapControlPanel;
+      $(document).ready(function() {
+         if ($("#mapcontrolpanel").length > 0) {
+            var windowHeight = $(window).height();
+            if (windowHeight > 350) {
+               $("#settings").on("click", function(event) {
+                  var x = event.pageX - 275;
+                  var y = event.pageY;
+                  var panelHeight = 510;
+                  
+                  if (panelHeight > windowHeight) {
+                     panelHeight = windowHeight - 20;
+                     y = 0;
+                  }
+                  
+                  mapControlPanel = new YAHOO.widget.Panel("mapcontrolpanel", {
+                     visible: true,
+                     zindex: 1000,
+                     fixedcenter: false,
+                     draggable: true,
+                     constraintoviewport: true,
+                     width: "375px",
+                     height: panelHeight + "px",
+                     x: x,
+                     y: y
+                  });
+                  
+                  mapControlPanel.render();
+                  
+                  //Make sure overflow will kick in.
+                  $("#mapcontrolpanel .bd").height($("#mapcontrolpanel").height() - 50);
+                  
+                  $("#mapcontrolpanel").fadeIn(200);
+                  
+                  mapControlPanel.hideEvent.subscribe(function(event) {
+                     $("#mapcontrolpanel").fadeOut(200);
+                  });
+               });
+            } else {
+               $("#settings").hide();
+            }
+         }
+         // Stop button mousedowns from bleeding though to map
+         $("#settings, #reset").on("mousedown", function(event) {
+            event.stopPropagation();
+         });
+      });
+   </script>
+   </head>
+   #if (!$!map.getIfRemoveMenues())
+      #set ($scrollable = 'setScrollableSize();window.focus()')
+   #else
+      #set ($scrollable = 'window.focus()')
+   #end
+   <body onload="$!scrollable">
+      <script type="text/javascript">
+         mode = 'table';
+      </script>
+      ## Remove this if this is embed
+      #if (!$!embed)
+         #if (!$!map.getIfRemoveMenues())
+            #parse( "menu/menu.vm" )
+         #end
+      #end
+      <div class="mozview bodypadder" id="exploder">
+      ## Remove this if this is embed
+         #if (!$!embed)
+            #if (!$!map.getIfRemoveMenues())
+               #parse( "toptitle.vm" )
+               #parse ("embedlink.vm")
+            #end
+         #end
+
+         #if ($!urlPrefix)
+         <script type="text/javascript">
+            urlPrefix = '$!urlPrefix';
+         </script>
+         #end
+
+         ## Remove this if this is embed
+         #if (!$!embed)
+            #parse( "loading.vm" )
+            <div id="hidearea">
+         #end
+         #if ($!viewer.getIsLogin())
+            #parse ("login/loginform.vm")
+         #elseif ($!maperror)
+            <div class="errormessage">$utils.escape($!{maperror})</div>
+         #else
+         ## Remove this if this is embed
+         #if (!$!embed)
+            #if (!$!map.getIfRemoveMenues())
+               #if ($!props.useNewMenus())
+                  #parse( "dimensionchooser.vm" )
+               #else
+                  #parse( "cube/form.vm" )
+               #end
+            #end
+         #else
+            #if($!showTitle)
+               #parse ("toptitle.vm")
+            #end
+            #parse ("embedlink.vm")
+            #if ($!showGraphButton || $!showMapButton || $!showTableButton)
+               #if (!$!viewer.getIsLogin())
+                  #parse ("menu/embedmenu.vm")
+               #end
+            #end
+         #end
+
+         #if ($!errormessage)
+            <div class="errormessage">$utils.escape($!{errormessage})</div>
+         #else
+            #parse ( "map/object.vm" )
+         #end
+      #end
+
+      ## Remove this if this is embed
+      #if (!$!embed)
+         </div>
+         #if (!$!map.getIfRemoveMenues())
+            #parse( "micro/filterweight.vm" )
+            #parse( "copyright/copyright.vm" )
+            #if ($!props.inlineMetaData() && !$!doprint)
+               <div id="metaBuffer">&nbsp;</div>
+            #end
+            <div class="footer">#include( "static/footer.html" )</div>
+         #end
+         </div>
+      #end
+      #parse( "help/help.vm" )
+      </div><!-- /exploder -->
+
+      ## Remove this if this is embed
+      #if (!$!embed)
+         #if (!$!viewer.getIsLogin())
+            #if ($!props.inlineMetaData() || $!props.inlineMetaDataPrint())
+               #parse( "documentation/documentation2.vm" )
+            #end
+         #end
+      #end
+</body>
+</html>

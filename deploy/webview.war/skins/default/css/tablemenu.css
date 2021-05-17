@@ -1,0 +1,93 @@
+/* The menu over the table */
+a {
+	font-weight:bold;
+	text-decoration:none;
+	color:black;
+}
+
+a:hover {
+	color:#cc0000;
+}
+
+/* 100% CSS menu */
+
+ul, li {
+	margin:0;
+	padding:0;
+	display:block;
+}
+
+ul {
+	list-style:none;
+	width:150px;
+	padding:2px;
+	border:1px solid gray;
+	background:white;
+}
+
+li {
+	position:relative;
+	padding:3px;
+	background:white;
+	border:1px solid white;
+	z-index:9;
+}
+
+li.top {
+	display: none;
+}
+
+li.folder {
+	/*border-right-color:#cc0000;*/
+}
+
+li.theHover ul li ul{
+	/*border-right-color:#cc0000;*/
+	display: none;
+}
+
+/* decoratieve hover */
+
+li:hover {
+	border:1px solid gray;
+	background:#ffffee;
+	z-index:15;
+}
+
+/* All subnavigations hidden */
+
+ul ul {
+	position: absolute;
+	display: none;
+	right: -136px;
+	top: 4px;
+}
+
+li:hover ul ul {
+	/*display:none;*/
+}
+
+li:hover ul, li:hover li:hover ul {
+	/*display:block;*/
+}
+
+li.theHover ul, li.theHover li.theHover ul {
+	display:block;
+}
+
+li:theHover ul ul {
+	display:none;
+}
+
+li.test ul, li.test li.test ul {
+	display:none;
+}
+
+ul.scroll {
+	height: 100px;
+	overflow: scroll;
+}
+
+ul.topmenu:hover{
+	display: block;
+}

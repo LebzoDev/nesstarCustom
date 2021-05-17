@@ -1,0 +1,20 @@
+#if ($!compute.getIfUpdated())
+<script type="text/javascript">
+   var node = parent.parent.content.tree.document.getElementById("udNode-$!compute.getStudyID()");
+   var div;
+   var children = node.parentNode.childNodes;
+   for (var i = 0; i < children.length; i++) {
+      var child = children[i];
+      if (child.tagName && ( child.tagName == 'div' || child.tagName == 'DIV')) div=children[i];
+   }
+
+   //Need to refresh the uservars, so reloading
+   if (node) {
+      parent.parent.content.tree.openUserDefined(node);
+    if (xGetComputedStyle(div, 'display') == 'none') {
+       //Open menu if closed
+       parent.parent.content.tree.openUserDefined(node);
+    }
+   }
+</script>
+#end

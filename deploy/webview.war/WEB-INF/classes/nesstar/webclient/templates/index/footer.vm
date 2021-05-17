@@ -1,0 +1,18 @@
+<div id="footer">
+   ## Don't show languagelinks if current page is an error page
+   #if($!error)
+   #else
+      #foreach ($langkey in $availableLanguages.keySet())
+         #if ( $!velocityCount == 1 )
+         <ul id="languagelinks" class="nomargins smaller">
+            <li class="floatleft pad">$!i18n.changeLanguage:</li>
+         #end
+         <li class="floatleft pad#if ($!currentlyActiveLanguageISO == $langkey) active#end"><a
+                 href="$!indexurls.getLanguageLink($!langkey)"
+                 title="$!languagelist.get($!langkey)">$!stringutils.capitalize($!languagelist.get($!langkey))</a></li>
+         #if ( !$!velocityHasNext )
+         </ul>
+         #end
+      #end
+   #end
+</div>

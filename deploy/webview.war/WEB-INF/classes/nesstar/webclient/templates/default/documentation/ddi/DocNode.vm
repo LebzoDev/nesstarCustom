@@ -1,0 +1,8 @@
+#if ($!node.HasContent)
+<h3 class="ddititle">
+		$!node.Name
+</h3>
+<p class="ddicontent">
+		$!node.Content
+</p>
+#end

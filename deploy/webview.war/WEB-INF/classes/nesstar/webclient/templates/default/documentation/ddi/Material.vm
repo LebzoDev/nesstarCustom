@@ -1,0 +1,27 @@
+#if ($!node.getChildTagged('citation').getChildTagged('titlStmt').getChildTagged('titl') )
+	#set ( $title = $!node.getChildTagged('citation').getChildTagged('titlStmt').getChildTagged('titl').Content )
+#else
+	#set ($title = '')
+#end
+
+#if ($!node.getChildTagged('citation').getChildTagged('holdings') )
+	#set ($holdings = $!node.getChildTagged('citation').getChildTagged('holdings') )
+#else
+	#set ($holdings = '')
+#end
+
+#if (!$!title)
+	#set ($title = $!holdings.URL)
+#end
+<h3 class="ddititle">
+#if ($!holdings.URL) <a href="$!holdings.URL" target="_new">$!title</a> #else $!title #end
+</h3>
+#if ($!node.Content)
+<p class="ddicontent">$!node.Content</p>
+#end
+
+#if ($!node.getChildTagged('citation').getChildTagged('notes') )
+	#set ($notes = $!node.getChildTagged('citation').getChildTagged('notes') )
+<h3 class="ddititle">$!XmlStore.DdiTable.getLabel($notes.Tag)</h3>
+<p class="ddicontent">$!notes.Content</p>
+#end

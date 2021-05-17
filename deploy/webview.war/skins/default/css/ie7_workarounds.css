@@ -1,0 +1,274 @@
+
+#dropzone,
+   #toptitle {
+   z-index: 10;
+}
+
+#topstrip,
+   #charticons,
+   #bookmarkmenu {
+   z-index : 20;
+}
+
+#exploder{
+    position:relative;
+}
+
+#mainmenu {
+   z-index: 3;
+}
+
+#mainmenu li.combo1 {
+   z-index: 50;
+}
+
+#mainmenu li.combo2 {
+   z-index: 49;
+}
+
+#mainmenu li.combo3 {
+   z-index: 48;
+}
+
+#mainmenu li.combo4 {
+   z-index: 48;
+}
+
+#mainmenu li.combo5 {
+   z-index: 47;
+}
+
+#mainmenu li.combo6 {
+   z-index: 46;
+}
+
+#mainmenu li.combo7 {
+   z-index: 45;
+}
+
+#mainmenu li.combo8 {
+   z-index: 44;
+}
+
+#mainmenu li.combo9 {
+   z-index: 43;
+}
+
+#mainmenu li.combo10 {
+   z-index: 42;
+}
+
+#mainmenu li.combo11 {
+   z-index: 41;
+}
+
+#mainmenu li.combo12 {
+   z-index: 40;
+}
+
+#mainmenu li.combo13 {
+   z-index: 39;
+}
+
+#mainmenu li.combo14 {
+   z-index: 38;
+}
+
+#mainmenu li.combo15 {
+   z-index: 37;
+}
+
+li.menuentry1 {
+   z-index: 90;
+}
+
+li.menuentry2 {
+   z-index: 89;
+}
+
+li.menuentry3 {
+   z-index: 88;
+}
+
+li.menuentry4 {
+   z-index: 87;
+}
+
+li.menuentry5 {
+   z-index: 86;
+}
+
+li.menuentry6 {
+   z-index: 85;
+}
+
+li.menuentry7 {
+   z-index: 84;
+}
+
+li.menuentry8 {
+   z-index: 83;
+}
+
+li.menuentry9 {
+   z-index: 82;
+}
+
+li.menuentry10 {
+   z-index: 81;
+}
+
+li.menuentry11 {
+   z-index: 80;
+}
+
+#mainmenu li ul {
+   z-index: 5;
+}
+
+#mainmenu li a,
+   #mainmenu li span {
+   z-index: 4;
+}
+
+#mainmenu li span.movingcelllayer,
+   #mainmenu li span.layerlabel,
+   #mainmenu li span.mouseoverlayer {
+   z-index: 500;
+}
+
+ul#metadatamenu {
+   z-index: 500;
+}
+
+ul#metadatamenu li {
+   z-index: 1000;
+}
+div#metacontent {
+   z-index: 25;
+}
+
+/* Fix separators */
+#mainmenu li ul li,
+   #mainmenu li ul li ul li,
+   #mainmenu li ul li ul li ul li,
+   #mainmenu li ul li ul li ul li ul li {
+   margin: 0;
+   padding: 0;
+   font-size: 12px;
+   font-weight: bold;
+   text-align: left;
+   display: block;
+   float: left;
+   clear: left;
+   position: relative;
+}
+
+#mainmenu{
+   margin-left: 0;
+}
+
+hr.menuseparator {
+   font-size: 1px;
+   display: block;
+   margin-left: -8px;
+   margin-top: 0px;
+   margin-bottom: -15px;
+   padding: 0px;
+   width: 100%;
+   float: left;
+   clear: left;
+}
+
+ul#metadatamenu {
+    position: relative;
+}
+ul#metadatamenu li.menuchosen {
+    position: relative;
+    z-index: 2;
+}
+/**
+ * YUI-panel fix start
+ * For fixing the width of the YUI-panel header in IE7
+ * Without this, the background-color and grabbable area will not
+ * follow the header widht but be limited to the header text
+ */
+.yui-panel .hd {
+   width: 100%;
+}
+/** YUI-panel fix end **/
+
+/**
+ * Fixing the position of the autocomplete-container.
+ * Without this, the container is displayed a bit below the search-input-field
+ */
+
+.autocomplete-trix {margin-top:0;}
+
+/** Autocomplete-container-fix end **/
+
+.hideClass {
+   background-image: url( '../images/80PercentWhite.png' );
+   background-color: transparent;
+}
+
+/**
+ * Fitting the map-rubberband into place
+ */
+#rubberBand {
+  margin-top: -33px;
+}
+/** End rubberband-fix **/
+
+/*Remove unwanted whitespace in calculation window */
+form#categories {
+	display: inline;
+}
+
+
+td.bothmenus {
+	height: 17px;
+}
+
+ul.variablegroup {
+	margin-left: 25px;
+}
+
+ul.variablegroup li {
+	padding: 0;
+	margin: -3px 0 6px 0;
+	
+}
+
+#catalogtext {
+	margin-top: 1em;
+}
+
+/* advanced search */
+.express_row button {
+	margin-left: 10px;
+}
+
+.searchforwhat input {
+	border: none;
+}
+
+fieldset.recode, fieldset.recode fieldset {
+	position: relative;
+	margin-top: 1em;
+	padding-top: .75em;
+}
+
+fieldset.recode legend, fieldset.recode fieldset legend {
+	position: absolute;
+	top: -.5em;
+	left: .5em;
+}
+
+#submithint p.nomorehints input {
+   margin-top: -5px;
+}
+
+#downloadsubsetform input.button {
+   margin-left: -40px;
+}

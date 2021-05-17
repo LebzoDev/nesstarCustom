@@ -1,0 +1,52 @@
+#if (!$!viewer.getIsLogin())
+    #set ($tableinfo = $!analysis.getTableInfo())
+
+#if(!$embed)
+<div class="regressionHead">$!tableinfo.getSelectedWise() $!i18n.correlationHeader
+    #set ($tableinfo = $!analysis.getTableInfo())
+      #if (!$!doprint)
+        <a href="$!tableinfo.getSwitchUrl()">
+          #if ($!tableinfo.getIsListSelected())
+              [$i18n.corrlation_do_pairwise]
+          #else
+              [$i18n.corrlation_do_listwise]
+          #end
+        </a>
+      #end
+</div>
+#end
+
+<div id="corr_header">
+  <div id="variables">
+    <span class="correlationSubHead">$!i18n.correlationvariables</span>
+    <ul class="tableinfo">
+      #if ($!tableinfo.getVariables())
+        #foreach ($variable in $!tableinfo.getVariables())
+        <li>
+          $!utils.escape($!variable.get('label'))
+          ## The links should not be added if this is embed or print
+          #if (!$!embed)
+              #if (!$!doprint)
+                #set ($removeVariableUrl = $!variable.get('remove'))
+                <a onclick="return setUrlDialog('$!removeVariableUrl', '$i18n.confirm_delete_correlation?');" href="$!removeVariableUrl">$!utils.escape($!i18n.remove_corr_var)</a>
+              #end
+          #end
+        </li>
+         #end
+      #else
+        $!i18n.correlation_no_variables
+      #end
+    </ul>
+  </div>
+</div>
+#end
+
+#if ($emptytable)
+  	<div id="error" class="errormessage">
+      <img id="errortip" src="$!{props.getSkinPath()}images/tip_up.gif" alt="tip" title=""/>
+      #if ($i18n.correlation_help)
+         <p>$i18n.correlation_help</p>
+      #end
+      <p>$!regressionerror</p>
+   </div>
+#end

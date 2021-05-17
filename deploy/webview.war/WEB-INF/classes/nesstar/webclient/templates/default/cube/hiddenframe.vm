@@ -1,0 +1,30 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+		#parse ("cache/cacheHeader.vm")
+    <script type="text/javascript">
+
+         var tooLarge = $!tooLarge;
+
+			function doItAll() {
+			   if (!tooLarge) {
+				   var tree = document.getElementById('treeform');
+				   tree.submit();
+				}
+				parent.hideTheViewArea(tooLarge);
+			}
+
+
+
+    </script>
+  </head>
+
+  <body onload="doItAll()">
+    <form method="GET" name="treeform" id="treeform" target="_parent" action="$!form_action">
+			#foreach ($field in $!hiddenform.getForm())
+      <input type="hidden" name="$field.name" value="$field.value"/>
+			#end
+    </form>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+#if ($!doprint)
+  <h3>$!i18n.get("descriptionlabel")</h3>
+#end
+
+#set ($study = $!parameters.getStudy())
+#set ($abstract = $!study.getAbstractText())
+#set ($comment = $!study.getStdyVersionNotes())
+  #if($!abstract)
+  <strong>
+    $!i18n.get("descriptionlabel"):
+  </strong>
+  $utils.escapeHtml($!abstract, true)
+  #end
+  #if($!comment)
+  <p>
+    <strong>
+      $!i18n.get("commentlabel"):
+    </strong>
+    $utils.escapeHtml($!comment, true)
+  </p>
+  #end

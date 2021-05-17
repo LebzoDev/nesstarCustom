@@ -1,0 +1,14 @@
+<div class="menu" id="cubemenu">
+  <ul class="testmenu">
+    <li class="m">
+      <a href="#" id="cubetable">
+				$!i18n.treemenu_cube_table
+      </a>
+    </li>
+    <li class="m">
+      <a href="#" id="cubearea">
+				$!i18n.treemenu_cube_area
+      </a>
+    </li>
+  </ul>
+</div>

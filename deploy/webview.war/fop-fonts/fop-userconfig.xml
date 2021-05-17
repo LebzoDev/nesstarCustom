@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fop version="1.0">
+	<base>.</base>
+	<renderers>
+		<renderer mime="application/pdf">
+			<fonts>
+				<font kerning="yes" embed-url="/fop-fonts/DroidSans.ttf">
+					<font-triplet name="DroidSans" style="normal" weight="normal" />
+				</font>
+				<font kerning="yes" embed-url="/fop-fonts/DroidSans-Bold.ttf">
+					<font-triplet name="DroidSans" style="normal" weight="bold" />
+				</font>
+				<font kerning="yes" embed-url="/fop-fonts/HanaMinA.ttf">
+					<font-triplet name="HanaMinA" style="normal"
+						weight="normal" />
+				</font>
+				<font kerning="yes" embed-url="/fop-fonts/DejaVuSans.ttf">
+					<font-triplet name="DejaVuSans" style="normal"
+						weight="normal" />
+				</font>
+				<font kerning="yes" embed-url="/fop-fonts/DejaVuSans-Bold.ttf">
+					<font-triplet name="DejaVuSans" style="normal"
+						weight="bold" />
+				</font>
+			</fonts>
+		</renderer>
+	</renderers>
+</fop>

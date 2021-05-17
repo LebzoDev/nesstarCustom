@@ -1,0 +1,8 @@
+<div id="toptitle" class="giveroom">
+   <h2><span id="topspan">
+   $!i18n.dataset $!currentStudyLabel
+   </span></h2>
+</div>
+#parse ('documentation/vardoc.vm')
+
+#if($!downloadStudyURL) <p class="download"><a href="$!downloadStudyURL">$!i18n.download</a></p> #end

@@ -1,0 +1,66 @@
+<script type="text/javascript">
+	computetype = "add";
+</script>
+<fieldset class="compute">
+  <legend>
+			#if ($!compute.getComputeType() == 'add')
+				$!i18n.compute_type_add
+			#elseif ($!compute.getComputeType() == 'mul')
+				$!i18n.compute_type_mul
+			#elseif ($!compute.getComputeType() == 'avg')
+				$!i18n.compute_type_avg
+			#end
+  </legend>
+  <form action="$!form_action" id="computeRemove" class="addedVariables" name="computeRemove">
+
+    <div class="addedVariables">
+			#foreach ($variable in $!compute.getView().getVariables())
+                #if ($!variable.Label)
+                    #set ($text = $!variable.getLabel())
+                #else
+                    #set ($text = $!variable.getName())
+                #end
+      <div>
+        <input type="checkbox" id="$!variable.Name" value="$!variable.ID"/>
+        <label for="$!variable.Name">$!utils.escape($!text)</label>
+      </div>
+			#end
+    </div>
+    #if ($!compute.getView().getVariables().size() > 0)
+    <div>
+      <a href="javascript:removeSelectedVariables()">$i18n.compute_remove_selected</a>
+    </div>
+    #end
+  </form>
+
+  <form id="computeAdd" name="computeAdd" action="$!form_action">
+    <table border="0" cellspacing="0" cellpadding="0" class="numberLabel">
+		#if ($!compute.getComputeType() != 'avg')
+      <tr>
+        <td class="label">$i18n.group_number</td>
+        <td>
+          <input type="text" class="textfield" id="number" name="numValue" value="$utils.escape($!{compute.getView().getNumValue()})"/>
+        </td>
+      </tr>
+		#end
+      <tr>
+        <td class="label">$!i18n.group_label</td>
+        <td>
+          <input type="text" class="textfield" id="varname_id" name="label" value="$!utils.escape($!{compute.getLabel()})"/>
+        </td>
+      </tr>
+    </table>
+
+    #foreach ($field in $!compute.getView().getAddForm())
+    <input type="hidden" name="$field.name" value="$field.value"/>
+	  #end
+    <div class="commands">
+	#if ($!compute.getIfCanBeExecuted())
+      <input class="button minWidth" onclick="return setExecuteBit()" type="submit" value="$i18n.group_create"/>
+    #else
+      <input class="button minWidth" type="submit" value="$i18n.group_create" disabled="disabled"/>
+    #end
+      <input class="button" onclick="setToCancel()" type="submit" value="$i18n.group_cancel"/>
+    </div>
+  </form>
+</fieldset>

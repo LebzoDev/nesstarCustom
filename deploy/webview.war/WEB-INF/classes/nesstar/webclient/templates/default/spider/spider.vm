@@ -1,0 +1,97 @@
+#macro (dimension $category $name $spider)
+<ul>
+   #foreach ($child in $category.children())
+   <li>
+      #if($!child.getCode() != $!spider.getReferenceCategoryCode())
+         #set ($selected = $!spider.isCatSelectedForLabel($!child.getCode()))
+         <input type="radio" onclick="validateBeforeSubmit()" name="$name" value="$child.getCode()"
+                id="val_$!child.getCode()" $!spider.isCatSelected($!child.getCode())/>
+         <label for="val_$!child.getCode()"#if ($!selected == "true") class="selected"#end>$!child.getLabel()</label>
+      #else
+         $!child.getLabel()
+      #end
+
+      #if ($!child.getChildCount() > 0)
+      #dimension($child $name $spider)
+      #end
+   </li>
+   #end
+</ul>
+   #end
+
+   #macro (measure $node $name $spider $props)
+<ul>
+   #foreach ($child in $node.children())
+   <li>
+      ##set ($child = $node.getUserObject())
+      #if(!$!child.isSection())
+         <input type="checkbox" name="$!name" value="$child.getCode()" id="val_$!child.getCode()"
+         $!spider.isMeasSelected($!child.getCode())/>
+         <label for="val_$!child.getCode()">$!child</label>
+      #else
+         <img onclick="toggle(this)" class="treemenuitem" src="$!{props.getSkinPath()}images/minus.gif" alt="Neste niv&aring;">
+         <span>$!child</span>
+      #end
+      #if ($!node.getChildCount() > 0)
+      #measure($child $name $spider $props)
+      #end
+   </li>
+   #end
+</ul>
+   #end
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+   <head>
+      <title>Spider tree</title>
+      <link href="$!{props.getSkinPath()}css/spider.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/x.js?$!props.getTimestamp()"></script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/spider/prototype.js?$!props.getTimestamp()"></script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/browserdetect.js?$!props.getTimestamp()"></script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/spider/spider.js?$!props.getTimestamp()"></script>
+   </head>
+   <body>
+      <script type="text/javascript">
+        #parse("help/jstranslations.vm")
+        #parse("tree/jsproperties.vm")
+      </script>
+      <script type="text/javascript">
+         var skinPath = '$!{props.getSkinPath()}';
+      </script>
+
+      <div>
+
+         <div id="panel1">
+            <div class="titlebar">Velg region</div>
+            <div class="contentbox" id="pasadena">
+               <form action="" id="dimform">
+                  #dimension($spider.getGeoCategoryTree() $!spider.getGeoName() $spider)
+               </form>
+            </div>
+         </div>
+
+         <div id="panel2" style="display: none;">
+            <div class="titlebar">Velg indikator</div>
+            <div class="contentbox">
+               <form id="indicatorform" action="">
+                  <input type="submit" name="submit" value=" Oppdater diagram &gt;&gt;" class="button"
+                         onclick="return validateBeforeSubmit();"/>
+                  #measure($spider.getMeasureTree() $spider.getMeasureName() $spider $props)
+               </form>
+            </div>
+         </div>
+
+      </div>
+
+      <form action="velocity" target="rightside" id="hiddensubmit">
+         #foreach ($input in $spider.getForm())
+         <input type="hidden" id="$!input.name" name="$!input.name" value="$!input.value"/>
+         #end
+      </form>
+      <script language="Javascript">
+      	//foo=setTimeout("validateBeforeSubmit()", 500);
+      	validateBeforeSubmit();
+      </script>      
+   </body>
+</html>

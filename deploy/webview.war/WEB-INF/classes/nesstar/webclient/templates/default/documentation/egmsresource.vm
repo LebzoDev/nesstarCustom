@@ -1,0 +1,1151 @@
+#macro ( displaylist $myList $utils )
+   #if ($!myList.size() == 1)
+      	$!utils.escapeHtml($!myList.get(0), true)
+   #elseif ($!myList.size() > 1)
+      <ul>
+         #foreach ($item in $myList)
+            <li>$!utils.escapeHtml($item, true)</li>
+         #end
+      </ul>
+   #end
+#end
+
+#set ($myResource = $!documentation.getResource())
+#set ($resource = $!documentation.getResource().getEGMSResource())
+
+#if ($!myResource.getHasTitle())
+<h1 class="giveroom">$!i18n.egms_label $!utils.escapeHtml($!resource.label)</h1>
+
+
+   #if ($!resource.getAlternativeTitle())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_alt_title</h2>
+   #displaylist($!myResource.wrapArray($!resource.getAlternativeTitle()) $!utils)
+</div>	
+   #end
+   #end
+
+   ##########################
+   ##
+   ##
+   ## Start Abstract (promoted specifically)
+   ##
+   ##
+   ############################
+
+   #if ( $!resource.getAbstractText()  )
+     <h2 class="egmsheading">$!i18n.egms_abstracttext</h2>
+     <p class="egmstext">$!utils.escapeHtml($!resource.getAbstractText(), true)</p>
+   #end
+
+
+
+   ##########################
+   ##
+   ##
+   ## Start identifiers
+   ##
+   ##
+   ############################
+
+
+   #if ($!myResource.getHasIdentifiers())
+<h2 class="egmsheading">$!i18n.egms_identifier</h2>
+<p class="egmstext">
+   ##If it's got an URI, there's no uploaded document
+   #if ($!resource.getUri())
+      <a href="$!resource.getUri()" target="_blank">$!i18n.egms_open_resource</a>
+   #elseif ($!myResource.getFileUrl())
+      <a href="$!myResource.getFileUrl()" target="_blank">$!i18n.egms_open_resource</a>
+   #end
+</p>
+   #if ($!resource.getIdentifier())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_identifiers</h2>
+   #displaylist($!myResource.splitText($!resource.getIdentifier()) $!utils)
+</div>
+   #end
+   #if ($!resource.getBibliographicCitation())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_bib_citation</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getBibliographicCitation(), true)</p>
+</div>
+   #end
+
+   #if ($!resource.getIdentifierCaseID())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_case_id</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getIdentifierCaseID())</p>
+</div>
+   #end
+
+   #if ($!resource.getFileplanID())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_fileplan_id</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getFileplanID())</p>
+</div>
+   #end
+
+   #if ($!resource.getSystemID())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_system_id</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getSystemID())</p>
+</div>
+   #end
+   #end
+
+
+   ############################
+   ##
+   ## Start description
+   ##
+   ############################
+
+   #if ($!myResource.getHasDescription())
+<h2 class="egmsheading">$!i18n.egms_comment</h2>
+
+   #if ( $!resource.getComment()  )
+<p class="egmstext">
+   $!utils.escapeHtml($!resource.getComment(), true)
+</p>
+   #end
+
+   #if ( $!resource.getTableOfContents() )
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_contents</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getTableOfContents(), true)</p>
+</div>
+   #end
+   #end
+
+
+   ##############################
+   ##
+   ## Start accessibility
+   ##
+   ##
+   ##############################
+
+
+   #if ($!resource.getAccessibility())
+<h2 class="egmsheading">$!i18n.egms_accessibility</h2>
+<p class="egmstext">$!utils.escapeHtml($!resource.getAccessibility(), true)</p>
+   #end
+
+
+   ##############################
+   ##
+   ## Start addressee
+   ##
+   ##
+   ##############################
+
+   #if ($!myResource.getHasAddressee())
+<h2 class="egmsheading">$!i18n.egms_addressee</h2>
+   #if ($!resource.getAddressee())
+      #displaylist($!myResource.wrapArray($!resource.getAddressee()) $!utils)
+   #end
+
+   #if ($!resource.getAddresseeCopy())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_addressee_copy</h2>
+   #displaylist($!myResource.wrapArray($!resource.getAddresseeCopy()) $!utils)
+</div>
+   #end
+   #end
+
+
+   ##############################
+   ##
+   ## Start aggregation
+   ##
+   ##
+   ##############################
+
+   #if ($!resource.getAggregation())
+<h2 class="egmsheading">$!i18n.egms_aggregation</h2>
+<p class="egmstext">$!utils.escapeHtml($!resource.getAggregation())</p>
+   #end
+
+
+   ##############################
+   ##
+   ## Start audience
+   ##
+   ##
+   ##############################
+
+
+   #if ($!myResource.getHasAudience())
+<h2 class="egmsheading">$!i18n.egms_audience</h2>
+   #if ($!resource.getAudience())
+<p class="egmstext">$!utils.escapeHtml($!resource.getAudience(), true)</p>
+   #end
+
+   #if ($!resource.getEducationLevel())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_education_level</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getEducationLevel(), true)</p>
+</div>
+   #end
+
+   #if ($!resource.getMediator())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_mediator</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getMediator(), true)</p>
+</div>
+   #end
+   #end
+
+
+   ##############################
+   ##
+   ## Start contributor
+   ##
+   ##
+   ##############################
+
+
+   #if ($!resource.getContributor())
+<h2 class="egmsheading">$!i18n.egms_contributor</h2>
+   #displaylist($myResource.wrapArray($!resource.getContributor()) $!utils)
+   #end
+
+   ##############################
+   ##
+   ## Start coverage
+   ##
+   ##
+   ##############################
+
+   #if ($!myResource.getHasCoverage())
+<h2 class="egmsheading">$!i18n.egms_coverage</h2>
+
+   #if ($!resource.getCoverage())
+      #displaylist($!myResource.wrapArray($!resource.getCoverage()) $!utils)
+   #end
+
+   #if ($!resource.getSpatial())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_spatial</h2>
+   #displaylist($!myResource.wrapArray($!resource.getSpatial()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getPostcode())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_spatial_postcode</h2>
+   #displaylist($!myResource.wrapArray($!resource.getPostcode()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getSpatialLocation())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_spatial_location</h2>
+   #displaylist($!myResource.wrapArray($!resource.getSpatialLocation()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getTemporal())
+   
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_temporal</h2>
+   #displaylist($!myResource.wrapArray($!resource.getTemporal()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getBeginningDate())
+   
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_temporal_beginning</h2>
+
+   <p class="egmstext">$!utils.getNesstarFormattedDate($!resource.getBeginningDate())</p>
+</div>
+   #end
+
+   #if ($!resource.getEndDate())
+   
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_temporal_end</h2>
+
+   <p class="egmstext">$!utils.getNesstarFormattedDate($!resource.getEndDate()) </p>
+</div>
+   #end
+
+   #if ($!myResource.getCoverageTemporalDateRanges())
+   
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_temporal_date_ranges</h2>
+   #displaylist($!myResource.getCoverageTemporalDateRanges() $!utils)
+</div>
+   #end
+
+   #if ($!resource.getStatusOfStartDateOfCapture())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_temporal_status_date_capture</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getStatusOfStartDateOfCapture(),true)</p>
+</div>
+   #end
+
+   #if ($!resource.getStartDateOfCapture())
+   
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_temporal_start_date_capture</h2>
+
+   <p class="egmstext">$!utils.getNesstarFormattedDate($!resource.getStartDateOfCapture())</p>
+</div>
+   #end
+
+   #if ($!resource.getEndDateOfCapture())
+   
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_temporal_end_date_capture</h2>
+
+   <p class="egmstext">$!utils.getNesstarFormattedDate($!resource.getEndDateOfCapture())</p>
+</div>
+   #end
+
+   #end
+
+   ##############################
+   ##
+   ## Start creator
+   ##
+   ##
+   ##############################
+
+
+   #if ( $!resource.Creator )
+<h2 class="egmsheading">$!i18n.egms_creator</h2>
+   #displaylist($myResource.wrapArray($!resource.Creator) $!utils)
+   #end
+
+
+   ##############################
+   ##
+   ## Start Date
+   ##
+   ##
+   ##############################
+
+   #if ($!myResource.getHasDate())
+<h2 class="egmsheading">$!i18n.egms_date</h2>
+   #if ($!resource.getResourceDate())
+      #displaylist($!utils.wrapArrayAsFormattedDates($!resource.getResourceDate()) $!utils)
+   #end
+
+   #if ($!resource.getDateAquired())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_date_aquired</h2>
+   
+   <p class="egmstext">
+      $!utils.getNesstarFormattedDate($!resource.getDateAquired())
+   </p>
+</div>
+   #end
+   #if ($!resource.getDateAvailable() || $!resource.getDateAvailableEnd())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_date_available</h2>
+   
+   <p class="egmstext">   
+      #if ($!resource.getDateAvailable())
+         $!utils.getNesstarFormattedDate($!resource.getDateAvailable())
+      #end
+      #if ($!resource.getDateAvailable() && $!resource.getDateAvailableEnd())
+         -
+      #end
+      #if ($!resource.getDateAvailable())
+         $!utils.getNesstarFormattedDate($!resource.getDateAvailableEnd())
+      #end
+   </p>
+</div>
+   #end
+
+   #if ($!resource.getDateCreated())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_date_created</h2>
+   
+   <p class="egmstext">
+      $!utils.getNesstarFormattedDate($!resource.getDateCreated())
+   </p>
+</div>
+   #end
+
+   #if ($!resource.getCutOffDate())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_date_cutoff</h2>
+   
+   <p class="egmstext">
+      $!utils.getNesstarFormattedDate($!resource.getCutOffDate())
+   </p>
+</div>
+   #end
+
+   #if ($!resource.getDateClosed())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_date_closed</h2>
+   
+   <p class="egmstext">
+      $!utils.getNesstarFormattedDate($!resource.getDateClosed())
+   </p>
+</div>
+   #end
+
+   #if ($!resource.getDateAccepted())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_date_accepted</h2>
+   
+   <p class="egmstext">
+      $!utils.getNesstarFormattedDate($!resource.getDateAccepted())
+   </p>
+</div>
+   #end
+
+   #if ($!resource.getDateCopyrighted())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_date_copyrighted</h2>
+   
+   <p class="egmstext">
+      $!utils.getNesstarFormattedDate($!resource.getDateCopyrighted())
+   </p>
+</div>
+   #end
+
+   #if ($!resource.getDateSubmitted())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_date_submitted</h2>
+   
+   <p class="egmstext">
+      $!utils.getNesstarFormattedDate($!resource.getDateSubmitted())
+   </p>
+</div>
+   #end
+
+   #if ($!resource.getDateDeclared())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_date_declared</h2>
+   
+   <p class="egmstext">
+      $!utils.getNesstarFormattedDate($!resource.getDateDeclared())
+   </p>
+</div>
+   #end
+
+   #if ($!resource.getDateIssued())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_date_issued</h2>
+   
+   <p class="egmstext">
+      $!utils.getNesstarFormattedDate($!resource.getDateIssued())
+   </p>
+</div>
+   #end
+
+   #if ($!resource.getDatesModified())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_date_modified</h2>
+   
+   #displaylist($!utils.wrapArrayAsFormattedDates($!resource.getDatesModified()) $!utils)
+   
+</div>
+   #end
+
+   #if ($!resource.getDateNextVersionDue())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_date_next_version_due</h2>
+   
+   <p class="egmstext">
+      $!utils.getNesstarFormattedDate($!resource.getDateNextVersionDue())
+   </p>
+</div>
+   #end
+
+   #if ($!resource.getUpdatingFrequency())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_updating_freq</h2>
+   
+   <p class="egmstext">
+      $!utils.escapeHtml($!resource.getUpdatingFrequency())
+   </p>
+</div>
+   #end
+
+   #if ($!resource.getDateValid() || $!resource.getDateValidEnd())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_date_valid</h2>
+   
+   <p class="egmstext">
+      #if ($!resource.getDateValid())
+         $!utils.getNesstarFormattedDate($!resource.getDateValid())
+         #if ($!resource.getDateValidEnd()) - #end
+      #end
+      #if ($!resource.getDateValidEnd())
+         $!utils.getNesstarFormattedDate($!resource.getDateValidEnd())
+      #end
+   </p>
+</div>
+   #end
+   #end
+
+
+   ##############################
+   ##
+   ## Start Disposal
+   ##
+   ##
+   ##############################
+
+   #if ($!myResource.getHasDisposal())
+<h2 class="egmsheading">$!i18n.egms_disposal</h2>
+   #if ($!resource.getDisposal())
+<p class="egmstext">$!utils.escapeHtml($!resource.getDisposal(), true)</p>
+   #end
+
+   #if ($!resource.getAutoRemoveDate())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_auto_remove_date</h2>
+
+   <p class="egmstext">$!utils.getNesstarFormattedDate($!resource.getAutoRemoveDate())</p>
+</div>
+   #end
+
+   #if ($!resource.getDisposalAction())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_disposal_action</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getDisposalAction(), true)</p>
+</div>
+   #end
+
+   #if ($!resource.getDisposalAuthorisedBy())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_disposal_authorized</h2>
+   #displaylist($myResource.wrapArray($!resource.getDisposalAuthorisedBy()) $!utils)
+
+</div>
+   #end
+
+   #if ($!resource.getDisposalComment())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_disposal_comment</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getDisposalComment(), true)</p>
+</div>
+   #end
+
+   #if ($!resource.getDisposalConditions())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_disposal_conditions</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getDisposalConditions(), true)</p>
+</div>
+   #end
+
+   #if ($!resource.getDisposalDate())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_disposal_date</h2>
+
+   <p class="egmstext">$!utils.getNesstarFormattedDate($!resource.getDisposalDate())</p>
+</div>
+   #end
+
+   #if ($!resource.getDateOfLastReview())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_date_last_review</h2>
+
+   <p class="egmstext">$!utils.getNesstarFormattedDate($!resource.getDateOfLastReview())</p>
+</div>
+   #end
+
+   #if ($!resource.getDisposalExportDestination())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_disposal_export_destination</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getDisposalExportDestination(), true)</p>
+</div>
+   #end
+
+   #if ($!resource.getDisposalExportStatus())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_disposal_export_status</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getDisposalExportStatus())</p>
+</div>
+   #end
+
+   #if ($!resource.getDisposalReview())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_disposal_review_date</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getDisposalReview())</p>
+</div>
+   #end
+
+   #if ($!resource.getDisposalReviewDetails())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_disposal_review_details</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getDisposalReviewDetails(),true)</p>
+</div>
+   #end
+
+   #if ($!resource.getDisposalReviewerDetails())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_disposal_reviewer_details</h2>
+   #displaylist($myResource.wrapArray($!resource.getDisposalReviewerDetails()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getDisposalScheduleID())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_disposal_schedule_id</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getDisposalScheduleID())</p>
+</div>
+   #end
+
+   #if ($!resource.getDisposalTimePeriod())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_disposal_timeperiod</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getDisposalTimePeriod())</p>
+</div>
+   #end
+   #end
+
+
+   ##############################
+   ##
+   ## Start Format
+   ##
+   ##
+   ##############################
+
+   #if ($!myResource.getHasFormat())
+
+<h2 class="egmsheading">$!i18n.egms_format</h2>
+
+   #if ($!resource.getFormat())
+<p class="egmstext">$!utils.escapeHtml($!resource.getFormat(), true)</p>
+   #end
+
+   #if ($!resource.getExtent())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_format_extent</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getExtent())</p>
+</div>
+   #end
+
+   #if ($!resource.getMedium())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_format_medium</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getMedium())</p>
+</div>
+   #end
+   #end
+
+
+   ##############################
+   ##
+   ## Start Languages
+   ##
+   ##
+   ##############################
+
+   #if ($!resource.getLanguage())
+<h2 class="egmsheading">$!i18n.egms_languages</h2>
+   #displaylist($myResource.wrapArray($!resource.getLanguage()) $!utils)
+   #end
+
+
+   ##############################
+   ##
+   ## Start Location
+   ##
+   ##
+   ##############################
+
+   #if ($!myResource.getHasLocation())
+
+<h2 class="egmsheading">$!i18n.egms_location</h2>
+
+   #if ($!resource.getLocation())
+<p class="egmstext">$!utils.escapeHtml($!resource.getLocation(), true)</p>
+   #end
+
+   #if ($!resource.getCurrentLocation())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_location_current</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getCurrentLocation(), true)</p>
+</div>
+   #end
+
+   #if ($!resource.getHomeLocation())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_location_home</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getHomeLocation(), true)</p>
+</div>
+   #end
+   #end
+
+
+   ##############################
+   ##
+   ## Start Mandate
+   ##
+   ##
+   ##############################
+
+   #if ($!myResource.getHasMandate())
+
+<h2 class="egmsheading">$!i18n.egms_mandate</h2>
+
+   #if ($!resource.getMandate())
+      #displaylist($myResource.splitText($!resource.getMandate()) $!utils)
+   #end
+
+   #if ($!resource.getAuthorisingStatute())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_authorising_statute</h2>
+   #displaylist($myResource.splitText($!resource.getAuthorisingStatute()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getDataProtectionExemptCategory())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_authorising_data_protection_exempt_category</h2>
+   #displaylist($myResource.wrapArray($!resource.getDataProtectionExemptCategory()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getPersonalDataAquisitionPurpose())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_authorising_personal_data_aquisition_purpose</h2>
+   #displaylist($myResource.wrapArray($!resource.getPersonalDataAquisitionPurpose()) $!utils)
+</div>
+   #end
+   #end
+
+   ##############################
+   ##
+   ## Start Preservation
+   ##
+   ##
+   ##############################
+
+   #if ($!myResource.getHasPreservation())
+
+<h2 class="egmsheading">$!i18n.egms_preservation</h2>
+
+   #if ($!resource.getPreservation())
+<p class="egmstext">$!utils.escapeHtml($!resource.getPreservation(), true)</p>
+   #end
+
+   #if ($!resource.getOriginalFormat())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_original_format</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getOriginalFormat())</p>
+</div>
+   #end
+   #end
+
+
+   ##############################
+   ##
+   ## Start Publisher
+   ##
+   ##
+   ##############################
+
+
+   #if ($!resource.getPublisher())
+<h2 class="egmsheading">$!i18n.egms_publisher</h2>
+   #displaylist($myResource.wrapArray($!resource.getPublisher()) $!utils)
+   #end
+
+
+   ##############################
+   ##
+   ## Start Relation
+   ##
+   ##
+   ##############################
+
+   #if ($!myResource.getHasRelations())
+<h2 class="egmsheading">$!i18n.egms_relation</h2>
+   #if ($!resource.getRelation())
+      #displaylist($myResource.wrapArray($!resource.getRelation()) $!utils)
+   #end
+
+   #if ($!resource.getConformsTo())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_conforms_to</h2>
+   #displaylist($myResource.wrapArray($!resource.getConformsTo()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getHasFormat())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_has_format</h2>
+   #displaylist($myResource.wrapArray($!resource.getHasFormat()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getHasVersion())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_has_version</h2>
+   #displaylist($myResource.wrapArray($!resource.getHasVersion()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getHasPart())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_has_part</h2>
+   #displaylist($myResource.wrapArray($!resource.getHasPart()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getIsDefinedBy())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_is_defined_by</h2>
+   #displaylist($myResource.wrapArray($!resource.getIsDefinedBy()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getIsFormatOf())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_is_format_of</h2>
+   #displaylist($myResource.wrapArray($!resource.getIsFormatOf()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getIsPartOf())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_is_part_of</h2>
+   #displaylist($myResource.wrapArray($!resource.getIsPartOf()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getIsReferencedBy())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_is_referenced_by</h2>
+   #displaylist($myResource.wrapArray($!resource.getIsReferencedBy()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getIsReplacedBy())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_is_replaced_by</h2>
+   #displaylist($myResource.wrapArray($!resource.getIsReplacedBy()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getIsRequiredBy())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_is_required_by</h2>
+   #displaylist($myResource.wrapArray($!resource.getIsRequiredBy()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getIsVersionOf())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_is_version_of</h2>
+   #displaylist($myResource.splitText($!resource.getIsVersionOf()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getProvidesDefinitionOf())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_provides_definition_of</h2>
+   #displaylist($myResource.splitText($!resource.getProvidesDefinitionOf()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getReasonForRedaction())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_reasons_redaction</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getReasonForRedaction(), true)</p>
+</div>
+   #end
+
+   #if ($!resource.getRedaction())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_redaction</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getRedaction())</p>
+</div>
+   #end
+
+   #if ($!resource.getResourceReferences())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_referenced</h2>
+   #displaylist($myResource.wrapArray($!resource.getResourceReferences()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getRequires())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_required</h2>
+   #displaylist($myResource.wrapArray($!resource.getRequires()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getReplaces())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_replaced</h2>
+   #displaylist($myResource.wrapArray($!resource.getReplaces()) $!utils)
+</div>
+   #end
+   #end
+
+
+   ##############################
+   ##
+   ## Start Rights
+   ##
+   ##
+   ##############################
+
+   #if ($!myResource.getHasRights())
+
+<h2 class="egmsheading">$!i18n.egms_rights</h2>
+
+   #if ($!resource.getRights())
+      #displaylist($myResource.wrapArray($!resource.getRights()) $!utils)
+   #end
+
+   #if ($!resource.getCopyright())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_copyright</h2>
+   #displaylist($myResource.wrapArray($!resource.getCopyright()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getCustodian())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_custodian</h2>
+   #displaylist($myResource.wrapArray($!resource.getCustodian()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getDescriptor())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_descriptor</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getDescriptor())</p>
+</div>
+   #end
+
+   #if ($!resource.getEIRDisclosabilityIndicator())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_eird_closeab_ind</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getEIRDisclosabilityIndicator())</p>
+</div>
+   #end
+
+   #if ($!resource.getEIRExemption())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_eird_exemption</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getEIRExemption())</p>
+</div>
+   #end
+
+   #if ($!resource.getFOIDisclosabilityIndicator())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_foid_closeab_ind</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getFOIDisclosabilityIndicator())</p>
+</div>
+   #end
+
+   #if ($!resource.getFOIExemption())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_foid_exemption</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getFOIExemption())</p>
+</div>
+   #end
+
+
+   #if ($!resource.getFOIReleaseDetails())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_foia_release_details</h2>
+   #displaylist($myResource.wrapArray($!resource.getFOIReleaseDetails()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getFOIReleaseDate())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_foid_release_date</h2>
+
+   <p class="egmstext">$!utils.getNesstarFormattedDate($!resource.getFOIReleaseDate())</p>
+</div>
+   #end
+
+   #if ($!resource.getGroupAccess())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_group_access</h2>
+   #displaylist($myResource.wrapArray($!resource.getGroupAccess()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getIndividualUserAccessList())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_individual_user_access_list</h2>
+   #displaylist($myResource.wrapArray($!resource.getIndividualUserAccessList()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getLastFOIDisclosabilityReview())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_foia_closability_review</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getLastFOIDisclosabilityReview())</p>
+</div>
+   #end
+
+
+   #if ($!resource.getPreviousProtectiveMarking())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_previous_protective_marking</h2>
+   #displaylist($myResource.wrapArray($!resource.getPreviousProtectiveMarking()) $!utils)
+</div>
+   #end
+
+
+   #if ($!resource.getProtectiveMarking())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_protective_marking</h2>
+
+   <p class="egmstext">$!utils.escapeHtml($!resource.getProtectiveMarking(), true)</p>
+</div>
+   #end
+
+   #if ($!resource.getProtectiveMarkingChangeDate())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_protective_marking_change_date</h2>
+
+   <p class="egmstext">$!utils.getNesstarFormattedDate($!resource.getProtectiveMarkingChangeDate())</p>
+</div>
+   #end
+
+   #if ($!resource.getProtectiveMarkingExpiryDate())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_protective_marking_expiry_date<h2>
+
+   <p class="egmstext">$!utils.getNesstarFormattedDate($!resource.getProtectiveMarkingExpiryDate())</p>
+</div>
+   #end
+   #end
+
+   ##############################
+   ##
+   ## Start Source
+   ##
+   ##
+   ##############################
+
+   #if ($!resource.getSource())
+<h2 class="egmsheading">$!i18n.egms_source</h2>
+   #displaylist($myResource.wrapArray($!resource.getSource()) $!utils)
+   #end
+
+
+   ##############################
+   ##
+   ## Start Status
+   ##
+   ##
+   ##############################
+
+   #if ($!resource.getStatus())
+<h2 class="egmsheading">$!i18n.egms_status</h2>
+<p class="egmstext">$!utils.escapeHtml($!resource.getStatus(), true)</p>
+   #end
+
+   ##############################
+   ##
+   ## Start Subject
+   ##
+   ##
+   ##############################
+
+   #if ($!myResource.getHasSubject())
+
+<h2 class="egmsheading">$!i18n.egms_subject</h2>
+
+   #if ($!resource.getSubject())
+      #displaylist($myResource.wrapArray($!resource.getSubject()) $!utils)
+   #end
+
+   #if ($!resource.getCategory())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_subject_category</h2>
+   #displaylist($myResource.wrapArray($!resource.getCategory()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getKeyword())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_subject_keyword</h2>
+   #displaylist($myResource.wrapArray($!resource.getKeyword()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getSubjectPerson())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_subject_person</h2>
+   #displaylist($myResource.wrapArray($!resource.getSubjectPerson()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getProcessIdentifier())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_subject_process_identifiers</h2>
+   #displaylist($myResource.wrapArray($!resource.getProcessIdentifier()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getProgramme())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_subject_programme</h2>
+   #displaylist($myResource.wrapArray($!resource.getProgramme()) $!utils)
+</div>
+   #end
+
+   #if ($!resource.getProject())
+<div class="egmslevel2">
+   <h2 class="egmsheading">$!i18n.egms_subject_project</h2>
+   #displaylist($myResource.wrapArray($!resource.getProject()) $!utils)
+</div>
+   #end
+   #end
+
+
+   ##############################
+   ##
+   ## Start Type
+   ##
+   ##
+   ##############################
+
+   #if ($!resource.getResourceType())
+<h2 class="egmsheading">$!i18n.egms_resource_type</h2>
+   #displaylist($myResource.splitText($!resource.getResourceType()) $!utils)
+   #end

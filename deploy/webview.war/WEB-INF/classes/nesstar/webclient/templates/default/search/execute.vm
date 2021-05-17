@@ -1,0 +1,12 @@
+
+#if ($!searchView.isExecute())
+<script type="text/javascript">
+			try {
+				window.opener.parent.tree.applySearch();
+				window.opener.parent.tree.applyAdvancedSearch('$!searchView.getExecuteLink()');
+			} catch(error) {
+			  alert(error);
+				alert('$!{i18n.advanced_search_error}')
+			}
+</script>
+#end

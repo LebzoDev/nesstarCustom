@@ -1,0 +1,29 @@
+#if ($!searchView.getSearchMenu())
+<table class="menutable" cellspacing="0" cellpadding="0" border="0" summary="">
+  <tr class="mainmenu">
+  	<td class="menubackground menubackgroundlast"></td>
+		#foreach ($field in $!searchView.getSearchMenu())
+			#if ($!field.getIsSelected())
+				#set ($style = 'selected')
+			#else
+				#set ($style = 'notselected')
+			#end
+    <td class="bothmenus $!style">
+				#if ($!field.getLink())
+      <a href="$!field.getLink()">$!field.getLabel()</a>
+				#else
+					$!field.getLabel()
+				#end
+    </td>
+		#end
+	
+	<td style="width: 100%"></td>
+	
+	<td class="menubackground">
+		<a id="imagehelp" href="$!help.getHelpFile($!currentlyActiveLanguageISO)" target="help" title="$i18n.Help"></a>
+	</td>
+	
+	<td class="menubackground menubackgroundlast"></td>
+  </tr>
+</table>
+#end

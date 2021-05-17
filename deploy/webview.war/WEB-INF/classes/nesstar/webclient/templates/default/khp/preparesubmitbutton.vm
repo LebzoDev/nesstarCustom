@@ -1,0 +1,13 @@
+#if($!{props.getKHPOutput()} == "spider")
+   #set($buttonname = "spider")
+   #set($buttontext = $!i18n.spider)
+   #if($!{props.getKHPSelectionMode()} == "sets")
+      #set($onclickmethod = "return parent.leftside.validateBeforeMultiProfileSubmit()")
+   #else
+      #set($onclickmethod = "return parent.leftside.validateBeforeProfileSubmit()")
+   #end
+#else
+   #set($buttonname = "exe")
+   #set($buttontext = $!i18n.next)
+   #set($onclickmethod = "return parent.leftside.validateBeforeTableSubmit()")
+#end

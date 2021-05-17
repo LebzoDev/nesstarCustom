@@ -1,0 +1,19 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+   <head>
+      <title>$!i18n.htmlTitle</title>
+      <link href="$!context/$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!context/$!{props.getSkinPath()}css/khp.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+   </head>
+   <body class="submitframe">
+
+<div id="controller">
+
+#parse("khp/preparesubmitbutton.vm")
+
+<button id="$!buttonname" class="executebutton" type="submit" name="$!buttonname" onclick="$!{onclickmethod};">$!buttontext</span>
+
+</div>
+</body>
+</html>

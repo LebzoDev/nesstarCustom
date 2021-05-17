@@ -1,0 +1,62 @@
+#macro (traverse $node $i18n $props $utils)
+#set ($thislevel = $!node.getLevel())
+##Increment counter
+<ul class="browsetree">
+   #foreach ($child in $!node.children())
+      #if ($!child.isOpen() && ($!child.getType() == 'Study' || $!child.getType() == 'Cube'))
+         <li class="studyopen">
+      #else
+         <li>
+      #end
+      #if (!(!$!props.allowToolTipsInBrowseTree() && $!child.getType() == 'Variable'))
+         #set ($theTooltip = $!utils.escape($!child.getTooltip()))
+         #if ("$!theTooltip" == "")
+            #set ($theTooltip = $!utils.escape($!child.getLabel()))
+         #end
+      #end
+      #parse("tree/recursive/images.vm")#parse("tree/recursive/text.vm")
+      #set ($theTooltip = "")
+      #if (!$!child.isOpen())
+         #set ($nextclass = 'nextlevel')
+      #else
+         #set ($nextclass = '')
+      #end
+      #if ($!child.isOpen() && ( $!child.getType() == 'Study' || $!child.getType() == 'Cube'))
+         <div class="$!nextclass" id="finddiv">
+         <script type="text/javascript">
+            previousStudy = xGetElementById('finddiv');
+         </script>
+      #else
+         <div class="$!nextclass">
+      #end
+      #if ( $!child.isOpen() && $!child.getAllowsChildren())
+      	#traverse($!child  $!i18n $!props $!utils)
+      #end
+      </div>
+      </li>
+   #end      
+</ul>
+#end
+
+<div class="topcopy" id="topcopy">
+   #traverse($!treeRootNode $!i18n $!props $!utils)
+   <script type="text/javascript">
+      if (this.name == "login") {
+         //When the treecontent is shown on rightside (after successful tree-initialised login 
+         //in temporarilly shown login frame), hide the loginframe and copy contents to the tree.
+         
+         var frameset = parent.document.getElementById('set');
+         loginframesize = frameset.cols;
+         var firstSize = loginframesize.split(",")[0];
+         frameset.cols = firstSize + ", *, 0px";     
+         
+         var contentFrame =  parent.document.getElementById("content");          
+         var contentFrameset = contentFrame.contentDocument.getElementById("contentoncemore");         
+         var treeFrame = contentFrameset.children["tree"];                
+         emptyBranch = treeFrame.contentDocument.getElementById('waitforloginspan');
+         branchContent = document.getElementById('topcopy').innerHTML;
+         emptyBranch.parentNode.innerHTML = branchContent;    
+      }
+   </script>
+   
+</div>

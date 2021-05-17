@@ -1,0 +1,16 @@
+#parse("khp/indicatormacro.vm")
+
+#if ($indicators)
+<li class="label #if($!browselistmode == "spider")invisible#end"#if($!browselistmode == "spider")id="invisibleindicators"#end>
+   <div id="indorigo"><span class="origotitle">$!i18n.indicator</span>
+      <span class="searchcombo">
+      <input id="indicators_textinput" type="text" size="25" tabindex="1" value="$!i18n.sok_indikator" onfocus="javascript: this.value = '';"/>
+      </span>
+      <div class="autocomplete-trix">
+      <a class="formresetter" title="$!i18n.deselect" onclick="uncheckAll('indicators');">$!i18n.deselect</a>
+      <div id="indicators_textinput_container"></div>
+      </div>
+   </div>
+   #indicatorentry($!indicators.getRoot() false $context $!{props.getKHPOutput()})
+</li>
+#end

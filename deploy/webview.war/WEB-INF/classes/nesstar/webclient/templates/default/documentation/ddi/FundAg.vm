@@ -1,0 +1,23 @@
+#macro ( singlefunding $sub $!i18nDdi )
+	<tr>
+	  <td>$!sub.Content</td>
+      <td>$!sub.Abbreviation</td>
+		<td>$!sub.Role</td>
+		<td>$!sub.Grant</td>
+   </tr>
+#end
+
+<h3 class="ddititle">
+	$!node.Name
+</h3>
+<table class="doctable" border="1">
+   <tr>
+      <th>$!i18nDdi.name</th>
+      <th>$!i18nDdi.abbr</th>
+      <th>$!i18nDdi.role</th>
+      <th>$!i18nDdi.grant</th>
+   </tr>
+	#foreach ($sub in $!node.SubNodes)
+ 		#singlefunding($sub $!i18nDdi)
+	#end
+</table>

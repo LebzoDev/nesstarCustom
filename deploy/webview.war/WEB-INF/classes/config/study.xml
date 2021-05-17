@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--<!DOCTYPE codeBook SYSTEM "codebook-1.2.2.dtd">-->
+<codeBook version="" ID="">
+   <stdyDscr>
+      <citation>
+         <titlStmt>
+            <titl/>
+            <IDNo/>
+         </titlStmt>
+         <rspStmt>
+            <AuthEnty/>
+         </rspStmt>
+         <prodStmt>
+            <producer/>
+            <copyright/>
+            <fundAg/>
+         </prodStmt>
+         <distStmt>
+             <distrbtr>
+                <abbr/>   
+            </distrbtr>
+            <depositr/>
+         </distStmt>
+      </citation>
+      <stdyInfo>
+         <subject>
+            <keyword/>
+            <topcClas/>
+         </subject>
+         <abstract/>
+         <sumDscr>
+            <timePrd date=""/>
+            <geogCover/>
+            <geogUnit/>
+            <anlyUnit/>
+            <universe/>
+            <dataKind/>
+         </sumDscr>
+      </stdyInfo>
+      <method>
+         <dataColl>
+            <sources>
+               <dataSrc/>
+            </sources>
+            <timeMeth/>
+            <sampProc/>
+            <collMode/>
+            <weight/>
+         </dataColl>
+         <anlyInfo>
+             <dataAppr/>
+         </anlyInfo>
+      </method>
+      <dataAccs>
+         <useStmt>
+            <restrctn/>
+         </useStmt>
+         <setAvail>
+            <accsPlac/>
+         </setAvail>
+      </dataAccs>
+   </stdyDscr>
+   <dataDscr>
+      <varGrp name="">
+         <labl/>
+         <concept/>
+      </varGrp>
+      <var name="">
+         <txt/>
+         <labl/>
+         <qstn>
+            <preQTxt/>
+            <qstnLit/>
+            <postQTxt/>
+         </qstn>
+         <concept/>
+         <catgry>
+            <labl/>
+         </catgry>
+      </var>
+   </dataDscr>
+</codeBook>

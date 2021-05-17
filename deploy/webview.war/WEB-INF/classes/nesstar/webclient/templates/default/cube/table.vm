@@ -1,0 +1,304 @@
+#parse ("doctype/doctypepage.vm")
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+   <head>
+      <title>$!frametitle</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      #parse ("cache/cacheHeader.vm")
+      <link href="$!{props.getSkinPath()}css/cube.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!{props.getSkinPath()}css/draganddrop.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!{props.getSkinPath()}css/documentation.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      
+      <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+      
+      <script type="text/javascript">
+         var skinPath = '$!{props.getSkinPath()}';
+      </script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/cube.js?$!props.getTimestamp()"></script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/draganddrop.js?$!props.getTimestamp()"></script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/table.js?$!props.getTimestamp()"></script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/bookmark.js?$!props.getTimestamp()"></script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery-1.8.2.min.js?$!props.getTimeStamp()"></script>
+      <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery.cookie.js?$!props.getTimestamp()"></script>
+            
+      <script type="text/javascript">
+		$(document).ready(function() {
+			var scrOfY;
+			if ($!TableVmScrollPosition){
+		    	scrOfY = jQuery.cookie("currentScrollPosition")- 30;
+		    }else{
+		    	scrOfY = jQuery.cookie("currentScrollPosition");
+		    }
+		    
+		    jQuery.cookie("currentScrollPosition", null);
+		    if(scrOfY>=0){
+				$('html,body').animate({scrollTop : scrOfY}, $!TableVmScrollAnimateDuration);
+			}
+			
+     		$('a[href*=#]').click(function() {
+     			if ($!TableVmScrollPosition){
+     			 	jQuery.cookie("currentScrollPosition", $(this).offset().top);
+     			}else{	 
+					var yScroll=0;
+					if (window.pageYOffset) {
+						yScroll = window.pageYOffset;
+					} else if (document.documentElement && document.documentElement.scrollTop) {
+						yScroll = document.documentElement.scrollTop;
+					} else if (document.body && document.body.scrollTop) {
+						yScroll = document.body.scrollTop;
+					} 
+     			 	jQuery.cookie("currentScrollPosition", yScroll);		
+				}
+     		});
+		});      
+	  </script>
+
+      <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      #parse( "header.vm" )
+      #if (!$!embed)
+         #if ($doprint)
+           <link href="$!{props.getSkinPath()}css/printspecials.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+         #end
+      #end
+   </head>
+   #if (!$!embed)
+      #if ($!doprint && !$!viewer.getIsLogin())
+         #set ($onload = "window.print();")
+      #else
+         #set ($onload = "setScrollableSize();")
+      #end
+   #end
+
+   <body onload="$!onload highlightSearch()" class="yui-skin-sam">
+         ## If embed, take this away
+         #if (!$!embed)
+            <div id="dropzone">
+            #parse( "menu/menu.vm" )
+         #end
+         <div class="mozview bodypadder" id="exploder">
+            #if (!$!embed)
+               #parse( "toptitle.vm" )
+               #parse ("embedlink.vm")
+               #parse( "loading.vm" )
+               <div id="hidearea">
+            #end
+            #if (!$!embed)
+               ## If it is not a login, then display the menues
+               #if (!$!viewer.getIsLogin())
+                  #if (!$!isReferenceCube)
+                     #if ($!props.useNewMenus())
+                        #parse( "dimensionchooser.vm" )
+                     #else
+                        #parse( "cube/form.vm" )
+                     #end
+                  #end
+               #end
+               ## Embed takes the above away
+            #end
+               #if ($!showTitle)
+                  #parse ("toptitle.vm")
+               #end
+               #parse ("embedlink.vm")
+               #if ($!showGraphButton || $!showMapButton || $!showTableButton)
+                  #if (!$!viewer.getIsLogin())
+                     #parse ("menu/embedmenu.vm")
+                  #end
+               #end
+               #if ($!viewer.getIsLogin())
+                  #parse ("login/loginform.vm")
+               #elseif ($!errormessage)
+                  <div class="errormessage">$utils.escape($!{errormessage})</div>
+               #else
+                  <table class="matrix" border="0" id="tabell">
+			         #set ($idcounter = 0)
+			         #set ($indicatorPanelCounter = 0)
+                     #foreach ($row in $table)
+                        <tr>
+                           #foreach ($element in $row)
+                              #set ( $rowspan = $element.rowspan )
+                              #set ( $colspan = $element.colspan )
+                              #set ( $class = $element.type)
+
+                              #if ($class == 'stublabel')
+                                 #set ($title = $!i18n.canmovetocolumn)
+                              #elseif ($class == 'headlabel')
+                                 #set ($title = $!i18n.canmovetorow)
+                              #else
+                                 #set ($title = '')
+                              #end
+
+                              #if ($!element.code == 'droptoheader')
+                                 #set ($class = 'empty')
+                                 #set ($title = "")
+                              #elseif ($!element.code == 'droptostub')
+                                 #set ($class = 'emptystub')
+                                 #set ($title = "")
+                              #end
+
+                              #if ($class == 'stublabel' || $class == 'headlabel' || $class == 'empty' || $class == 'emptystub')
+                                 #if ($class != 'empty' && $!embed) #set($embedclass = " embedded") #end
+                                 <td class="$!class$!embedclass" id="var$!element.code" title="$!title" rowspan="$!rowspan" colspan="$!colspan">
+                                 #if ($!element.label && $!element.label.length() > 0)
+                                    $!element.label
+                                 #else
+                                    &nbsp;
+                                 #end
+
+                                 #if (!$!doprint && !$!isReferenceCube)
+                                    <div class="$!class" id="var${element.code}div" style="display:none; position: absolute; left: 0px; right:0px; z-index: 500;">
+                                       $element.label
+                                    </div>
+                                 #end
+                                 #if ( ($class == 'empty' || $class == 'emptystub') && $!element.desc && $!element.asc )
+                                    #parse ("sorting/sorting.vm")
+                                 #end
+                                 </td>
+                                 #if (!$!doprint && !$!isReferenceCube)
+                                    ## We don't want draggable in embed
+                                    #if (!$!embed)
+                                       <script type="text/javascript">
+                                          makeDraggable('var$!{element.code}');
+                                       </script>
+                                       ## Make sure tableHighlight still works (is invoked by makeDraggable())
+                                    #else
+                                       <script type="text/javascript">
+                                          document.onclick = doTableHighlight;
+                                       </script>
+                                    #end
+                                 #end
+                              #else
+                                 #if ($!class != 'matrix')
+                                    #set ($currentclass = $!class)
+                                 #else
+                                    #set ($currentclass = "")
+                                 #end
+
+                                 #if ($!element.itemmetadata && !$!doprint)
+                                    #if ($!currentclass != "")
+                                       #set ($space = " ")
+                                    #else
+                                       #set ($space = "")
+                                    #end
+                                    #set ($item = 'item')
+                                    #set ($currentclass = "$!{currentclass}$!{space}$!{item}")
+                                 #end
+
+                                 ## Counting through the columns to prevent ID's becoming identical
+                                 #if($!element.itemmetadata)
+                                    #set ($idcounter = $!idcounter + 1)
+                                 #end
+
+                                 <td #if ($!currentclass != "") class="$!currentclass"#end
+                                 #if ($!class != 'matrix') rowspan="$!rowspan" colspan="$!colspan"#end #if ($!element.itemmetadata)
+                                 id="$!{element.itemid}_$!idcounter" #end >
+                                 #if ($!element.itemmetadata)
+                                    #if (!$!doprint)
+                                       <div id="$!{element.itemid}mod"></div>
+
+                                       <script type="text/javascript">
+                                          var myTooltip = new YAHOO.widget.Tooltip("$!{element.itemid}tip", { context:"$!{element.itemid}_$!idcounter", text:"$!element.itemmetadata", showDelay:$!{props.getTooltipShowDelay()}, autodismissdelay:$!{props.getAutoDismissDelay()},iframe:true, preventoverlap:true } );
+                                       </script>
+                                    #end
+                                 #end
+                                 #if ($!element.subset && !$!doprint && !$!isReferenceCube && !$!embed)
+                                    <a #if ($!element.scrolltag.length() > 0) id="$!element.scrolltag" #end #if ($!element.CollapseOrExpandLinkToolTips.length() > 0) title="$!element.CollapseOrExpandLinkToolTips" #end href="$!element.link" onclick="return hideTheViewArea($!element.tooLarge)">$element.label</a>
+                                 #else
+                                    #if ($!element.label && $!element.label.length() > 0)
+                                       $!element.label
+                                    #else
+                                       &nbsp;
+                                    #end
+                                 #end
+                                 #if ($!element.super && $!doprint)
+                                    <sup>$!element.super</sup>
+                                 #end
+                                 #if ($!element.linkcategorytext && !$!doprint)
+                                    <a href="$!element.linkcategorytext" target="_blank" title="$!i18n.metadata" class="linkcategory"><img src="$!{props.getSkinPath()}/images/categoryinfo.png" alt="categoryinfo" /></a>
+                                 #end
+                                 #if ($!element.indicatorDefinitionID && $!props.enableIndicatorDocumentation() && !$!embed)
+                                    <img src="$!{props.getSkinPath()}images/info.png" alt="Documentation" id="btn_$!{element.indicatorDefinitionID}_$!indicatorPanelCounter" class="indicatorlink"/>
+                                    <script type="text/javascript">
+                                       YAHOO.util.Event.addListener("btn_$!{element.indicatorDefinitionID}_$!indicatorPanelCounter","click", showIndicatorPanel, "$!element.indicatorDefinitionID");
+                                    </script>
+                                    #set ($indicatorPanelCounter = $!indicatorPanelCounter + 1)
+                                 #end
+                                 #parse ("sorting/sorting.vm")
+                                 </td>
+                              #end
+                           #end
+                       </tr>
+                    #end
+                 </table>
+                 
+                 #if (!$!embed && $!suppression)
+                  <div id="tablemsg">
+                    $!i18n.suppression_missing_table
+                      #if ($!menuClass.getLeftMenu().size() > 1)
+                        #foreach ($field in $!menuClass.getLeftMenu())
+                            #if ($field.id == "menudesc")
+                                <span>$!i18n.suppression_missing_table_reason_link <a href=$field.href>$field.label</a></span>
+                            #end
+                        #end
+                      #end
+                  </div>
+               #end
+                 
+                 #set ($markings = $!cube.getMarkingLegend())
+
+                 #if ($!markings && $!markings.size() > 0)
+                    <div id="cellmarkings">
+                       <h4>$!i18n.cellMarkings</h4>
+                       <dl>
+                          #foreach ($mark in $markings)
+                             <dt>$!mark.getLabel()</dt>
+                             <dd>$!mark.getText()</dd>
+                          #end
+                       </dl>
+                    </div>
+                 #end
+
+                 ## If embed, remove all unnecessary info
+                 #if (!$!embed)
+                    #if ($!doprint)
+                       #if ($!parser.getItemLevelMetadata())
+                          <ul id="itemlist">
+                             #set ($counter = 1)
+                             #foreach ($item in $!parser.getItemLevelMetadata())
+                                <li><span><sup>$counter</sup>$!item</span></li>
+                                #set ($counter = $counter + 1)
+                             #end
+                          </ul>
+                       #end
+                    #end
+                 #end
+
+                 #if ($!isReferenceCube)
+                    <div class="referencehelp">$!i18n.hinge_reference_cube_help</div>
+                 #end
+
+               #if(!$!embed)
+                 #parse( "copyright/copyright.vm" )
+                 </div><!-- end hidearea -->
+                 #if ($!props.inlineMetaData() && !$!doprint)
+                    <div id="metaBuffer">&nbsp;</div> 
+                 #end
+                 <div class="footer">
+                    #include( "static/footer.html" )
+                 </div>
+               #end
+               #parse( "help/help.vm" )
+           </div><!-- end exploder -->
+               #if(!$!embed)
+                 #if (!$!viewer.getIsLogin())
+                    #if ($!props.inlineMetaData() || $!props.inlineMetaDataPrint())
+                       #parse( "documentation/documentation2.vm" )
+                    #end
+                 #end
+               #end
+           ## Embed end
+         #end
+         #if(!$!embed)
+            </div><!-- end dropzone -->
+         #end
+   </body>
+</html>

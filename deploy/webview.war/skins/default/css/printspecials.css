@@ -1,0 +1,29 @@
+table.matrix {
+    border-collapse: collapse;
+}
+table.matrix, table.matrix td, table.matrix td.stublabel, table.matrix td.empty, table.matrix td.emptystub {
+    border: 1px solid #000;
+}
+table.matrix td.headlabel, table.matrix td.stublabel {
+    cursor: default !important;
+}
+
+table.matrix {
+    border-collapse: collapse;
+}
+table.matrix td.headlabel, table.matrix td.stublabel {
+    cursor: default !important;
+}
+
+table.matrix td {
+   background-color: #ffffff;
+   border: 1px solid #d8d8d8 !important;
+}
+
+table.matrix td.stub, table.matrix td.stublabel, table.matrix td.header, table.matrix td.headerlast, table.matrix td.headlabel {
+   background-color: #fff !important;
+}
+
+h4.print{
+   font-weight: normal;
+}

@@ -1,0 +1,163 @@
+#if ($!searchView.isExecute() && $!searchView.getHasCatalogs() == false)
+<div class="errormessage" style="margin-top: 15px">$!i18n.get("nocatalogs")</div>
+#end
+
+<form id="advancedform" name="advancedform" action="$!form_action" method="get" accept-charset="UTF-8">
+  <h3>$!i18n.searchcriteria</h3>
+  <div class="expressions">
+  	#foreach ($row in $!searchView.getRows())
+  	<div class="express_row" id="$!{searchView.getNamePrefix()}express_row$!row.id" style="$!row.style">
+  		
+  		#if ($!row.conjunctions)
+          <select name="$!{searchView.getNamePrefix()}b$!row.id" class="conjunction">
+			#foreach ($field in $!row.conjunctions)
+				#if ($!field.selected)
+					<option value="$!field.value" selected="selected">$!field.label</option>
+				#else
+					<option value="$!field.value">$!field.label</option>
+				#end
+			#end
+          </select>
+        #end
+        
+        <select onchange="fieldChanged(this, '$!{searchView.getNamePrefix()}t$!row.id')" id="$!{searchView.getNamePrefix()}f$!row.id" name="$!{searchView.getNamePrefix()}f$!row.id"#if (!$!row.conjunctions) class="firstcriteria"#end>
+			#foreach ($field in $!row.fields)
+				#if ($!field.selected)
+					<option value="$!field.value" selected="selected">$!field.label</option>
+				#else
+					<option value="$!field.value">$!field.label</option>
+				#end
+			#end
+		</select>
+		
+		<span class="contains">$!i18n.search_op_cont</span>
+		
+		#if (!$!searchView.isLuceneAvailable())
+			<select name="$!{searchView.getNamePrefix()}o$!row.id">
+				#foreach($operator in $!row.operators)
+					#if ($!operator.selected)
+						<option value="$!operator.value" selected="selected">$!operator.label</option>
+					#else
+						<option value="$!operator.value">$!operator.label</option>
+					#end
+				#end
+			</select>
+        #end
+        
+        <input type="text" class="textfield" id="$!{searchView.getNamePrefix()}t$!row.id" name="$!{searchView.getNamePrefix()}t$!row.id" value="$!row.word"/>
+        
+        #if ($!searchView.getIfMoreIsDisabled())
+    		<button class="moreless disabled button" type="button" name="more" value="add">+</button>
+    	#else
+    		<button class="moreless button" type="button" name="more" onclick="return moreFields('$!{searchView.getNamePrefix()}', '$!{row.id}')" value="add">+</button>
+		#end
+
+		#if ($!searchView.getIfLessIsDisabled())
+			<button class="moreless disabled button" type="button" name="less" value="remove">-</button>
+		#else
+			<button class="moreless button" type="button" name="less" onclick="lessFields('$!{searchView.getNamePrefix()}', '$!{row.id}')" value="remove">-</button>
+		#end
+		
+  	</div><!-- end express row -->
+  	#end
+  
+    <input type="hidden" id="howmany" name="$!{searchView.getNamePrefix()}num" value="$!searchView.getCurrentFieldCount()"/>
+    <input type="hidden" id="addrowafter" name="$!{searchView.getNamePrefix()}addrowafter" value="-1"/>
+    <input type="hidden" id="removerow" name="$!{searchView.getNamePrefix()}removerow" value="-1"/>
+    <input type="hidden" name="searchtype" value="$!searchView.getSearchType()"/>
+	#if ($!request.getParameter("language") )
+    	<input type="hidden" name="language" value="$!request.getParameter('language')"/>
+	#end
+
+  </div> <!-- end criteria -->
+
+  <div class="searchforwhat">
+  	
+  	#set ($typecount = 0)
+    #if ($!searchView.getIsStudySearchAllowed()) #set ($typecount = $typecount + 1) #end
+    #if ($!searchView.getIsVariableSearchAllowed()) #set ($typecount = $typecount + 1) #end
+    #if ($!searchView.getIsCubeSearchAllowed()) #set ($typecount = $typecount + 1) #end
+		
+	#if ($!searchView.includeTypeSelection())
+		#if ($typecount == 1)		
+			#if ($!searchView.getIsStudySearchAllowed())		
+       			<input type="hidden" name="$!{searchView.getNamePrefix()}includewhat" value="includestudy" id="includestudyradio" />		
+			#end
+			#if ($!searchView.getIsVariableSearchAllowed())          
+            	<input type="hidden" name="$!{searchView.getNamePrefix()}includewhat" value="includevariable" id="includevariableradio" />	
+			#end
+			#if ($!searchView.getIsCubeSearchAllowed())        
+        		<input type="hidden" name="$!{searchView.getNamePrefix()}includewhat" value="includecube" id="includecuberadio" />	
+			#end        	
+		#elseif ($typecount > 1)
+			<span>$!i18n.forwhat:</span>
+			#if ($!searchView.getIsStudySearchAllowed())
+				#if ($!searchView.getIfStudyIsSelected())
+        			<input type="radio" name="$!{searchView.getNamePrefix()}includewhat" value="includestudy" checked="checked" id="includestudyradio" /><label for="includestudyradio">$!i18n.includestudy</label>
+				#else
+          			<input type="radio" name="$!{searchView.getNamePrefix()}includewhat" value="includestudy" id="includestudyradio" /><label for="includestudyradio">$!i18n.includestudy</label>
+				#end
+			#end
+				
+			#if ($!searchView.getIsVariableSearchAllowed())          	
+				#if ($!searchView.getIfVariableIsSelected())
+          			<input type="radio" name="$!{searchView.getNamePrefix()}includewhat" checked="checked" value="includevariable" id="includevariableradio" /><label for="includevariableradio">$!i18n.includevariable</label>
+				#else
+          			<input type="radio" name="$!{searchView.getNamePrefix()}includewhat" value="includevariable" id="includevariableradio" /><label for="includevariableradio">$!i18n.includevariable</label>
+				#end	
+			#end
+				
+			#if ($!searchView.getIsCubeSearchAllowed())          
+				#if ($!searchView.getIfCubeIsSelected())
+	    			<input type="radio" name="$!{searchView.getNamePrefix()}includewhat" checked="checked" value="includecube" id="includecuberadio" /><label for="includecuberadio">$!i18n.includecube</label>
+				#else
+          			<input type="radio" name="$!{searchView.getNamePrefix()}includewhat" value="includecube" id="includecuberadio" /><label for="includecuberadio">$!i18n.includecube</label>
+				#end
+			#end
+		#end
+	#end	
+  </div><!-- end searchforwhat -->
+
+<div class="buttonpadder">
+  <input type="submit" id="startsearch" onclick="return setExecute('$!{searchView.getNamePrefix()}');" class="button" value="$i18n.Search">
+  	<div id="searchhelp" class="searchcompleted">
+  		<div>
+  			<h2>$!i18n.pleasenote</h2>
+  			<p>$!i18n.searchwindow</p>
+  		</div>
+  		<img id="searchhelptip" src="$!{props.getSkinPath()}images/tip.gif" alt="tip" title=""/>
+  	</div>
+  </div>
+    
+  #parse( "search/catalogs.vm" )
+
+  <input type="hidden" name="id" value="search"/>
+  <input type="hidden" id="execute" name="execute" value="false"/>
+	#if ($!searchView.getFormEntries())
+		#foreach ($entry in $!searchView.getFormEntries())
+  <input type="hidden" name="$utils.htmlEscape($!entry.name)" value="$utils.htmlEscape($!entry.value)"/>
+		#end
+	#end
+
+</form>
+
+#if ($!searchView.getTreeAsList())
+<script type="text/javascript">
+
+		var form = document.getElementById("advancedform");
+		if (form) {
+			form.onkeydown = doExecuteOnKey;
+		}
+
+		function doExecuteOnKey(e) {
+			return executeOnKey('$!{searchView.getNamePrefix()}',e);
+		}
+		
+		var fields = new Array();
+		#foreach ($item in $!searchView.getTreeAsList())
+			fields[fields.length] = $item.isDateField();
+		#end
+</script>
+#end
+
+#parse( "search/execute.vm" )

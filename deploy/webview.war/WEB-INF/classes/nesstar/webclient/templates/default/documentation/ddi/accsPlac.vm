@@ -1,0 +1,16 @@
+<h3 class="ddititle">
+	$!node.Name
+</h3>
+<ul class="keywordnode">
+	#foreach ($sub in $!node.SubNodes)
+    <li>
+			#if ($!sub.getAttribute('URI'))
+      <a href="$!sub.getAttribute('URI')" target="_new">
+			#end
+            $!sub.Content
+			#if ($!sub.getAttribute('URI'))
+      </a>
+			#end
+    </li>
+    #end
+</ul>

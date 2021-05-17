@@ -1,0 +1,45 @@
+#macro (menuentry $dimension $close $variable $context $outputmode $levelno)
+  #set($newlevelno = $levelno + 1)
+   #if ($!close)
+      #set ($class = 'class="closed"')
+      #set ($liid = '')
+   #else
+      #set ($class = 'class="top"')
+      #set ($liid = 'id="dimensions"')
+   #end
+   #if ($!dimension.isOpen() )
+     #set ($style= ' style="display:block"')
+   #else
+      #set ($style = '')
+   #end
+   <ul $!class $!style>
+   #foreach ($child in $!dimension.children())
+   <li $!liid>
+   #if (!$!child.isLeaf())
+   #if ($!child.isOpen())
+      #set ($image = 'minus.gif')
+   #else
+      #set ($image = 'plus.gif')
+   #end
+   <img onclick="toggle(this)" src="$!context/skins/default/images/$!{image}" alt="Neste niv&aring;"/>
+   #end
+   ##Check selected indicators
+   #if ($!variable.isSelected($!child.getCode()))
+      #set ($selected = 'checked="checked"')
+   #else
+      #set ($selected = '')
+   #end
+   ##Root level not selectable in spiderweb-environments
+   #if($!{props.getKHPOutput()} == "spider" && $levelno == 1)
+      <input type="hidden" $!selected name="$!variable.getKey()" id="$!variable.getVarCode()$!child.getCode()" value="$child.getCode()" class="checkbox"/>
+   #else
+      <input type="checkbox" $!selected name="$!variable.getKey()" id="$!variable.getVarCode()$!child.getCode()" value="$child.getCode()" class="checkbox"/>
+   #end
+   <label for="$!variable.getVarCode()$!child.getCode()">$child</label>
+   #if (!$!child.isLeaf())
+   #menuentry($!child true $variable $context $outputmode $newlevelno)
+   #end
+</li>
+   #end
+   </ul>
+#end

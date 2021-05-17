@@ -1,0 +1,63 @@
+#if (!$!doprint)
+   #set ( $styles = ["menunotchosen","menunotchosen"])
+   #set ( $title = ["description","source"])
+   #set ( $desclink = $!utils.replaceParameter("view","description"))
+   #set ( $sourcelink = $!utils.replaceParameter("view","source"))
+   #set ( $links = ["$!desclink","$!sourcelink"])
+
+   #set ($view = $!request.getParameter("view"))
+
+   <script type="text/javascript" src="$!props.getSkinPath()javascript/inlinemetadata.js?$!props.getTimestamp()"></script>
+
+   #if (!$!view)
+      #set ($view = 'description')
+   #end
+
+   #if ($!view == "description")
+      #set ($return = $!styles.remove(0))
+      $styles.add(0, "menuchosen")
+   #elseif ($!view == "source")
+      #set ($return = $!styles.remove(1))
+      $styles.add(1, "menuchosen")
+   #end
+   <div class="metadata" id="metadataview">
+     <div id="metadatacontrol" style="display: none" class="hidemetadata">
+       <a href="" onclick="return toggleMetaData()" id="hidemetadatalink">
+         <img id="hidemetadataimg" src="skins/default/images/down.gif" />
+         <span id="metatogglelabel">$!i18n.get("showDoc")</span>
+       </a>
+       
+     </div>
+     <ul id="metadatamenu">
+        #set ($counter = 0)
+        #foreach ($style in $!styles)
+          <li class="$style">
+             <a href="$links.get($!counter)" onclick="hideTheViewArea();">
+              $!i18n.get($!title.get($!counter))
+             </a>
+           </li>
+          #set ($counter = $counter + 1)
+        #end
+     </ul>     
+     <div id="metacontent">
+     #if ($!view == "description")
+       #parse ("documentation/description.vm")
+     #else
+     	#if ($!view == "source")
+       		#parse ("documentation/source.vm")
+     	#end
+     #end
+     <a name="metadataanchor">&nbsp;</a>
+     </div>
+     <!-- Show hide/show control in javascript enabled browsers -->
+     <script type="text/javascript">
+      handleInlineMetadata();
+     </script>
+   </div>
+#else
+##for printer-friendly view
+<div id="metacontentprint">
+  #parse ("documentation/description.vm")
+  #parse ("documentation/source.vm")
+</div>
+#end

@@ -1,0 +1,47 @@
+body {
+    background-color: #efefef;
+    font-family: arial, verdana, helvetica, sans-serif;
+	font-size: 80%;
+	color: #000000;
+	padding: 0px;
+	margin: 0px;
+}
+
+a {
+    text-decoration: none;
+}
+
+span.nesstar  {
+    font-size: 2em;
+    font: arial, verdana;
+    color: #6688aa;
+    font-weight: bold;
+}
+
+/* A class for the light word at the top */
+span.light  {
+    font-size: 2em;
+    color: #99aacc;
+    font: arial, verdana;
+}
+
+/* A class for the version text */
+span.version  {
+    font-size: 0.7em;
+    color: #6688aa;
+}
+
+img {
+	padding: 0px;
+	margin: 0px;
+}
+
+td.background {
+	text-align: right;
+	width: 80%;
+	background-image: url('../images/skraaboxtop.gif');
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: 100% 0%;
+
+}

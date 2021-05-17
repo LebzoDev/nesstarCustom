@@ -1,0 +1,341 @@
+#set ($counter = 0)
+
+  ##If compute, use other variables
+  #if ($!compute.getView().getVariables())
+  #set ($variables = $!compute.getView().getVariables())
+  #else
+  #set ($variables = $!documentation.getVariables())
+  #end
+
+  #foreach ($variable in $variables)
+  #if ($counter > 0)
+  #set ($varClass = 'multiplevariables')
+  #else
+  #set ($varClass = 'multiplevariables variableheader')
+  #end
+  ## heading
+
+
+#set ($varURL = $variable.getID().toString())
+#set ($addToCartURL = $utils.replaceParameter('addVariableToCart', "$varURL"))
+#set ($addToStubsURL = $utils.addVariableToStubs($!varURL))
+#set ($addToHeadsURL = $utils.addVariableToHeads($!varURL))
+#set ($addToFiltersURL = $utils.addVariableToFilters($!varURL)) 
+  <ul class="variableActions">
+    #if ($!cart && !$!cart.isResourceInCart($varURL) )
+    <li><a href="$addToCartURL">$i18n.shoppingcart_add_var</a></li>
+    #end  
+##  <li><a href="$addToHeadsURL">$i18n.treemenu_col</a></li>
+##  <li><a href="$addToStubsURL">$i18n.treemenu_row</a></li>
+##  <li><a href="$addToFiltersURL">$i18n.treemenu_layers</a></li>   
+  </ul>
+  <h3 class="$!varClass">$!i18nDdi.var
+     $!variable.name#if ($!variable.label && $!variable.label.length() > 0): $!utils.escapeHtml($!variable.label)
+  #end
+  </h3>
+
+  #if ($!variable.PreQuestionText)
+<h4 class="allnodes">$!i18nDdi.preqtxt</h4>
+<p class="text">$!utils.escapeHtml($!variable.PreQuestionText, true)</p>
+  #end
+
+  #if ($!variable.QuestionText)
+<h4 class="allnodes">$!i18nDdi.qstnlit</h4>
+<p class="text">$!utils.escapeHtml($!variable.QuestionText, true)</p>
+  #end
+
+  #if ($!variable.PostQuestionText)
+<h4 class="allnodes">$!i18nDdi.postqtxt</h4>
+<p class="text">$!utils.escapeHtml($!variable.PostQuestionText,true)</p>
+  #end
+
+  #if ($!variable.Source)
+<h4 class="allnodes">$!i18nDdi.txt</h4>
+<p class="text">$!utils.escapeHtml($!variable.Source, true)</p>
+  #end
+
+
+  #set ($statistics = $!documentation.getStatistics($!variable))
+
+  #if ($!statistics)
+<table border="0" cellpadding="0" cellspacing="0" style="margin-top: 15px">
+  #foreach ($field in $!statistics)
+  <tr>
+    #if ($field.header)
+    #set ($firstclass = 'allcell head')
+    #set ($secondclass = 'allcell headN')
+    #else
+    #set ($firstclass = 'allcell stringcell')
+    #set ($secondclass = 'allcell numcell')
+    #end
+
+    <td class="$!firstclass">$!utils.escapeHtml($field.value)</td>
+    <td class="$!firstclass">$!utils.escapeHtml($field.label)</td>
+    #if ($field.N)
+    <td class="$!secondclass">$field.N</td>
+    #end
+    #if ($field.NW)
+    <td class="$!secondclass">$field.NW</td>
+    #end
+    #if (!$!field.missing)
+    <td class="graph">
+      <table width="180" cellspacing="0" cellpadding="0" border="0">
+        <tr>
+          <td class="graphonthefly" width="$!field.width"></td>
+          <td>&nbsp;$!field.percentage</td>
+        </tr>
+      </table>
+    </td>
+    #end
+  </tr>
+  #end
+</table>
+  #end
+
+  #set ($recode = $!documentation.getComputeAndRecode($!variable))
+
+  #if ($!recode)
+<h4 class="allnodes">$!utils.escapeHtml($!i18n.computeFormula)</h4>
+<p class="text">$!utils.escapeHtml($!recode.Formula)</p>
+
+  #if ($!recode.IsRecode)
+<h4 class="allnodes">$!utils.escapeHtml($!i18n.recodeScheme)</h4>
+<div class="recode">
+  #set ($test = $!recode.recodes)
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <th class="recode_space">$!utils.escapeHtml($!i18n.recode_origValue)</th>
+      <th class="recode_space">$!utils.escapeHtml($!i18n.recode_newValue)</th>
+      <th class="recode_space">$!utils.escapeHtml($!i18n.recode_label)</th>
+      #if ($!recode.hasMissing)
+      <th class="recode_space">$!utils.escapeHtml($!i18n.recode_isMissing)</th>
+      #end
+    </tr>
+    #foreach ($code in $!recode.recodes)
+    <tr>
+      <td class="recode_space">$!code.from</td>
+      <td class="recode_space">$!code.to</td>
+      <td class="recode_space">$!utils.escapeHtml($!code.label)</td>
+      #if ($!recode.hasMissing)
+      #if ($!code.missing)
+      <td>$!utils.escapeHtml($!i18n.recode_missing)</td>
+      #else
+      <td>&nbsp;</td>
+      #end
+      #end
+    </tr>
+    #end
+    <tr>
+      #if ($!recode.hasMissing)
+      #set ($colspan = '4')
+      #else
+      #set ($colspan = '3')
+      #end
+      #if ($!recode.isOtherAsIs)
+      <td colspan="$!colspan">
+        $!utils.escapeHtml($!i18n.recode_otherasis)
+      </td>
+      #elseif ($!recode.isOtherSysmis)
+      <td colspan="$!colspan">
+        $!utils.escapeHtml($!i18n.recode_otherassysmis)
+      </td>
+      #else
+      <td>$!i18n.recode_others</td>
+      <td>$recode.otherNewValue</td>
+      <td>$!utils.escapeHtml($recode.otherLabel)</td>
+      #if ($!recode.hasMissing)
+      #if ($!recode.otherMissing)
+      <td>$!i18n.recode_missing</td>
+      #else
+      <td>&nbsp;</td>
+      #end
+      #end
+      #end
+    </tr>
+    <!--<tr>
+      <td colspan="$!colspan">$!recode.OtherInformation</td>
+    </tr>-->
+  </table>
+</div>
+  #end
+  #end
+
+
+  ##Summary statistics
+
+  #set ($hasWeightedSumStats = $!documentation.hasWeightedSummaryStatistics($!variable))
+<h4 class="allnodes">$!i18nDdi.sumstat</h4>
+<table class="summary">
+##<tr>
+  ##<th>$i18n.vardoc_type</th>
+  ##<th>$i18n.vardoc_valid</th>
+  ##if ($!hasWeightedSumStats)
+  ##<th class="last">$i18n.vardoc_weighted</th>
+  ##end
+##</tr>
+#if ($!variable.NoValidResponses)
+<tr>
+  <td>
+    $!i18nDdi.valCases
+  </td>
+  <td class="right">
+    $!variable.NoValidResponses
+  </td>
+  #if ($!hasWeightedSumStats)
+  <td class="last right">
+    $!variable.getWeightedNoValidResponses()
+  </td>
+  #end
+</tr>
+#end
+#if ($!variable.NoInvalidResponses)
+<tr>
+  <td>
+    $!i18nDdi.misCases
+  </td>
+  <td class="right">
+    $!variable.NoInvalidResponses
+  </td>
+  #if ($!hasWeightedSumStats)
+  <td class="last right">
+    $!variable.getWeightedNoInvalidResponses()
+  </td>
+  #end
+</tr>
+#end
+#if ($!variable.MinValue)
+<tr>
+  <td>
+    $!i18nDdi.min
+  </td>
+  <td class="right">
+    $!variable.MinValue
+  </td>
+  #if ($!hasWeightedSumStats)
+  <td class="last right"></td>
+  #end
+</tr>
+#end
+#if ($!variable.MaxValue)
+<tr>
+  <td>
+    $!i18nDdi.max
+  </td>
+  <td class="right">
+    $!variable.MaxValue
+  </td>
+  #if ($!hasWeightedSumStats)
+  <td class="last right"></td>
+  #end
+</tr>
+#end
+#if ($!variable.MeanValue)
+<tr>
+  <td>
+    $!i18nDdi.mean
+  </td>
+  <td class="right">
+    $!variable.MeanValue
+  </td>
+  #if ($!hasWeightedSumStats)
+  <td class="last right">$!variable.getWeightedMeanValue()</td>
+  #end
+</tr>
+#end
+#if ($!variable.StdValue)
+<tr>
+  <td>
+    $!i18nDdi.stDev
+  </td>
+  <td class="right">
+    $!variable.StdValue
+  </td>
+  #if ($!hasWeightedSumStats)
+  <td class="last right">
+    $!variable.getWeightedStdValue()
+  </td>
+  #end
+</tr>
+#end
+
+
+#if ($!variable.Format)
+#if ($!variable.Format == 'character')
+#set ($format = $!i18nDdi.alpha)
+#else
+#set ($format = $!i18nDdi.numeric)
+#end
+<tr>
+  <td>
+    $!format
+  </td>
+</tr>
+#end
+</table>
+
+
+  #if ($!variable.getConcept())
+  #set ($myResource = $!documentation.getResource())
+<h4 class="allnodes">$!i18nDdi.concept</h4>
+<ul>
+  #foreach ($item in $!documentation.getConceptItems($!variable))
+  <li>
+    #if ($!item.hasLink())
+      <a href="$!item.getLink()" target="contentFrame">
+    #end
+    $!item
+    #if ($!item.hasLink())
+    </a>
+    #end
+  </li>
+  #end
+</ul>
+  #end
+
+  #if ($!variable.Instructions)
+<h4 class="allnodes">$!i18nDdi.ivuinstr</h4>
+<p class="text">$!utils.escapeHtml($!variable.Instructions, true)</p>
+  #end
+
+  #if ($!variable.Universe)
+<h4 class="allnodes">$!i18nDdi.universe</h4>
+<p class="text">$!utils.escapeHtml($!variable.Universe, true)</p>
+  #end
+
+  #if ($!variable.NoResponses)
+<h4 class="allnodes">$!i18nDdi.totResp</h4>
+<p class="text">$!utils.escapeHtml($!variable.NoResponses, true)</p>
+  #end
+
+  #if ($!variable.Notes)
+<h4 class="allnodes">$!i18nDdi.notes</h4>
+<p class="text">$!utils.escapeHtml($!variable.Notes, true)</p>
+  #end
+
+
+  #set ($extTitle = $!documentation.getExtNotesTitle($!variable))
+  #set ($extURI = $!documentation.getExtNotesURI($!variable))
+  #set ($extRole = $!documentation.getExtNotesRole($!variable))
+
+  ##If no title set, use the url as title
+  #if (!$!extTitle)
+  #set ($extTitle = $!extURI)
+  #end
+
+<h4 class="allnodes">
+  #if ($!extURI)
+  <a href="$!extURI" target="_new">$!extTitle</a>
+  #else
+  $!extTitle
+  #end
+  #if ($!extRole)
+  <span>$!i18nDdi.role $!extRole</span>
+  #end
+</h4>
+
+
+
+  ##increment counter
+  #set ($counter = $counter + 1)
+  #end
+

@@ -1,0 +1,5 @@
+<script type="text/javascript">
+   var tooltips = new Array();
+</script>
+<div id="tooltipcontainer" style="height: 0px; background: green; display:none;">&nbsp;
+</div>

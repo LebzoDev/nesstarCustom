@@ -1,0 +1,235 @@
+div.computingheader {
+	margin-top: 20px;
+	font-weight: bold;
+}
+
+div.computehelp {
+	margin-top: 20px;
+}
+
+div.storehelp {
+	margin-left: 23px;
+}
+
+div.variablebox {
+	padding-left: 5px;
+}
+
+td.padding {
+	padding-left: 5px;
+}
+
+table.numberLabel {
+	margin-top: 8px;
+}
+
+table.numberLabel td {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	font-size: 12px;
+}
+
+table.numberLabel td.label {
+	padding-right: 4px;
+}
+
+
+div.added {
+    font-weight: bold;
+    padding-top: 10px;
+    clear: both;
+    /*float: left;*/
+}
+
+div.commands {
+	padding-top: 10px;
+}
+
+div.addedVariables {
+	width: 500px;
+	height: 200px;
+	overflow: auto;
+	border: 1px solid #000000;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	margin-top: 4px;
+	margin-left: -5px;
+	margin-right: -5px;
+}
+
+div.addedVariables input, table.numberLabel input {
+	float: left;
+}
+
+div.addedVariables div, table.numberLabel label, table.numberLabel div.variablebox {
+	line-height: 22px;
+}
+
+div.categories {
+	width: 200px;
+	height: 100px;
+	overflow: auto;
+	border: 1px solid #000000;
+	margin-top: 4px;
+}
+
+
+form {
+	padding: 0px;
+	margin: 0px;
+}
+
+tr.subtractLabel td {
+	padding-top: 20px;
+}
+
+td.secondline {
+	padding-bottom: 10px;
+}
+
+td.subtract {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-weight: bold;
+}
+
+fieldset.compute {
+	padding: 12px;
+	display: block;
+	width: 490px;
+	background-color:#F6F6F6;
+    border:1px solid #DDDDDD;
+}
+
+fieldset.types {
+	display: inline;
+}
+
+fieldset.subtract{
+	width: 300px;
+}
+
+legend {
+	font-weight: bold;
+	color: #666;
+}
+
+input.recodebutton {
+	color: #000000;
+	border: 1px solid #000000;
+	background-color: #grey;
+	vertical-align: top;
+	width: 50px;
+}
+
+div.recoded {
+	height: 188px;
+	overflow: auto;
+}
+
+td.alignToRadio {
+	padding-left: 20px;
+}
+
+form#recodeForm fieldset, div.block {
+	float: left;
+	display: inline;
+	margin: 10px 0 0 10px;
+	font-size: 9pt;
+}
+
+fieldset.top_value, fieldset.bottom_values, div.block {
+	width: 250px;
+}
+
+fieldset.top_value {
+}
+
+fieldset.bottom_values {
+	height: 214px;
+}
+
+fieldset div {
+	line-height: 20px;
+}
+
+div.recoded ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+div.recoded li {
+	margin: 0;
+	padding: 0;
+	clear: both;
+}
+
+fieldset.new_variable {
+	width: 536px;
+}
+
+fieldset.recode {
+	width: 580px;
+}
+
+.g10, .g20, .g40, .g50, .g60, .g70, .g80, .g100, .g120, .g150, .g200, .g120b {
+	display: inline;
+	float: left;
+	margin: 0 0 0 4px;
+	padding: 0;
+	min-height: 23px;
+}
+.g10 {
+	width: 6px;
+}
+.g20 {
+	width: 16px;
+}
+.g40 {
+	width: 36px;
+}
+.g50 {
+	width: 46px;	
+}
+.g60 {
+	width: 56px;
+}
+.g70 {
+	width: 66px;
+}
+.g80 {
+	width: 76px;
+}
+.g100 {
+	width: 96px;
+}
+.g120, .g120b {
+	width: 116px;
+}
+
+.g120b .button{
+   background-color:#d4cfc9;
+}
+.g150 {
+	width: 146px;
+}
+.g200 {
+	width: 196px;
+}
+.gc {
+	text-align: center;
+}
+.gclear {
+	clear: both;
+	height: 10px;
+}
+.g10 p, .g20 p, .g40 p, .g50 p, .g60 p, .g70 p, .g80 p, .g100 p, .g120 p, .g150 p, .g200 p {
+	paddig: 0;
+	margin: 0;
+}
+.g10 input, .g20 input, .g40 input, .g50 input, .g60 input, .g70 input, .g80 input, .g100 input, .g120 input, .g150 input, .g200 input {
+	width: 100%;
+	padding: 0;
+}

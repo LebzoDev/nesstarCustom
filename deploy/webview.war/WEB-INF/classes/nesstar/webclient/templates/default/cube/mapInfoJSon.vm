@@ -1,0 +1,56 @@
+{
+  "header": "$!map.legendHeader",
+  "maxNumGroups": "$!map.maxNumGroups",
+  "nameLabelsEnabled": "$!map.nameLabelsEnabled",
+  "valueLabelsEnabled": "$!map.valueLabelsEnabled",
+  "shaderType": "$!map.groupingType",
+  "mapImageURI": "$!map.imageUrl",  
+  "basePath": "$!map.basePath",
+  "embedBasePath": "$!map.embedBasePath",
+  "webViewBasePath": "$!map.webViewBasePath",
+  "baseParameters": "$!map.baseParameters",
+  "mapURIParams": "$!map.mapURIParams",
+  "coordinateRequestURI": "getInfoFromCoords.jsp?url=$!map.mapServerHostUrl&bbox=$!map.boundingBox&width=$!map.width&height=$!map.height&layers=$!map.thematicLayerName",
+  "thematicLegendItems": [
+     #foreach ($group in $!map.groups)
+        {
+          "uri": "$!map.legendServletURI?geoServer=$!map.mapServerHostUrl&layer=$!map.thematicLayerName&type=polygon&color=$!group.URLEscapedHexColor",
+          "label": "$!group.toString()",
+           "id": "thematicLegendItem$velocityCount"
+        } #if ($velocityHasNext), #end                    
+     #end    
+  ],
+  "nonThematicLegendItems": [
+    #set ($first = "true")
+    #foreach ($layer in $!map.layerInfoForAllLayers)  
+        #if ($layer.thematicLayer != "true")
+            #if ($layer.visible == "true")         
+                #if ($!first != "true"),#end {
+                  "uri": "$!map.legendServletURI?geoServer=$!map.mapServerHostUrl&layer=$layer.id&type=$layer.type&typeCount=$layer.typeCount",
+                  "label": "$layer.label",
+                  "id": "nonThematicLegendItem$velocityCount"
+                }                         
+                #set ($first = "false")
+            #end
+        #end
+    #end    
+  ]
+  #if ($map.includeHashesInJSonDocument() == "true"), 
+    "tipHash": {
+    #set ($first = "true")
+    #foreach ($featinfo in $!map.featureInfo)
+        #if ($!first != "true"),#end 
+        "code_$!featinfo.get('code')": "$!featinfo.get('label'): $!featinfo.get('value')"
+        #set ($first = "false")
+    #end
+  },
+  "drillHash": {
+    #set ($first = "true")
+    #foreach ($drillinfo in $!map.subsetInfo)
+        #if ($!first != "true"),#end
+        "code_$!drillinfo.get('code')": "$!drillinfo.get('subset')"
+        #set ($first = "false")
+    #end  
+  }
+  #end
+}

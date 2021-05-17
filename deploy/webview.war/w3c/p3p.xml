@@ -1,0 +1,53 @@
+<POLICY xmlns="http://www.w3.org/2000/12/p3pv1"
+    discuri="http://129.177.92.208:8180/nesstar/w3c/privacypolicy.html"  
+<STATEMENT>
+	<EXTENSION optional="yes">
+		<GROUP-INFO name="Google Analytics Urchin Cookie"/>
+	</EXTENSION>
+	<!-- Consequence -->
+	<CONSEQUENCE></CONSEQUENCE>
+	<!--
+		Data in this statement is marked as being non-identifiable 
+	-->
+	<NON-IDENTIFIABLE/>
+	<!-- Use (purpose) -->
+	<PURPOSE>
+		<pseudo-analysis/>
+		<pseudo-decision/>
+		<individual-analysis/>
+		<individual-decision/>
+	</PURPOSE>
+	<!-- Recipients -->
+	<RECIPIENT>
+		<ours/>
+	</RECIPIENT>
+	<!-- Retention -->
+	<RETENTION>
+		<legal-requirement/>
+	</RETENTION>
+	<!-- Base dataschema elements. -->
+	<DATA-GROUP>
+		<DATA ref="#dynamic.http"/>
+		<DATA ref="#dynamic.cookies">
+			<CATEGORIES>
+				<demographic/>
+				<interactive/>
+				<location/>
+				<navigation/>
+				<preference/>
+			</CATEGORIES>
+		</DATA>
+		<DATA ref="#dynamic.clientevents"/>
+		<DATA ref="#dynamic.miscdata">
+			<CATEGORIES>
+				<computer/>
+			</CATEGORIES>
+		</DATA>
+		<DATA ref="#dynamic.miscdata">
+			<CATEGORIES>
+				<location/>
+			</CATEGORIES>
+		</DATA>
+	</DATA-GROUP>
+</STATEMENT>
+</POLICY>

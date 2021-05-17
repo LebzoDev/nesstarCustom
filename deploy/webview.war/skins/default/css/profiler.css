@@ -1,0 +1,87 @@
+/**
+* The div the drop down area is contained in
+*/
+div.profilerdropdown{
+  border: 1px solid #000000;
+  position: absolute;
+  background-color: #F5F5F7;
+  overflow: auto;
+  display: none;
+  padding: 4px;
+  margin: 0px;
+  width: 200px;
+}
+
+div.profilerdropdown a{
+  color: #000000;
+  text-decoration: none;
+}
+
+div.profilerdropdown a:link{
+  color: #000000;
+  text-decoration: none;
+}
+
+div.profilerdropdown a:visited{
+  color: #000000;
+  text-decoration: none;
+}
+
+/* Rules for the nested list in the drop down */
+div.profilerdropdown ul{
+  margin: 0px;
+  padding: 0px;
+}
+
+div.profilerdropdown ul, li{
+  list-style: none;
+  white-space: nowrap;
+}
+
+div.profilerdropdown li{
+  width: 100%;
+}
+
+/**End rules for nested list */
+
+
+/** Start of rules of the table with the drop down menu */
+
+table.option{
+  border: 1px solid black;
+  margin-top: 4px;
+}
+
+table.option img{
+  border: 0px;
+  margin-left: 4px;
+  margin: 0px;
+  padding: 0px;
+}
+
+table.option td{
+  white-space : nowrap;
+}
+
+td.textitem{
+   padding-left: 4px;
+   padding-right: 10px;
+}
+
+td.imageitem{
+  width: 16px;
+  border-left: 1px solid #000000;
+  background-color: #F5F5F7;
+}
+
+fieldset.dropdownfield{
+  padding: 0px;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-bottom: 6px;
+}
+
+/* End the rules for the table drop down menu */
+
+
+

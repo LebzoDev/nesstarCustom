@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<zip-archive:archive xmlns:zip-archive="http://apache.org/cocoon/zip-archive/1.0">
+	<zip-archive:entry name="test.html" src="http://www.nesstar.org"/>
+</zip-archive:archive>

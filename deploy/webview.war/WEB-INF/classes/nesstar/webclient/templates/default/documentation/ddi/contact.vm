@@ -1,0 +1,23 @@
+#macro (singlecontact $sub)
+   <tr>
+   <td>$!sub.Content</td>
+   <td>$!sub.Affiliation</td>
+   <td><a href="mailto:$!sub.Email">$!sub.Email</a></td>
+   <td><a href="$!sub.URI" target="_blank">$!sub.URI</a></td>
+   </tr>
+#end
+
+<h3 class="ddititle">
+	$!node.Name
+</h3>
+   <table class="doctable" border="1">
+      <tr>
+         <th>$!i18nDdi.name</th>
+         <th>$!i18nDdi.affiliation</th>
+         <th>$!i18nDdi.email</th>
+         <th>$!i18nDdi.uri</th>
+      </tr>
+	#foreach ($sub in $!node.SubNodes)
+    	#singlecontact($sub)
+    #end
+  </table>

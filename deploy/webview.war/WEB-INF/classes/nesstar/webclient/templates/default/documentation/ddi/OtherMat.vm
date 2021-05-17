@@ -1,0 +1,26 @@
+<h3 class="ddititle">
+	#if ($!node.URL)
+  <a href="$!node.URL" target="_new">
+	#end
+	#if ($!node.Label)
+		$!node.Label
+	#else
+		$node.URL
+	#end
+	#if ($!node.URL)
+  </a>
+	#end
+</h3>
+
+#if ($!node.Txt)
+<p class="ddicontent">$!node.Txt</p>
+#end
+
+#if ($!node.Notes)
+<p class="ddicontent">$!node.Notes</p>
+#end
+
+#if ($!node.Citation)
+<p class="ddicontent">$!node.Citation</p>
+#end
+

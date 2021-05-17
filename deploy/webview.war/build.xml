@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="The standard Nesstar webview client" basedir="." default="update">
+   
+  <property name="war" value="webview"/>
+  <property name="folder" value="nesstar"/>
+  <property name="languages" value="no,en,nn,fr"/>
+  
+  <target name="deploy" description="Deploys the client">
+     <ant antfile="webclient.xml" inheritrefs="false" target="createwar" dir="../../">
+        <reference refid="war" torefid="war"/>
+        <reference refid="folder" torefid="folder"/>
+        <reference refid="languages" torefid="languges"/>
+     </ant>
+     <ant antfile="webclient.xml" inheritrefs="false" target="deploy_war" dir="../../">
+        <reference refid="war" torefid="war"/>
+     </ant>
+     <ant antfile="webclient.xml" inheritrefs="false" target="bundle_war" dir="../../">
+        <reference refid="war" torefid="war"/>
+     </ant>
+  </target>
+</project>

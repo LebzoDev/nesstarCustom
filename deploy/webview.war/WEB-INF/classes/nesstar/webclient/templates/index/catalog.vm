@@ -1,0 +1,9 @@
+<div class="giveroom"><h2>$!catalog.label</h2></div>
+## TODO:Comment removed due to lack of contentcontrol
+##<p>$!catalog.comment</p>
+<ul>
+#foreach ($!cat in $!catalog.children)
+   #set ($class = $!indexutils.getTypeFromRDF($!cat))
+   <li class="$!class"><a href="$!{indexurls.getLinkToObject($!cat)}">$!cat.label</a></li>
+#end
+</ul>

@@ -1,0 +1,66 @@
+#macro (categoryArray $entries)
+	#foreach ($entry in $!entries.children())
+		['$!{entry.label}','$!{entry.id}'],
+		#if ($entry.childCount > 0)
+			#categoryArray($entry)
+		#end
+	#end		
+#end
+
+<div id="subsetsearch">	
+	<span class="searchcombo">
+      		<input id="search_textinput" autocomplete="off" onclick="javascript: this.value = ''; this.style.color='black';" style="color: #888" type="text" class="textfield small" size="25" tabindex="0" value="$!i18n.autocomplete" title="$!i18n.autocomplete_explained" />
+      	</span>
+         #if($!props.getDisplayCollapseExpand())
+         	<a title="$!i18n.collapseAll" onclick="collapseAll('topCategoryMenu');" src="#"><img src="$!{props.getSkinPath()}/images/collapse_all.gif" alt="$!i18n.collapseAll" title="$!i18n.collapseAll" /></a>
+         	<a title="$!i18n.expandAll" onclick="expandAll('topCategoryMenu');" src="#"><img src="$!{props.getSkinPath()}/images/expand_all.gif" alt="$!i18n.expandAll" title="$!i18n.expandAll" /></a>
+         #end
+	<a title="$!i18n.select" onclick="ToggleAllTree('checked');" src="#"><img src="$!{props.getSkinPath()}/images/select_all.gif" alt="$!i18n.select" title="$!i18n.select" /></a>
+      	<a title="$!i18n.deselect" onclick="ToggleAllTree('');" src="#"><img src="$!{props.getSkinPath()}/images/deselect_all.gif" alt="$!i18n.deselect" title="$!i18n.deselect" /></a>            	
+	<div class="autocomplete-trix" id="autocomplete-trix-agg-ie6">
+      		<div id="search_textinput_container"></div>
+      	</div>
+</div>
+          
+#parse ("cube/categories.vm")
+<script type="text/javascript">
+#set ($categories = $!insertGroup.getCategories())
+    	collection = [		
+#foreach ($entry in $!categories.children())
+	['$!{entry.label}','$!{entry.id}'],
+	#if ($entry.childCount > 0)
+		#categoryArray($entry)
+	#end
+#end			
+	];	
+		
+	var dimensionDataSource = new YAHOO.widget.DS_JSArray(collection);
+	dimensionDataSource.queryMatchContains = true;	
+		
+	var dimensionAuto = new YAHOO.widget.AutoComplete('search_textinput','search_textinput_container', dimensionDataSource);
+	//dimensionAuto.delimChar = ",";
+	dimensionAuto.forceSelection = true;
+	dimensionAuto.highlightClassName = "highlight";    	
+	dimensionAuto.useShadow = true; 
+	dimensionAuto.animVert = false;
+	dimensionAuto.itemSelectEvent.subscribe(openTree);
+	//dimensionAuto.dataReturnEvent.subscribe(myOnDataReturn);
+	dimensionAuto.minQueryLength = 2; 
+	
+	var labels = new Object();
+	var counter = 0;
+		
+	dimensionAuto.formatResult = function(oResultItem, sQuery) {
+ 		var item = 'search_textinput0item'+counter;
+ 		counter--;
+ 		labels[item] = oResultItem[1];
+ 		return oResultItem[0];
+	};
+
+
+	
+</script>
+
+
+
+

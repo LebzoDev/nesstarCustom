@@ -1,0 +1,66 @@
+<script type="text/javascript">
+if (this.name == 'login') {
+  #if ($!isSearch)
+     parent.content.tree.elementWaitingForLogin= parent.content.tree.document.getElementById('searchdivinsert');
+  #end
+  if (parent.content.tree.elementWaitingForLogin) {
+    var toCopy = xGetElementById('topcopy');
+    parent.content.tree.setLoginContent(toCopy.innerHTML);
+    parent.content.tree.elementWaitingForLogin.innerHTML = toCopy.innerHTML;
+  }
+
+   window.location = "skins/default/jsp/empty.jsp";
+
+}
+#if ($!isSearch)
+else {
+  var toCopy = xGetElementById('topcopy');
+  parent.document.getElementById('searchdivinsert').innerHTML = toCopy.innerHTML;
+}
+#end
+
+</script>
+
+
+<script type="text/javascript"> 
+function endDrag(e) {
+  try {
+    if (parent.parent.rightsidemainframe.rightside) {
+      if(!e) e=window.event;
+   		if (e.target) target=e.target;
+    	else if (e.srcElement) target=e.srcElement;
+
+			parent.parent.rightsidemainframe.rightside.endDragOtherFrame(e);
+		}
+	} catch (error) {
+	}
+}
+
+
+
+pics = new Array();
+pics[0] = new Image();
+pics[0].src = 'skins/default/images/closed.gif';
+pics[1] = new Image();
+pics[1].src = 'skins/default/images/open.gif';
+pics[2] = new Image();
+pics[2].src = 'skins/default/images/dataset.gif';
+pics[3] = new Image();
+pics[3].src = 'skins/default/images/dataset_open.gif';
+pics[4] = new Image();
+pics[4].src = 'skins/default/images/variable.gif';
+pics[6] = new Image();
+pics[6].src = 'skins/default/images/ddileaf.gif';
+pics[7] = new Image();
+pics[7].src = 'skins/default/images/closedssl.gif';
+pics[8] = new Image();
+pics[8].src = 'skins/default/images/openssl.gif';
+pics[9] = new Image();
+pics[9].src = 'skins/default/images/resource.gif';
+pics[10] = new Image();
+pics[10].src = 'skins/default/images/resource_selected.gif';
+pics[11] = new Image();
+pics[11].src  = "skins/default/images/plusblue.gif";
+pics[12] = new Image();
+pics[12].src  = "skins/default/images/plusblue_open.gif";
+</script>

@@ -1,0 +1,48 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+   #parse ("cache/cacheHeader.vm")
+   <script type="text/javascript" src="$!{props.getSkinPath()}javascript/login.js?$!props.getTimestamp()"></script>
+   <script type="text/javascript" src="$!{props.getSkinPath()}javascript/treeview.js?$!props.getTimestamp()"></script>
+   <!--<link href="$!{props.getSkinPath()}css/treeview.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>-->
+   <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+   <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+   <script type="text/javascript" src="$!{props.getSkinPath()}javascript/common.js?$!props.getTimestamp()"></script>
+   <script type="text/javascript" src="$!{props.getSkinPath()}javascript/search.js?$!props.getTimestamp()"></script>
+   <title>Login</title>
+</head>
+
+<body onload="loadIt()" style="padding-left: 4px">
+
+<script type="text/javascript">
+   function loadIt() {
+      var name = '${nodeid}iframe';
+      var from = document.getElementById('tocopy');
+
+      var frameset = parent.parent.parent.document.getElementById('set');
+   #if ($!nodeid)
+      parent.loginframesize = frameset.cols;
+   #else
+      loginframesize = frameset.cols;
+   #end
+
+      frameset.cols = "30%, 0px, *";
+
+      parent.parent.parent.login.document.body.innerHTML = from.innerHTML;
+
+
+      var executeit = parent.parent.parent.login.document.forms['logonForm_new'];
+      if (executeit) {
+         executeit.submit();
+         return;
+      }
+   }
+</script>
+    <span id="tocopy">
+         #parse ("login/loginform.vm")
+    </span>
+</body>
+</html>

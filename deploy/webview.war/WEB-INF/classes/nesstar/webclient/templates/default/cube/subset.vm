@@ -1,0 +1,166 @@
+#parse ("doctype/doctypepage.vm")
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>$!i18n.choosecatshort</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    #parse ("cache/cacheHeader.vm")
+
+    <link href="$!{props.getSkinPath()}css/cube.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/popups.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!context/$!{props.getSkinPath()}css/yui/container.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!context/$!{props.getSkinPath()}css/yui/autocomplete.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+
+
+    <!-- YUI CSS Subclassing-->
+    <link rel="stylesheet" type="text/css" href="$!{props.getSkinPath()}css/containerspecials.css?$!props.getTimestamp()"/>
+
+    <!-- Custom Style Sheet -->
+    <link href="$!{props.getSkinPath()}css/custom.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+
+    <!--[if lte IE 7]>
+    <link href="$!{props.getSkinPath()}css/ie7_workarounds.css?$!props.getTimestamp()" type="text/css" rel="stylesheet" media="screen" />
+    <![endif]-->
+    <!--[if lte IE 6]>
+    <link href="$!{props.getSkinPath()}css/ie6_workarounds.css?$!props.getTimestamp()" type="text/css" rel="stylesheet" media="screen" />
+    <![endif]-->
+    <script type="text/javascript">
+        var skinPath = '$!{props.getSkinPath()}';
+    </script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/cube.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/bookmark.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery-1.8.2.min.js?$!props.getTimeStamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery.cookie.js?$!props.getTimestamp()"></script>
+
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/x.js?$!props.getTimestamp()"></script>
+
+
+    <!-- Dependencies -->
+    <script src="$!{props.getSkinPath()}javascript/yui/yahoo-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+    <script src="$!{props.getSkinPath()}javascript/yui/dom-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+    <script src="$!{props.getSkinPath()}javascript/yui/event-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+    <script src="$!{props.getSkinPath()}javascript/yui/datasource-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+
+    <!-- Source file -->
+    <script src="$!{props.getSkinPath()}javascript/yui/autocomplete-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+    <script src="$!{props.getSkinPath()}javascript/yui/container-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+    <script src="$!{props.getSkinPath()}javascript/yui/animation-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/categorytree.js?$!props.getTimestamp()"></script>
+
+    ##passing information down to clientlogheaders.vm
+    ##that the submode should be 'subset' for this document
+    #set ($submode = 'subset')
+    #parse('clientlogheaders.vm')
+
+  </head>
+  <body class="subsetbody" onresize="setTreeSize()">
+    <div id="subsetsearch">
+	<span class="searchcombo">
+      		<input id="search_textinput" autocomplete="off"  onclick="javascript: this.value = ''; this.style.color='black';" style="color: #888" class="textfield small" type="text" tabindex="0" value="$!i18n.autocomplete" title="$!i18n.autocomplete_explained"/>
+      	</span>
+      	#if($!props.getDisplayCollapseExpand())
+            <a title="$!i18n.collapseAll" onclick="collapseAll('topCategoryMenu');" src="#"><img src="$!{props.getSkinPath()}/images/collapse_all.gif" alt="$!i18n.collapseAll" title="$!i18n.collapseAll" /></a>
+            <a title="$!i18n.expandAll" onclick="expandAll('topCategoryMenu');" src="#"><img src="$!{props.getSkinPath()}/images/expand_all.gif" alt="$!i18n.expandAll" title="$!i18n.expandAll" /></a>
+         #end
+	<a title="$!i18n.select" onclick="ToggleAllTree('checked');" src="#"><img src="$!{props.getSkinPath()}/images/select_all.gif" alt="$!i18n.select" title="$!i18n.select" /></a>
+      	<a title="$!i18n.deselect" onclick="ToggleAllTree('');" src="#"><img src="$!{props.getSkinPath()}/images/deselect_all.gif" alt="$!i18n.deselect" title="$!i18n.deselect" /></a>
+      	<button onclick="executeTree()" title="$!i18n.update" id="subsetsubmit" class="button small">OK</button> <!--<a id="subsetsubmit" title="$!i18n.update" onclick="executeTree()" src="#"><img src="$!{props.getSkinPath()}/images/OK.png" alt="$!i18n.update" title="$!i18n.update" /></a>-->
+	<div class="autocomplete-trix" id="autocomplete-trix-sub-ie6">
+      		<div id="search_textinput_container"></div>
+      	</div>
+    </div>
+
+        #if ($!viewer.getIsLogin())
+		#parse ("login/loginform.vm")
+	#elseif ($!errormessage)
+    	<div style="margin-top: 30px">
+      		<div class="errormessage">$utils.escape($!{errormessage})</div>
+    	</div>
+	#else
+    	<div>
+		#if ($!chooseCat.getIsList())
+      			<div style="margin-left: 4px; margin-bottom: 10px">$!i18n.get("list.alpha")</div>
+		#end
+
+      <form method="post" id="treeform" name="treeform" action="$!form_action" target="calculatesubset">
+
+		#if ($!request.getParameter("subseton"))
+        <input type="hidden" name="subseton" value="$!request.getParameter('subseton')"/>
+		#end
+
+		#foreach ($field in $!hiddenform.getForm())
+        <input type="hidden" name="$field.name" value="$field.value"/>
+		#end
+		#parse ("cube/categories.vm")
+      </form>
+
+	#end
+	#parse('extra.vm')
+	#parse('static/stats.html')
+    <script type="text/javascript">    
+      #macro (categoryArray $entries $utils)
+         #foreach ($entry in $!entries.children())
+            #if($!entry.label.length() > 40)
+               ['<span title=\"$!{utils.escapeJS($!entry.label)}\">$!{utils.escapeJS($!{utils.ellipsisize($!entry.label,40,true)})}</span>','$!{entry.id}'],
+            #else
+               ['$!{utils.escapeJS($!{entry.label})}','$!{entry.id}'],
+            #end
+            #if ($entry.childCount > 0)
+               #categoryArray($entry $utils)
+            #end
+         #end
+      #end
+
+    	#set ($categories = $!chooseCat.getCategories())
+    	collection = [
+         #categoryArray($categories $utils)
+   	];
+
+	var dimensionDataSource = new YAHOO.util.LocalDataSource(collection);
+	dimensionDataSource.queryMatchContains = true;
+
+	var dimensionAuto = new YAHOO.widget.AutoComplete('search_textinput','search_textinput_container', dimensionDataSource);
+	dimensionAuto.forceSelection = true;
+	dimensionAuto.highlightClassName = "highlight";
+	dimensionAuto.useShadow = true;
+	dimensionAuto.animVert = false;
+	dimensionAuto.itemSelectEvent.subscribe(openTree);
+	dimensionAuto.minQueryLength = 2;
+	
+	var labels = new Object();
+	var counter = 0;
+
+	dimensionAuto.formatResult = function(oResultItem, sQuery) {
+ 		var item = 'search_textinput0item'+counter;
+ 		counter--;
+ 		labels[item] = oResultItem[1];
+ 		return unescape(oResultItem[0]);
+	};
+
+	/* Set treesize */
+	function setTreeSize() {
+		treewidget = document.getElementById("topCategoryMenu");
+		if (treewidget) {		
+			topControls = document.getElementById("subsetsearch");
+			bottomControls = document.getElementById("titleanddecs");		
+			
+			totalHeight = xHeight(document.body);		
+			topHeight=0;
+			bottomHeight=0;
+			
+			if (topControls) topHeight=xHeight(topControls);
+			if (bottomControls) bottomHeight=xHeight(bottomControls);
+			height = totalHeight - topHeight - bottomHeight;
+					
+			xHeight(treewidget,  height);				
+			treewidget.style.maxHeight = "" + height + "px";
+		}
+	}
+	setTreeSize();		 
+
+   </script>
+  </body>
+</html>

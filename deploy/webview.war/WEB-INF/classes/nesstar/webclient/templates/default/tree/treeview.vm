@@ -1,0 +1,269 @@
+#if ($!menuClass.getIsChunked() == false || $!menuClass.getIsOnAccessGranted() == true)
+  #parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  #parse ("cache/cacheHeader.vm")
+
+  <script type="text/javascript" src="$!{props.getSkinPath()}javascript/treeview.js?$!props.getTimestamp()"></script>
+  #if ($!thislevel <= 1 )
+  <link href="$!{props.getSkinPath()}css/treeview.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+  <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript" src="$!{props.getSkinPath()}javascript/search.js?$!props.getTimestamp()"></script>
+  <title>The browselist</title>
+  #end
+  #parse( "header.vm" )
+</head>
+#if ($!searchView.getDocument())
+#set ($document = $!searchView.getDocument())
+#end
+<body onload="$!document.onload" id="body" onmouseup="endDrag()">
+
+#parse ("tree/treeloginscripts.vm")
+#parse ("tree/searchform.vm")
+#parse ( "tree/treemenues.vm" )
+<div class="mozview" id="exploder">
+
+<div id="searchmessage" style="display:none">
+  <p style="padding-left: 20px; padding-top: 10px">$!i18n.searching</p>
+</div>
+
+<div class="topcopy" id="topcopy">
+#end
+#if ($!searchView.getNoHits())
+<div class="nohits">$!i18n.nohits</div>
+#end
+
+#if ($!searchView.getNumberOfHits())
+<table class="messageTable">
+  <tr valign="top">
+    #if ($!searchView.getIsVariableSearchInStudy())
+    <td>
+      <img onclick="closeResult(this)" src="$!{props.getSkinPath()}images/open.gif" border="0"/>
+    </td>
+    <td class="nodetext" style="padding-left: 5px">$!i18n.variablesfound</td>
+    #elseif (!$!searchView.getIsInVarSearch())
+    <td>
+      <img onclick="closeResult(this)" src="$!{props.getSkinPath()}images/open.gif" border="0"/>
+    </td>
+    <td class="nodetext" style="padding-left: 5px">$!i18n.searchingfor: $!searchView.getSearchedFor()
+      ($!searchView.getNumberOfHits() $!i18n.hits)</td>
+    #end
+  </tr>
+</table>
+<div id="resultset" style="display: block">
+#end
+
+<ul class="browsetree">
+#foreach ($catalog in $catalogs)
+   #if ($!catalog.type == 'Study')
+      #if ( $!open.containsKey($!catalog.objurl) )
+         #set ($cssClass = "studyopen")
+      #else
+         #set ($cssClass = "studyclosed")
+      #end
+   #elseif ($!catalog.type == 'Variable' || $!catalog.type == 'Section' || $!catalog.type == 'Metadata' || $!catalog.type == 'Cube')
+      #set ($cssClass = "insidestudy")
+   #else
+      #set ($cssClass = "")
+   #end
+
+   <li id="${catalog.id}li" class="$!cssClass">
+
+   #if ($!registerTopNodes)
+      <script type="text/javascript">
+        registerTopNodes('${catalog.id}');
+      </script>
+   #end
+
+   #if ($!catalog.isLeaf == false)
+      #set ($tooltip = $!i18n.clickopen)
+   #else
+      #set ($tooltip = $!catalog.tooltip)
+   #end
+<table class="messageTable">
+<tr valign="top">
+<td>
+  #if ($!catalog.isError)
+  ##do nothing
+  #elseif ($!catalog.type == 'Variable')
+  <a href="#" title="$!catalog.tooltip" onclick="$!catalog.onclicktext">
+    #if ( $!open.containsKey($!catalog.objurl) )
+       <img src="$catalog.DefaultOpenImage" id="${catalog.id}img" border="0" title="$!catalog.tooltip"/>
+    #else
+       <img src="$catalog.DefaultImage" id="${catalog.id}img" border="0" title="$!catalog.tooltip"/>
+    #end
+  </a>
+  #elseif ($!catalog.type == 'Bookmark')
+  #if ($!catalog.onclicktext.length() > 0)
+  <a href="$!catalog.onclicktext" title="$!catalog.tooltip" target="rightside">
+    <img src="$!{props.getSkinPath()}images/variable.gif" border="0"/>
+  </a>
+  #end
+  #else
+  <a href="$catalog.href" id="${catalog.id}href" onclick="$!catalog.onclick" title="$!tooltip" target="$catalog.id">
+    #if ( $!open.containsKey($!catalog.objurl) )
+    #if ($!catalog.type == 'Section' || ($!catalog.type == 'Metadata' && ($!catalog.isLeaf == false) ) )
+    <img src="$!{props.getSkinPath()}images/plusblue.gif" id="${catalog.id}img" border="0" title="$!tooltip"/>
+    #else
+    <img src="$catalog.DefaultImage" id="${catalog.id}img" border="0" title="$!tooltip"/>
+    #end
+
+    ##Make the opend study close when another study opens
+    #if ($!catalog.type == 'Study')
+    <script type="text/javascript">
+      parent.prevstudyid = '$!catalog.id';
+      prevstudyid = '$!catalog.id';
+    </script>
+    #end
+    #else
+    #if ($!catalog.type == 'Section' || ($!catalog.type == 'Metadata' && ($!catalog.isLeaf == false) ))
+    <img src="$!{props.getSkinPath()}images/plusblue.gif" id="${catalog.id}img" border="0" title="$!tooltip"/>
+    #else
+    <img src="$catalog.DefaultImage" id="${catalog.id}img" border="0" title="$!tooltip"/>
+    #end
+
+    #end
+  </a>
+  #end
+</td>
+#if ($!catalog.type == 'Study')
+#if ($!catalog.isNew)
+<td>
+  <img src="$!{props.getSkinPath()}images/dataset_new.png" title="This dataset is new"/>
+</td>
+#end
+#end
+<td>
+  #if ($!catalog.isError)
+  <div class="nohits">$catalog.label</div>
+  #else
+
+  #if ($!catalog.type == 'Variable')
+  #if ( $!open.containsKey($!catalog.objurl))
+  #set ($hrefClass = 'nodetextSelected')
+  #else
+  #set ($hrefClass = 'nodetextVariable')
+  #end
+  #else
+  #set ($hrefClass = 'nodetext')
+  #end
+  #if ($!catalog.type == 'Bookmark')
+  #if ($!catalog.onclicktext.length() > 0)
+  <a class="$!hrefClass" href="$!catalog.onclicktext" onclick="return openBookmarkMenu('$!catalog.id')"
+     title="$!catalog.tooltip">
+    #end
+    $!utils.escapeHtml($catalog.label)
+    #if ($!catalog.onclicktext.length() > 0)
+  </a>
+  #end
+  #if ($!catalog.onclicktext.length() > 0)
+  <div class="menu" id="${catalog.id}bookmark">
+    <ul class="testmenu">
+      <li class="m">
+        <a href="$!catalog.onclicktext" onclick="closeBookmarkMenu()" target="rightside">
+          $!i18n.apply_bookmark
+        </a>
+      </li>
+      #if ($!catalog.tooltip)
+      <li class="m">
+        <a onclick="displayBookmarkComment('$!{catalog.Objurl}')">$!i18n.bookmark_comment</a>
+      </li>
+      #end
+      <li class="m">
+        <a href="$!catalog.onclick" onclick="return removeBookmark(this, '$!request.getParameter('id')')"
+           id="${catalog.id}remove">
+          $!i18n.remove_bookmark
+        </a>
+      </li>
+    </ul>
+  </div>
+  #end
+  #else
+  <a class="$!hrefClass" title="$!catalog.tooltip" id="${catalog.id}nodetext" href="#" onclick="$!catalog.onclicktext">
+    $!utils.escapeHtml($catalog.label)
+  </a>
+  #end
+  #if ($!searchView.getIsInVarSearch())
+  #if ($!catalog.type == 'Variable')
+  <a href="$!{searchView.getRequestUrl()}$!catalog.Objurl" class="advancedsearch" target="$!catalog.Objurl">[$!i18n.openInContext]</a>
+  #end
+  #end
+  #end
+
+</td>
+</tr>
+</table>
+#if ( $!open.containsKey($!catalog.objurl) && $!catalog.type != 'Variable' )
+<div id="${catalog.id}divinsert" style="display: none">
+  #if ($!catalog.type == 'Section' || $!catalog.type == 'Metadata')
+  #set ($loadClass = 'otherload studyload')
+  #else
+  #set ($loadClass = 'otherload')
+  #end
+  <span class="$!loadClass">$!i18n.processing</span>
+</div>
+<script type="text/javascript">
+  ##Beware of changes here.It is chopped in javascripts
+  iframes[iframes.length] = '$!{catalog.id}';
+  iframessrc[iframessrc.length] = '$!catalog.CompleteNextlevel';
+</script>
+#elseif ($!catalog.type != 'Variable')
+<div id="${catalog.id}divinsert" style="display: none">
+  #if ($!catalog.type == 'Section' || $!catalog.type == 'Metadata')
+  #set ($loadClass = 'otherload studyload')
+  #else
+  #set ($loadClass = 'otherload')
+  #end
+  <span class="$!loadClass">$!i18n.processing</span>
+</div>
+#end
+</li>
+##end catalogs
+#end
+</ul>
+#if ($!searchView.getNumberOfHits())
+</div>
+#end
+#if ($!menuClass.getIsChunked() == false || $!menuClass.getIsOnAccessGranted() == true)
+</div>
+#parse ("tree/searchresult.vm")
+
+#if ($!treeErrors)
+<div style="padding-left: 4px; padding-top: 4px">
+  <div>$i18n.couldNotLoadCatalogs</div>
+  #foreach ($treeError in $!treeErrors)
+  <div class="error">$treeError</div>
+  #end
+</div>
+#end
+#if ($!noPathErrors)
+<div style="padding-left: 4px; padding-top: 4px">
+  <div>$i18n.couldNotFindPathTo</div>
+  #foreach ($noPathError in $!noPathErrors)
+  <div class="error">$noPathError</div>
+  #end
+</div>
+#end
+</div>
+#parse( "tree/treeloader.vm" )
+#parse( "help/help.vm" )
+<div class="hidden" id="studyload">
+  <span class="otherload studyload">$!i18n.processing</span>
+</div>
+
+<div class="hidden" id="load">
+  <span class="otherload">$!i18n.processing</span>
+</div>
+
+<div class="hidden" id="loginstudy">
+  <span class="otherload studyload">$!i18n.treelogin</span>
+</div>
+
+<div class="hidden" id="login">
+  <span class="otherload">$!i18n.treelogin</span>
+</div>
+</body>
+</html>
+  #end

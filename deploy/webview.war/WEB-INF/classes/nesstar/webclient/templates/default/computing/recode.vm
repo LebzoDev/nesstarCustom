@@ -1,0 +1,298 @@
+<script type="text/javascript">
+	computetype = "recode";
+</script>
+#if ($!compute.getView().getRecodeVariable())
+<fieldset class="recode compute">
+  <legend>$!i18n.get("cal.recode")</legend>
+#end
+  <form action="$!form_action" method="GET" onsubmit="return false;" name="recodeForm" id="recodeForm">
+		#if ($!compute.getView().getRecodeVariable())
+                <fieldset class="top_value">
+                  <legend>$i18n.recode_old_value</legend>
+                  	<div class="gclear"></div>
+                  	<div class="g20">
+												#if ($!compute.getView().getRecodeType() == 'value')
+                        <input type="radio" checked="checked" name="recode_type" value="value" id="recode_value_id"/>
+												#else
+                        <input type="radio" name="recode_type" value="value" id="recode_value_id"/>
+												#end
+					</div>
+					
+					<div class="g60">
+                        <label for="recode_value_id">$i18n.recode_value</label>
+                    </div>
+                    
+                    <div class="g40">
+                        <input class="textfield" type="text" id="value_value_id" name="value_value" value="$!compute.getView().getValue()" size="5"/>
+                       	</div>
+					
+					<div class="gclear"></div>
+					
+					<div class="g20">
+												#if ($!compute.getView().getRecodeType() == 'range')
+                        <input type="radio" checked="checked" name="recode_type" value="range" id="recode_range_id"/>
+												#else
+                        <input type="radio" name="recode_type" value="range" id="recode_range_id"/>
+												#end
+					</div>
+					
+					<div class="g60">
+                        <label for="recode_range_id">$i18n.recode_range</label>
+                    </div>
+                    
+                    <div class="g40">
+                        <input class="textfield" type="text" id="value_range_id" name="value_range" value="$!compute.getView().getValueRange()" size="5"/>
+                    </div>
+                    <div class="g80 gc">
+                    	<p>$!i18n.recode_through</p>
+                    </div>
+
+					<div class="g40">
+                        <input class="textfield" type="text" id="value_through_id" name="value_through" value="$!compute.getView().getValueThrough()" size="5"/>
+                    </div>
+                    
+                    <div class="gclear"></div>
+                    
+                    <div class="g20">
+												#if ($!compute.getView().getRecodeType() == 'range_lo')
+													#if ($!compute.getView().getIfLoIsUsed())
+                        <input type="radio" disabled="disabled" checked="checked" name="recode_type" value="range_lo" id="recode_range_lo_id"/>
+													#else
+                        <input type="radio" checked="checked" name="recode_type" value="range_lo" id="recode_range_lo_id"/>
+													#end
+												#else
+													#if ($!compute.getView().getIfLoIsUsed())
+                        <input type="radio" disabled="disabled" name="recode_type" value="range_lo" id="recode_range_lo_id"/>
+													#else
+                        <input type="radio" name="recode_type" value="range_lo" id="recode_range_lo_id"/>
+													#end
+												#end
+					</div>
+					
+					<div class="g60">
+                        <label for="recode_range_lo_id">$i18n.recode_range</label>
+                    </div>
+                    
+                    <div class="g120">
+                      <p>$!i18n.recode_lowest_through</p>
+                    </div>
+                    
+                    <div class="g40">
+												#if ($!compute.getView().getIfLoIsUsed())
+                        <input class="textfield" type="text" readonly="true" id="lo_through_value_id" name="lo_through_value" value="$!compute.getView().getLoThroughValue()" size="5"/>
+												#else
+                        <input class="textfield" type="text" id="lo_through_value_id" name="lo_through_value" value="$!compute.getView().getLoThroughValue()" size="5"/>
+												#end
+					</div>
+					
+					<div class="gclear"></div>
+
+					<div class="g20">
+												#if ($!compute.getView().getRecodeType() == 'range_hi')
+													#if ($!compute.getView().getIfHighIsUsed())
+                        <input type="radio" checked="checked" disabled="disabled" name="recode_type" value="range_hi" id="recode_range_hi_id"/>
+													#else
+                        <input type="radio" checked="checked" name="recode_type" value="range_hi" id="recode_range_hi_id"/>
+													#end
+												#else
+													#if ($!compute.getView().getIfHighIsUsed())
+                        <input type="radio" disabled="disabled" name="recode_type" value="range_hi" id="recode_range_hi_id"/>
+													#else
+                        <input type="radio" name="recode_type" value="range_hi" id="recode_range_hi_id"/>
+													#end
+												#end
+					</div>
+					
+					<div class="g60">
+                        <label for="recode_range_hi_id">$i18n.recode_range</label>
+                    </div>
+                    
+                    <div class="g40">
+												#if ($!compute.getView().getIfHighIsUsed())
+                        <input class="textfield" type="text" id="value_through_hi_id" name="value_through_hi" readonly="true" value="$!compute.getView().getValueThroughHigh()" size="5"/>
+												#else
+                        <input class="textfield" type="text" id="value_through_hi_id" name="value_through_hi" value="$!compute.getView().getValueThroughHigh()" size="5"/>
+												#end
+					</div>
+					
+					<div class="g120 gc">
+                      <p>$!i18n.recode_high_through</p>
+                    </div>
+                </fieldset>
+
+                <fieldset class="top_value">
+                  <legend>$!i18n.recode_new_value</legend>
+                  	<div class="gclear"></div>
+                  	<div class="g60">
+                      <p>$i18n.recode_value</p>
+                    </div>
+                    <div class="g120">
+                        <input class="textfield" type="text" id="new_value_id" name="new_value" value="$!compute.getView().getNewValue()"/>
+                    </div>
+                    <div class="gclear"></div>
+                    <div class="g60">
+                      <p>$i18n.recode_label</p>
+                    </div>
+                    <div class="g120">
+                        <input class="textfield" type="text" name="label" value="$utils.escape($!{compute.getView().getNewLabel()})"/>
+                    </div>
+                    <div class="gclear"></div>
+                    <div class="g20">
+													#if ($!compute.getView().getNewIsMissing())
+                        <input type="checkbox" checked="checked" name="missing" value="true" id="missing_box_id"/>
+													#else
+                        <input type="checkbox" name="missing" value="true" id="missing_box_id"/>
+													#end
+					</div>
+					<div class="g200">
+                        <label for="missing_box_id">$!i18n.recode_is_missing</label>
+                    </div>
+                    <div class="gclear"></div>
+                    <div class="g120b gc">
+                    	<input type="submit" class="button" onclick="return checkRecodeFormValidity();" name="add" value="$!i18n.recode_add"/>
+                    </div>
+                    <div class="g120b gc">
+                    	<input type="submit" class="button" onclick="setFormSubmitAllowed();" name="del" title="$!i18n.recode_remove_selected_value" value="$!i18n.recode_del"/>
+                    </div>
+                </fieldset>
+
+			<div class="gclear"></div>
+			
+          <fieldset class="bottom_values compute">
+                  <legend>$i18n.recode_other</legend>
+                  <div class="gclear"></div>
+					<div class="g20">
+												#if ($!compute.getView().getIfOtherAsIs())
+                        <input type="radio" checked="checked" name="other_values" value="asis" id="other_asis_id" onclick="checkIfOthersDisabled(this, false)"/>
+												#else
+                        <input type="radio" name="other_values" value="asis" id="other_asis_id" onclick="checkIfOthersDisabled(this, false)"/>
+                        
+												#end
+					</div>
+					<div class="g150">
+						<label for="other_asis_id">$!i18n.recode_other_asis</label>
+					</div>
+					<div class="gclear"></div>
+					<div class="g20">
+												#if ($!compute.getView().getIfOtherIsSysmis())
+                        <input type="radio" checked="checked" name="other_values" value="sysmis" id="other_value_sysmis_id" onclick="checkIfOthersDisabled(this, false)"/>
+												#else
+                        <input type="radio" name="other_values" value="sysmis" id="other_value_sysmis_id" onclick="checkIfOthersDisabled(this, false)"/>
+												#end
+					</div>
+					<div class="g150">
+						<label for="other_value_sysmis_id">$!i18n.recode_other_sysmis</label>
+					</div>
+					<div class="gclear"></div>
+					<div class="g20">
+												#if ($!compute.getView().getIfOtherRecode())
+                        <input type="radio" checked="checked" name="other_values" value="recode" id="other_value_recode_id" onclick="checkIfOthersDisabled(this, true)"/>
+												#else
+                        <input type="radio" name="other_values" value="recode" id="other_value_recode_id" onclick="checkIfOthersDisabled(this, true)"/>
+												#end
+					</div>
+					<div class="g150">
+						<label for="other_value_recode_id">$!i18n.recode_other_recode</label>
+					</div>
+					<div class="gclear"></div>
+					<div class="g20"></div>
+					<div class="g50">
+                      <p>$i18n.recode_value</p>
+                    </div>
+                    <div class="g100">
+												#if ($!compute.getView().getIfOtherRecode())
+                        <input class="textfield" type="text" name="other_value" id="other_value_id" value="$!compute.getView().getOtherValue()"/>
+												#else
+                        <input class="textfield" type="text" name="other_value" id="other_value_id" value="$!compute.getView().getOtherValue()" disabled="true"/>
+												#end
+					</div>
+					<div class="gclear"></div>
+					<div class="g20"></div>
+					<div class="g50">
+                      <p>$i18n.recode_label</p>
+                    </div>
+                    <div class="g100">
+												#if ($!compute.getView().getIfOtherRecode())
+                        <input class="textfield" type="text" name="other_label" id="other_label_id" value="$utils.escape($!{compute.getView().getOtherLabel()})"/>
+												#else
+                        <input class="textfield" type="text" name="other_label" id="other_label_id" value="$utils.escape($!{compute.getView().getOtherLabel()})" disabled="true"/>
+												#end
+					</div>
+					<div class="gclear"></div>
+					<div class="g20">
+												#if ($!compute.getView().getIfOtherIsMissing())
+													#if ($!compute.getView().getIfOtherRecode())
+                        <input type="checkbox" checked="checked" name="other_missing" value="true" id="other_missing_box_id"/>
+													#else
+                        <input type="checkbox" checked="checked" name="other_missing" value="true" id="other_missing_box_id" disabled="true"/>
+													#end
+												#else
+													#if ($!compute.getView().getIfOtherRecode())
+                        <input type="checkbox" name="other_missing" value="true" id="other_missing_box_id"/>
+													#else
+                        <input type="checkbox" name="other_missing" value="true" id="other_missing_box_id" disabled="true"/>
+													#end
+												#end
+					</div>
+					<div class="g200">
+                        <label for="other_missing_box_id">$!i18n.recode_is_missing</label>
+                    </div>
+                </fieldset>
+                
+                <fieldset class="bottom_values compute">
+			        <legend>$!i18n.recode_added</legend>
+			        <div class="gclear"></div>
+			        <div class="recoded">
+			        	<ul>
+												#foreach ($add in $!compute.getView().getAdded())
+			          <li>
+			          <div class="g20">
+			            <input type="checkbox" name="remove_recode" value="$!add"/>
+			          </div>
+			          <div class="g200">
+			          	<p>$!utils.escape($!add.toString())</p>
+			          </div>
+			          </li>
+												#end
+						</ul>
+			        </div>
+				</fieldset>
+			
+                <fieldset class="new_variable compute">
+            		<legend>$!i18n.recode_new_variable</legend>
+            		<div class="gclear"></div>
+            		<div class="block">
+            			<div class="g50">
+                			<label for="varname_id">$!i18n.recode_label</label>
+                		</div>
+                		<div class="g100">
+                  			<input class="textfield" type="text" id="varname_id" name="new_label" value="$utils.escape($!{compute.getView().getLabel()})"/>
+                  		</div>
+                  </div>
+                  <div class="block">
+                  		<div class="g20"></div><div class="gclear"></div>
+						<div class="g120 gc">
+									#if ($!compute.getIfCanBeExecuted())
+							<button class="minWidth" type="submit" onclick="return setExecuteBitRecode()">$i18n.group_create</button>
+   					 				#else
+   					 		<button class="minWidth" type="submit">$i18n.group_create</button>
+    								#end
+    					</div>
+    					<div class="g120 gc">
+    						<button type="submit" onclick="setToCancelRecode()">$i18n.group_cancel</button>
+                  		</div>
+                  </div>
+          </fieldset>
+
+          
+		#end
+		#foreach ($field in $!compute.getView().getRecodeForm())
+    <input type="hidden" name="$field.name" value="$field.value"/>
+		#end
+  </form>
+#if ($!compute.getView().getRecodeVariable())
+</fieldset>
+#end
+
+
+

@@ -1,0 +1,17 @@
+<script type='text/javascript'>
+setupInlineDocumentation();
+
+var activePanel;
+</script>
+
+#set ($cubeCounter = 0)
+#foreach ($hingedStudy in $!cube.getStudies())
+  #set ($cssId = "cube_$!cubeCounter")
+  <div id="$cssId" #if(!$!doprint)class="hide"#end>
+      #if(!$!doprint)
+         <div class="inlinehead"><span class="inlinecaption">$!i18nDdi.panelTitl</span><a href="javascript:hideActiveInlineDocPanel();" class="deleteimage"><img src="$!{props.getSkinPath()}images/delete-small.png" alt="$!i18n.close_window" title="$!i18n.close_window" border="0"/></a></div>
+      #end
+      <div class="inlinebody">#parse ("documentation/ddi/ddi.vm")</div>
+  </div>
+  #set ($cubeCounter = $!cubeCounter + 1)
+#end

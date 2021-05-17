@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application>
+	<display-name>NEOOM Protocol Plugin for JBoss</display-name>
+
+	<module>
+	<web>
+		<web-uri>browser.war</web-uri>
+		<context-root>/browser</context-root>
+	</web>
+	</module>
+
+	<module>
+	<web>
+		<web-uri>neoom2ejb.war</web-uri>
+		<context-root>/obj</context-root>
+	</web>
+	</module>
+
+	<module>
+		<ejb>nesstarbeans.jar</ejb>
+	</module>
+
+</application>

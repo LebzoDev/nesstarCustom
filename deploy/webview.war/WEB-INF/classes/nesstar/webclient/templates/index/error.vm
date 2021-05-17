@@ -1,0 +1,18 @@
+<div class="cluster" style="padding-top:20px">
+   <div class="giveroom"><h2>
+      $!i18n.index_error :
+      
+      #if($!error == "noValidServers")
+         $!i18n.index_noServersFound
+      #elseif($!error == "500")
+         Internal server error
+      #else
+         $!i18n.index_resourceNotFound
+         <br/><br/>
+         $!i18n.index_tryAccess <a href="$indexutils.getRootUrl($req)/index/">index</a> $!i18n.index_or <a
+           href="$indexutils.getRootUrl($req)/">WebView</a> $!i18n.index_toFind
+      #end
+
+   </h2>
+   </div>
+</div>

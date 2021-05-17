@@ -1,0 +1,130 @@
+#parse ("doctype/doctypepage.vm")
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    #parse ("cache/cacheHeader.vm")
+
+    <title>$!i18n.insertgroup</title>
+    <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/popups.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+
+    <!-- Custom Style Sheet -->
+    <link href="$!{props.getSkinPath()}css/custom.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/grouping.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript">
+        var skinPath = '$!{props.getSkinPath()}';
+    </script>
+
+    <!--[if lte IE 7]>
+    <link href="$!{props.getSkinPath()}css/ie7_workarounds.css?$!props.getTimestamp()" type="text/css" rel="stylesheet" media="screen" />
+    <![endif]-->
+    <!--[if lte IE 6]>
+    <link href="$!{props.getSkinPath()}css/ie6_workarounds.css?$!props.getTimestamp()" type="text/css" rel="stylesheet" media="screen" />
+    <![endif]-->
+    
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/cube.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/bookmark.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery-1.8.2.min.js?$!props.getTimeStamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery.cookie.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/browserdetect.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/x.js?$!props.getTimestamp()"></script>
+
+    <!-- Dependencies -->
+    <script src="$!{props.getSkinPath()}javascript/yui/yahoo-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+    <script src="$!{props.getSkinPath()}javascript/yui/dom-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+    <script src="$!{props.getSkinPath()}javascript/yui/event-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+    <script src="$!{props.getSkinPath()}javascript/yui/datasource-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+
+    <!-- Source file -->
+    <script src="$!{props.getSkinPath()}javascript/yui/autocomplete-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+    <script src="$!{props.getSkinPath()}javascript/yui/container-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+    <script src="$!{props.getSkinPath()}javascript/yui/animation-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/categorytree.js?$!props.getTimestamp()"></script>
+  </head>
+  <body class="subsetbody" onresize="setTreeSize()">
+    #if ($!viewer.getIsLogin())
+       #parse ("login/loginform.vm")
+    #elseif ($!errormessage)
+    <div class="errormessage">$!errormessage</div>
+    #else
+    <form method="get" id="hiddenform" action="$!form_action" accept-charset="utf-8" target="_parent" style="display: inline;">
+        #foreach ($field in $hiddenform.getForm())
+        <input type="hidden" name="$field.name" value="$field.value"/>
+        #end
+    </form>
+    <div class="calculations">
+        <form id="categories" action="$!form_action" onSubmit="return false;">
+        #if ($!insertGroup.getSelectedType() == 'add' || $!insertGroup.getSelectedType() == 'agg' || $!insertGroup.getSelectedType() == 'mul' || $!insertGroup.getSelectedType() == 'avg')
+        	#parse ("grouping/aggregate/aggregate.vm")
+        #else
+        	#parse ("grouping/calculation.vm")
+        #end
+        <ul id="titleanddecs">
+        #if ($!insertGroup.getCategories().getSize() > 0)
+		#if ($!insertGroup.getSelectedType() == 'add' || $!insertGroup.getSelectedType() == 'mul')
+		<li>
+			<label for="number">$i18n.group_number</label>
+			<input type="text" class="textfield" id="number" name="numValue" value="$!insertGroup.getGroupConstant()"/>
+		</li>
+		#end
+		<li>
+			<label for="decimal">$!i18n.group_decimals</label>
+			<input type="text" class="textfield" id="decimal" name="decimal" value="$!insertGroup.getDecimal()"/>
+		</li>
+		<li>
+			<label for="label">$!i18n.group_label</label>
+			<input type="text" class="textfield" id="label" name="label" value="$!utils.escape($!insertGroup.getEditableCategoryLabel())"/>
+         </li>
+         <li>
+         #if ($!insertGroup.getIfIsEdit())
+            <button id="subsetsubmit" title="$!i18n.update" class="button small" onclick="return editGroup('$!insertGroup.getVariableToGroup().getCode()','$!insertGroup.getEditNumber()', '$!insertGroup.getTheCategoryToEdit().getCode()', '$!insertGroup.getSelectedType()')" src="#">OK</button>
+         #else
+            <button id="subsetsubmit" title="$!i18n.update" class="button small" onclick="return addGroup('$!insertGroup.getVariableToGroup().getCode()', '$!insertGroup.getSelectedType()','$!insertGroup.getVariableToGroup().generateCode()', $!insertGroup.getIsLayer())" src="#">OK</button>
+         #end
+		</li>
+	#end
+	    </ul>
+        </form>
+    #end
+    </div>
+    <script type="text/javascript">
+    	/* Set treesize */
+    	function setTreeSize() {
+		treewidget = document.getElementById("topCategoryMenu");
+		if (!treewidget) treewidget = document.getElementById("calculationformelements");
+		if (treewidget) {
+			calculationControls = document.getElementById("types");
+			topControls = document.getElementById("subsetsearch");
+			bottomControls = document.getElementById("titleanddecs");		
+			
+			totalHeight = xHeight(document.body);		
+			topHeight=0;
+			typeHeight=0;
+			bottomHeight=0;
+			
+			if (calculationControls) typeHeight=xHeight(calculationControls);
+			if (topControls) topHeight=xHeight(topControls);
+			if (bottomControls) bottomHeight=xHeight(bottomControls);
+			height = totalHeight - typeHeight - topHeight - bottomHeight;
+			
+			xHeight(treewidget,  height);				
+			treewidget.style.maxHeight = "" + height + "px";
+		}
+	}
+	
+	setTreeSize();	
+	
+	/* Change target if in "real" popup window */
+	mother = this.parent.parent;
+	if (mother.name == "popupwin") {
+		form = document.getElementById("hiddenform");
+		form.target="rightside";
+	}
+   </script>
+    #parse( "help/help.vm" )
+  </body>
+</html>

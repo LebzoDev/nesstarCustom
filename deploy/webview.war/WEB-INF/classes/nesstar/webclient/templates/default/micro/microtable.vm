@@ -1,0 +1,134 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+  <head>
+    <title>$!frametitle</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		#parse ("cache/cacheHeader.vm")
+		
+		#if ((!$!menuClass.getIsInRegression() &&  $!analysis.getTableParser().getTable()) || $!emptytable)
+    <link href="$!{props.getSkinPath()}css/draganddrop.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+		#end
+
+    <link href="$!{props.getSkinPath()}css/cube.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/microtable.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/draganddrop.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/table.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript">
+        var skinPath = '$!{props.getSkinPath()}';
+    </script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/cube.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/bookmark.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery-1.8.2.min.js?$!props.getTimeStamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery.cookie.js?$!props.getTimestamp()"></script>
+    #if ($doprint)
+        <link href="$!{props.getSkinPath()}css/printspecials.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    #end
+		#parse("header.vm")
+  </head>
+	#if ($!doprint)
+	#set ($onload = "setScrollableSize();window.print()")
+	#else
+	#set ($onload = "setScrollableSize();")
+	#end
+  <body onload="$!onload">
+    <div id="dropzone">
+   ## If embed, take this away
+      #if (!$!embed)
+         #parse( "menu/menu.vm" )
+         #if($!props.useInlinePopups())
+            #parse( "inlinePopups.vm" )
+         #end
+
+         #if ($!menuClass.getSubmenu())
+           #set ($mozstyle = 'mozviewanalysis')
+         #else
+           #set ($mozstyle = 'mozview')
+         #end
+      #end
+
+      <div class="$!mozstyle bodypadder" id="exploder">
+      #if (!$!embed)
+		   ## take this away if it is embed
+   		#parse( "toptitle.vm" )
+         #parse ("embedlink.vm")
+
+			#if ($!viewer.getIsLogin())
+				#parse ("login/loginform.vm")
+			#elseif ($!errormessage && !$!menuClass.getIsInRegression())
+          ##Analysis handles its own errors
+   		   #if ($!analysis.getTableMenu().getCubeMenu())
+	  				#parse( "micro/dragtable.vm" )
+            #end
+
+        <div class="errormessage">$errormessage</div>
+			#end
+         #parse( "loading.vm")
+        ## if this is embed, do the following
+      #else
+            #if ($!viewer.getIsLogin())
+                #parse("toptitle.vm")
+                #parse ("login/loginform.vm")
+            #else
+                #if ($!showTitle)
+                   #parse("toptitle.vm")
+                   #parse("embedlink.vm")
+                #end
+                   ## show embed menu if embed
+                #if ($!showGraphButton || $!showMapButton || $!showTableButton || $!showScatterPlotButton)
+                    #if (!$!viewer.getIsLogin())
+                        #parse ("menu/embedmenu.vm")
+                    #end
+                   ## end embed menu
+                #end
+            #end
+        #end
+        ## end embed
+
+        <div id="hidearea">
+				#if (!$!menuClass.getIsInRegression() &&  $!analysis.getTableParser().getTable())
+				    #parse( "micro/dragtable.vm" )
+				#elseif ($!emptytable)
+				    #parse( "micro/emptytable.vm" )
+            #elseif ($!menuClass.getIsInRegression())
+				    #parse( "micro/analysis.vm" )
+				#elseif ($!table)
+				    #if ($!labels)
+          <table class="labels" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td>
+                #foreach ($label in $labels)
+                <div>$label</div>
+                #end
+              </td>
+            </tr>
+          </table>
+				    #end
+				    $!table
+				#end
+
+				#parse( "micro/filterweight.vm" )
+				#parse( "micro/tableoptions.vm" )
+
+        ## remove copyright embed
+        #if(!$!embed)
+				#parse( "copyright/copyright.vm" )
+		  #end
+
+
+        </div>
+         #if(!$!embed)
+            <div class="footer">
+               #include( "static/footer.html" )
+            </div>
+		   #end
+		   #parse( "help/help.vm" )
+      </div>
+    </div>
+  </body>
+</html>

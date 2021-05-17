@@ -1,0 +1,11 @@
+#parse("khp/indicatormacro.vm")
+
+<li class="label">
+   <div id="indorigo"><span class="origotitle">$!i18n.set_selector_label</span>
+   </div>
+
+   ##Calling the setentry macro with the root barometer catalog
+   #setentry($!indicatorsets.getRoot() false $context $browselistmode)
+
+   <input type="hidden" name="setselection" value="true"/>
+</li>

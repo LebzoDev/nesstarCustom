@@ -1,0 +1,92 @@
+#if ($!options)
+<form method="get" action="$!form_action" class="tableoptions">
+  <input type="submit" class="button" value="Table Options"/>
+  <input type="hidden" name="options" value="yes"/>
+	#foreach ( $input in $url)
+  <input name="$!input.name" type="$!input.type" value="$!input.value"/>
+	#end
+</form>
+#end
+
+#if ($!analysistype == 0 || $!analysistype == 1 )
+<form method="get" action="$!form_action" class="tableoptions">
+	#if ($!analysistype == 0)
+		#if ($!form)
+			#foreach ( $input in $hiddenform.getForm())
+				#if ($!input.checked)
+					#if ($!input.disabled)
+						$!input.pre
+  <input name="$!input.name" id="$!input.id" onclick="$!input.onclick" type="$!input.type" value="$!input.value" checked disabled/>$!input.label
+					#else
+						$!input.pre
+  <input name="$!input.name" id="$!input.id" onclick="$!input.onclick" type="$!input.type" value="$!input.value" checked/>$!input.label
+					#end
+  <br/>
+				#else
+					#if ($!input.disabled)
+					$!input.pre
+  <input name="$!input.name" id="$!input.id" onclick="$!input.onclick" type="$!input.type" value="$!input.value" disabled/>$!input.label
+					#else
+						$!input.pre
+  <input name="$!input.name" id="$!input.id" onclick="$!input.onclick" type="$!input.type" value="$!input.value"/>$!input.label
+					#end
+  <br/>
+				#end
+			#end
+  <input type="submit" class="button" value="Update"/>
+  <input type="hidden" name="options" value="yes"/>
+			#foreach ( $input in $url)
+  <input name="$!input.name" type="$!input.type" value="$!input.value"/>
+			#end
+		#end
+	#end
+
+	#if ($!analysistype == 1)
+  <br/>
+  <table width="300">
+    <tr>
+      <td>
+				#foreach ($input in $leftside)
+					#if ($!input.selected)
+        <input type="$!input.type" name="$!input.name" checked/>$!input.label
+        <br/>
+					#else
+        <input type="$!input.type" name="$!input.name"/>$!input.label
+        <br/>
+					#end
+				#end
+      </td>
+      <td>
+				#foreach ($input in $rightside)
+					#if ($!input.selected)
+        <input type="$!input.type" name="$!input.name" checked/>$!input.label
+        <br/>
+					#else
+        <input type="$!input.type" name="$!input.name"/>$!input.label
+        <br/>
+					#end
+				#end
+      </td>
+    </tr>
+  </table>
+	#if ($!sort)
+  <b>Sort By : </b>
+  <select name="sort">
+		#foreach ($option in $sort)
+			#if ($!option.selected)
+    <option value="$!option.value" selected>$!option.label</option>
+			#else
+    <option value="$!option.value">$!option.label</option>
+			#end
+		#end
+  </select>
+	#end
+  <br/>
+  <input type="submit" value="Update" class="button" />
+	#foreach ( $input in $url)
+  <input name="$!input.name" type="$!input.type" value="$!input.value"/>
+	#end
+
+	#end
+</form>
+#end

@@ -1,0 +1,19 @@
+<fieldset class="types compute">
+  <legend>$!i18n.compute_create</legend>
+  <form action="$!form_action" method="get">
+    <select name="scheme" onchange="submit()">
+      <option value="disabled">$!i18n.compute_choose_type</option>
+      <option value="0">$!i18n.get("cal.add")</option>
+      <option value="2">$!i18n.get("cal.sub")</option>
+      <option value="1">$!i18n.get("cal.mul")</option>
+      <option value="5">$!i18n.get("cal.div")</option>
+      <option value="9">$!i18n.get("cal.pc")</option>
+      <option value="8">$!i18n.get("cal.avg")</option>
+      <option value="12">$!i18n.get("cal.pcGrow")</option>
+      <option value="20">$!i18n.get("cal.recode")</option>
+    </select>
+	#foreach ($field in $!compute.getForm())
+    <input type="hidden" name="$field.name" value="$field.value"/>
+	#end
+  </form>
+</fieldset>

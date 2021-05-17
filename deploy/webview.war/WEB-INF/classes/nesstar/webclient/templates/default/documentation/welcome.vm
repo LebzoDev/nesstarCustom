@@ -1,0 +1,15 @@
+<script type="text/javascript">
+  var isWelcomePage = true;
+</script>
+
+<div>
+   ##If there is a comment - display it
+   #if($!documentation.getComment())
+      $!documentation.getComment()
+   #else
+   ##If there is no comment, just display the splash-screen
+      <div style="text-align: center;">
+         <img alt="Nesstar" src="$!{props.getSkinPath()}images/nesstar_open.jpg" />
+      </div>
+   #end
+</div>

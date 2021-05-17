@@ -1,0 +1,5 @@
+#if($!{props.getKHPSelectionMode()} == "sets")
+   #parse("khp/indicators_sets.vm")
+#else
+   #parse("khp/indicators_free.vm")
+#end

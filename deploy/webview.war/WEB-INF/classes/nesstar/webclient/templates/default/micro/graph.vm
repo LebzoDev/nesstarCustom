@@ -1,0 +1,198 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+  <head>
+   <title>$!frametitle</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		#parse ("cache/cacheHeader.vm")
+    <link href="$!{props.getSkinPath()}css/cube.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/microtable.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript">
+        var skinPath = '$!{props.getSkinPath()}';
+    </script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/cube.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/table.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/bookmark.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery-1.8.2.min.js?$!props.getTimeStamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery.cookie.js?$!props.getTimestamp()"></script>
+
+
+		#parse( "header.vm" )
+
+  </head>
+	#if ($!doprint)
+    	#set ($onload = "setScrollableSize();window.print()")
+	#else
+	    #set ($onload = "setScrollableSize()")
+	#end
+  <body onload="$!onload">
+
+    #if (!$!embed) ## Add this if this is NOT embed
+        #parse( "menu/menu.vm" )
+        #if ($!menuClass.getSubmenu())
+            #set ($mozstyle = 'mozviewanalysis')
+        #else
+            #set ($mozstyle = 'mozview')
+        #end
+    <div class="$!mozstyle bodypadder" id="exploder">
+    #else ## Add this if this is embed
+        #if($!showTitle)
+            #parse ("toptitle.vm")
+            #parse ("embedlink.vm")
+        #end
+        ##if ($!showGraphButton || $!showMapButton || $!showTableButton || $!)
+            #if (!$!viewer.getIsLogin())
+                #parse ("menu/embedmenu.vm")
+            #end
+        ##end
+    #end
+
+    #if(!$!embed) ## Add this if this is NOT embed
+        #parse( "toptitle.vm" )
+        #parse ("embedlink.vm")
+        #parse( "loading.vm" )
+        <div id="hidearea">
+    #end
+
+    #if ($!viewer.getIsLogin())
+        #parse ("login/loginform.vm")
+    #else
+        #if (!$!errormessage)
+            #if(!$!embed)
+                #if ($!props.useNewMenus())
+                    #parse( "dimensionchooser.vm" )
+                #else
+                    #parse( "micro/xmlform.vm" )
+                #end
+           #else #parse( "micro/tableinfo.vm" )
+            #end
+        #end
+        #if ($!menuClass.getIsInCorrelation())
+            #parse ("micro/correlationinfo.vm")
+        <script type="text/javascript">
+                            mode = 'correlation';
+        </script>
+		#elseif ($!menuClass.getIsInRegression())
+        <script type="text/javascript">
+                            mode = 'regression';
+        </script>
+            #parse ( "micro/regressionHeaders.vm" )
+        #else
+        <script type="text/javascript">
+                            mode = 'graph';
+            #if($!freqchart == true)
+               freqchart = true;
+            #end
+        </script>
+            #foreach ($variable in $!variable_labels)
+        <div>$!variable</div>
+            #end
+		#end
+
+        #if ($!errormessage)
+            #if ($!analysis.getTableMenu().getCubeMenu())
+                #parse( "micro/dragtable.vm" )
+                #parse( "micro/filterweight.vm" )
+            #end
+        <div class="errormessage">$errormessage</div>
+        #end
+
+        #if (!$!graphmessage && !$!analysis.getTableInfo().getIsComplete())
+            #set ($graphmessage = $!i18n.nograph)
+        #end
+
+        #if ($!graphmessage)
+        <div class="errormessage">$!graphmessage</div>
+        #end
+        #if ($!graph.getIfToManyCells())
+        <div class="errormessage">$!graph.getIfToManyCells()</div>
+        #elseif ($!graphimage)
+        <div style="margin-bottom: 30px">
+            #parse( "colorschememenu.vm" )
+          <div id="diagram">
+            #if ($!multigraphs)
+                <div id="multigraphs">
+                     #foreach ($image in $!multigraphs)
+                     #if($!image.getLabel().length)
+                        <div>$!image.getLabel()</div>
+                     #end
+                     <div>
+                        <img src="$!image.getImage()" />
+                     </div>
+                     #end
+            #else
+                <img src="$!graphimage" usemap="#$!graph.getKey()" alt=""/>
+            #end
+          </div>
+          $!graph.getMap()
+          <br />
+            #if (!$!embed)
+                #if (!$!doprint)
+            ##only show min/max if graph is JFreeChart and has the property set
+            #if ($!chartcomponent == "jfreechart" && !$!noscaleadjust && $!props.showResizeOption())
+            <div class="scaleadjust">
+                  <form action="$!form_action">
+                     #foreach ($field in $!hiddenform.getForm())
+                        #if ($!field.name != 'min' && $!field.name != 'max')
+                           <input type="hidden" name="$field.name" value="$field.value"/>
+                        #end
+                     #end
+                     #if ($!openedBookmarkURL)
+                      <input type="hidden" name="openBookmark" value="$!openedBookmarkURL"/>
+                     #end
+                     #if ($!min || $!max)
+                        ##Remove when the new cube implementation comes
+                        <input type="text" class="textfield" name="min" value="$!min" size="$!min.length()"/>
+                        <input type="text" class="textfield" name="max" value="$!max" size="$!max.length()"/>
+                     #else
+                        <input type="text" class="textfield" name="min" value="$!graph.getMin()" size="$!graph.getMin().length()"/>
+                        <input type="text" class="textfield" name="max" value="$!graph.getMax()" size="$!graph.getMax().length()"/>
+                     #end
+                     <input type="submit" class="button" value="$!i18n.Change"/>
+                  </form>
+                  <form action="$!form_action">
+                     <input type="submit" class="button" value="$!i18n.Reset"/>
+                     #foreach ($field in $!hiddenform.getForm())
+                        #if ($!field.name != 'min' && $!field.name != 'max')
+                           <input type="hidden" name="$field.name" value="$field.value"/>
+                           #if ($!openedBookmarkURL)
+                              <input type="hidden" name="openBookmark" value="$!openedBookmarkURL"/>
+                           #end
+                        #end
+                     #end
+                  </form>
+                  </div>
+            #end
+            #end
+            #end
+        </div>
+        #end
+
+
+
+        #if ($!urlPrefix)
+        <script type="text/javascript">
+						urlPrefix = '$!urlPrefix';
+        </script>
+        #end
+
+        #if (!$!embed)
+            #parse( "micro/filterweight.vm" )
+            #parse( "copyright/copyright.vm" )
+        #end
+    #end
+    #if (!$!embed)
+         </div>
+			<div class="footer">
+				#include( "static/footer.html" )
+		   </div>
+       </div>
+	#end
+   #parse( "help/help.vm" )
+  </body>
+</html>

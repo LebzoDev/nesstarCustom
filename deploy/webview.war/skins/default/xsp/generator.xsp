@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsp:page language="java"
+	xmlns:xsp="http://apache.org/xsp"
+	xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+	xmlns:xsp-session="http://apache.org/xsp/session/2.0"
+	xmlns:i18n="http://apache.org/cocoon/i18n/2.0"
+	xmlns:util="http://apache.org/xsp/util/2.0"
+	create-session="true">
+
+	<xsp:structure>
+		<xsp:include>nesstar.api.faster.Study</xsp:include>
+		<xsp:include>nesstar.api.Protocol</xsp:include>
+		<xsp:include>nesstar.webclient.executor.WebClientExecutor</xsp:include>
+         <xsp:include>nesstar.webclient.htmlviewer.WebHTMLViewer</xsp:include>
+	</xsp:structure>
+	<page>
+		<xsp:logic>
+
+				try {
+					WebHTMLViewer viewer = new WebHTMLViewer();
+					javax.servlet.http.HttpServletRequest httpRequest = (javax.servlet.http.HttpServletRequest)this.objectModel.get(org.apache.cocoon.environment.http.HttpEnvironment.HTTP_REQUEST_OBJECT);
+					nesstar.server.ServletUtils.setProtocol(httpRequest.getSession());
+					Protocol.setExecutorLog(new WebClientExecutor(null, request, response, viewer));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+
+
+		try {
+			Study study = (Study)Protocol.getDB().retrieve(request.getParameter("file"));
+			if (study != null) {
+				String xml = study.GetDDI().execute().getContent();
+				<util:include-expr><util:expr><xsp:expr>xml</xsp:expr></util:expr></util:include-expr>
+			} else System.out.println("Could not find the study");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		</xsp:logic>
+	</page>
+</xsp:page>

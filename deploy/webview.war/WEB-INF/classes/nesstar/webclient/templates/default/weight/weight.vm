@@ -1,0 +1,94 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		#parse ("cache/cacheHeader.vm")
+    <link href="$!{props.getSkinPath()}css/weight.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/weight.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript">
+        var skinPath = '$!{props.getSkinPath()}';
+    </script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/cube.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/bookmark.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery-1.8.2.min.js?$!props.getTimeStamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery.cookie.js?$!props.getTimestamp()"></script>
+    <title>$!i18n.print_weight_title</title>
+		#parse( "header.vm" )
+  </head>
+  <body onload="setScrollableSize()">
+    <script type="text/javascript">
+			mode = 'weight';
+    </script>
+		#parse( "menu/menu.vm" )
+    <div class="mozview bodypadder" id="exploder">
+
+			#parse( "toptitle.vm" )
+
+			#if ($!viewer.getIsLogin())
+				#parse ("login/loginform.vm")
+			#elseif ($!errormessage)
+      <div class="errormessage">$errormessage</div>
+			#else
+      <div class="weightheader">$!i18n.weight</div>
+      <table border="0" cellpadding="0" cellspacing="0" width="500px">
+        <tr>
+          <td>
+            <span class="title">$!i18n.weight_defined</span>
+            <div class="area weightarea">
+								#foreach ($weight in $!weightView.weights)
+              <div class="weightlink" id="$!weight.id" onclick="selectWeightVariable(this,'$!weight.url')">$!weight.label</div>
+								#end
+            </div>
+          </td>
+          <td class="weightcontrols">
+            <form action="$!form_action">
+              <table>
+                <tr>
+                  <td>
+                    <input type="button" class="button" style="margin-top: 30px" onclick="selectOneWeight()" value="$!i18n.weight_addone"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="button" class="button" onclick="remove()" value="$!i18n.weight_remove"/>
+                  </td>
+                </tr>
+              </table>
+            </form>
+          </td>
+          <td width="40%" valign="top">
+            <span class="title">$!i18n.weight_selected</span>
+            <div class="area weightarea">
+								#foreach ($select in $weightView.selected)
+              <div class="weightlink" id="$!select.id" onclick="selectToRemove(this,'$!select.remove')">$!select.label</div>
+								#end
+            </div>
+          </td>
+        </tr>
+      </table>
+      <form action="$!form_action" style="margin: 0; padding: 0; margin-top: 10px">
+        <input type="button" class="button minWidth" onclick="return setUrl('$!weightView.executeLink')" value="$!i18n.weight_ok"/>
+        <input type="button" class="button" onclick="removeAllDialog('$!weightView.removeAllQuery', '$i18n.confirm_delete_weight?')" value="$!i18n.weight_clear"/>
+      </form>
+
+      <div class="weightinstructions">
+					$i18n.weight_help
+      </div>
+
+				#if ($!weightView.weightInfo)
+      <div class="weightheader">$i18n.weightInstHeader</div>
+      <div class="weightinfo">$!weightView.weightInfo</div>
+				#end
+			#end
+			<div class="footer">
+			#include( "static/footer.html" )
+			</div>
+			#parse( "help/help.vm" )
+    </div>
+  </body>
+</html>

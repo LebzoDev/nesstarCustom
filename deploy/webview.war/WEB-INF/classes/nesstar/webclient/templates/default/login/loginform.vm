@@ -1,0 +1,136 @@
+#if ($!treelogin)	   
+<script type="text/javascript">     
+   document.onmousedown = doMouseDown;
+   function doMouseDown(e) {
+       removeLanguageBox(e);
+   }
+   function loginScreenLanguageSwitcher(lang) {
+       var form = document.getElementsByName("login")[0];
+       if (typeof form != 'undefined') {
+           var url = form.action;
+           url += "&amp;language=" + lang;
+           form.action = url;
+           form.submit();
+       } 
+       return false;
+   }
+</script>
+#end
+
+<div class="header" id="topstrip">
+   <table border="0" cellspacing="0" cellpadding="0">
+      <tbody><tr class="mainmenu">
+         <td width="100%">&nbsp;</td>
+         <td class="menuImageLeft">&nbsp;</td>
+         <td class="menubackground">
+            &nbsp;
+         </td>
+         <td class="menubackground">
+            &nbsp;
+         </td>
+         <td class="menubackground">
+            &nbsp;
+         </td>
+         <td class="menubackground">
+            &nbsp;
+         </td>
+         <td class="menubackground" style="padding-left: 5px">
+            &nbsp;
+         </td>
+         <td class="menubackground">
+            &nbsp;
+         </td>
+         <td class="menubackground">
+            &nbsp;
+         </td>
+         <td class="menubackground">
+            &nbsp;
+         </td>
+         <td class="menubackground" style="padding-left: 5px">
+            &nbsp;
+         </td>
+         <td class="menubackground">
+            &nbsp;
+         </td>
+         <td class="menubackground">
+            &nbsp;
+         </td>
+         <td class="menubackground">
+            &nbsp;
+         </td>
+         
+         <td class="menubackground">
+         
+            <a id="imagehelp" href="http://www.nesstar.com/help/4.0/webview/getting-started/manipulate-tables.html" onclick="openEmptyWindow('helpwin');" target="helpwin" title="Help">
+               &nbsp;
+            </a>
+         </td>
+         <td class="menubackground menubackgroundlast">&nbsp;</td>
+      </tr>
+   </tbody></table>
+</div>
+
+<a id="navhide" href="javascript:void(0);" class="navigationvisible" onclick="swapNavigation(this);" title=""></a>
+<script type="text/javascript">
+var collapsor = xGetElementById("navhide");
+var navigationFrame = top.frames.main.document.getElementById('set');
+var className = "navigationvisible";
+if (navigationFrame.cols) {
+     if (navigationFrame.cols.substring(0,navigationFrame.cols.indexOf('%')) == '0')
+         className = "navigationhidden";
+}
+collapsor.className = className;
+</script>
+
+<div class="mozview bodypadder" id="exploder"> 
+	<div id="login">
+
+
+#if ($!viewer.clientBasedLogin)
+	   <h2>$!i18n.login_access_control</h2>
+	   
+      #if (!$viewer.firstAttempt)            
+      <p class="loginfail">$!i18n.login_authentication_failed</p>   
+      #else
+      <p>$!i18n.login_access_control_verbose.</p>     
+      #end
+      
+      <form action="$!viewer.getAction()" id="loginform" name="login" method="post">     
+         <input type="hidden" name="opid" value="$!viewer.getOperationId()"/>
+         <input type="hidden" name="http://www.nesstar.org/rdf/method" value="http://www.nesstar.org/rdf/Server/Login"/>
+         <input type="hidden" name="server" value="$!viewer.getServerBaseURL()"/>
+         <input type="hidden" name="original_request" value="$!viewer.getOriginalRequest()"/>
+          <!--ONRESULT-->
+         <fieldset>
+            <div class="loginelement">
+               <label for="username">$!i18n.login_username:</label>
+             	<input type="text" size="25" name="userID" class="textfield" id="username"/>
+           	</div>
+            
+            <div class="loginelement">
+               <label for="password">$!i18n.login_password:</label>
+               <input type="password" size="25" name="userPassword"  class="textfield" id="password"/>
+            </div>
+             
+            <div class="buttonpadder">
+               <button type="submit" value="login" name="login" class="button">$!i18n.login_button</button>
+            </div>
+         </fieldset>
+      </form>
+      <script type="text/javascript" language="JavaScript">
+         document.forms['loginform'].elements['userID'].focus();
+      </script>
+      
+      <div class="unregistered">
+         <h3>$!i18n.login_unregistered</h3>
+   	   <p>$!i18n.login_unregistered_verbose.</p>
+      </div>
+#else 
+   $!viewer.getLoginMessage()
+#end
+	</div>
+</div>
+#if ($!treelogin)
+   #parse( "tree/recursive/scripts.vm" )
+#end
+

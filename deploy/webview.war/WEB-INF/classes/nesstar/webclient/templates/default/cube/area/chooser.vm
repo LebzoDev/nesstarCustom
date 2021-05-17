@@ -1,0 +1,18 @@
+#macro (traverse $node $props)
+  <ul style="$!node.getULStyle()">
+		#foreach ($child in $!node.children())
+			<li style="$!child.getLIStyle()">
+          #if (!$!child.getIsLeaf())
+          <img src="$!{props.getSkinPath()}images/plus.gif" onclick="return openNextLevel(this, '$!{child.getDrilldownUrl()}')" />
+          #end
+          <a href="$!child.getSelectUrl()">$!{child.getLabel()}</a>
+			</li>
+		#end
+	</ul>
+#end
+
+#if ($!viewer.getIsLogin())
+	#parse ("login/loginform.vm")
+#else
+  #traverse($!profiler.getSelectedCategoryTree() $props)
+#end

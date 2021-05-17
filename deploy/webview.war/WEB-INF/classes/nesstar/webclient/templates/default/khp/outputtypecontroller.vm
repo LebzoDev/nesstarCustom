@@ -1,0 +1,11 @@
+##Needs to be invisible, because submit-button is
+##in another frame. It calls the form this is in.
+
+<div id="controller" class="invisible">
+#if($!{props.getKHPOutput()} == "spider")
+   #parse("khp/spidersizehandle.vm")
+   <input id="spider" class="executebutton" type="hidden" name="spider" value="$!i18n.spider"/>
+#else
+   <input id="exe" class="executebutton" type="hidden" name="exe" value="$!i18n.next"/>
+#end
+</div>

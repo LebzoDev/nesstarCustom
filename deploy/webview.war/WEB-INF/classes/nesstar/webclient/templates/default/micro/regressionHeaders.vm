@@ -1,0 +1,68 @@
+#set ($tableinfo = $!analysis.getTableInfo())
+
+##If it is a graph add Romans in front of the label
+<div id="regressionHeaders">
+  <div class="regressionHeader">
+    <div class="dep">$!{i18n.dependent_header}:</div> 
+    <div style="margin-bottom: 10px">
+            #set ($depVar = $!tableinfo.getDepVar())
+			#if ($!depVar)
+                #if ($!graphimage)
+                    ($!tableinfo.getRoman().inWords(1))
+                #end
+			    $!utils.escape($!depVar.get('label'))
+                 #if(!$!embed)
+                     #if (!$!doprint)
+                         #set ($deleteDepUrl = $!depVar.get('remove'))
+      <a class="remove" onclick="return setUrlDialog('$!depVar.get('remove')', '$i18n.confirm_delete_regression?');" href="$!deleteDepUrl">$!utils.escape($!i18n.remove_corr_var)</a>
+                    #end
+                #end
+			#else
+			    $!i18n.no_dependent_added
+			#end
+    </div>
+  </div>
+
+  <div class="regressionHeader">
+    <div class="dep">$!{i18n.independent_header}:</div>
+    <div style="margin-bottom: 10px">
+            #if ($!tableinfo.getIndepVars())
+                #set ($numVar = 2)
+                #foreach ($indep in $!tableinfo.getIndepVars())
+      <div>
+                        #if ($!graphimage)
+                            ($!tableinfo.getRoman().inWords($numVar))
+                        #end
+                       $!utils.escape( $!indep.get('label'))
+                        #if(!$embed)
+                            #if (!$!doprint)
+                                #set ($deleteIndepUrl = $!indep.get('remove'))
+        <a class="remove" onclick="return setUrlDialog('$!deleteIndepUrl', '$i18n.confirm_delete_regression?');" href="$!deleteIndepUrl">$!utils.escape($!i18n.remove_corr_var)</a>
+                            #end
+                        #end
+      </div>
+                    #set ($numVar = $numVar + 1 )
+                #end
+            #else
+            $!i18n.no_independent_added
+            #end
+    </div>
+  </div>
+  #if ($!isScatterplotGraph == "true")
+    #set ($scatterplotBoolean = "true")
+    <script language="javascript">
+    var isScatterplot = $scatterplotBoolean;
+    </script>
+  #end
+
+</div>
+
+#if ($!regressionerror || $emptytable)
+  	<div id="error" class="errormessage">
+      <img id="errortip" src="$!{props.getSkinPath()}images/tip_up.gif" alt="tip" title=""/>
+      #if ($i18n.regression_help)
+         <p>$i18n.regression_help</p>
+      #end
+      <p>$!regressionerror</p>
+   </div>
+#end

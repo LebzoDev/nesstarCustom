@@ -1,0 +1,116 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>Add bookmark</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		#parse ("cache/cacheHeader.vm")
+    <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/bookmark.js?$!props.getTimestamp()"></script>
+		#parse( "header.vm" )
+
+  </head>
+	#if ($!doprint)
+		#set ($onload = "window.print()")
+	#else
+		#set ($onload = "setScrollableSize()")
+	#end
+  <body onload="$!onload">
+			#parse( "menu/menu.vm" )
+    <div class="mozview bodypadder" id="exploder">
+				#parse( "toptitle.vm" )
+
+
+				#if ($!viewer.getIsLogin())
+					#parse ("login/loginform.vm")
+				#elseif ($!errormessage)
+      <div class="errormessage">$utils.escape($!{errormessage})</div>
+				#else
+      <div class="pageheader">$!i18n.add_bookmark</div>
+
+
+		#if (!$!bookmark.IfHasBeenAdded)
+      <ul class="serverbookmark">
+        <li>
+          <form method="get" action="$!form_action" accept-charset="UTF-8" >
+                <input type="hidden" name="add" value="true"/>
+								#foreach ($item in $!bookmark.FormElements)
+                  <input type="hidden" name="$!item.name" value="$!item.value"/>
+								#end
+            <table border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td>$!i18n.bookmark_label</td>
+              </tr>
+              <tr>
+                <td><input type="text" class="textfield" size="20" name="bookmarklabel" value="$!bookmark.getLabel()"/></td>
+              </tr>
+              <tr>
+                <td>$!i18n.bookmark_comment</td>
+              </tr>
+              <tr>
+                <td><textarea class="theInput" name="comment" rows="10" cols="25">$!bookmark.getComment()</textarea></td>
+              </tr>
+            </table>
+            <input type="submit" value="$!i18n.bookmark_add" class="button"/>
+
+          </form>
+        </li>
+        <li>
+          <form method="get" action="$!form_action">
+            <input type="submit" value="$!i18n.bookmark_cancel" class="button"/>
+								#foreach ($item in $!bookmark.FormElements)
+									#if ($!item.name != 'bookmark' && $!item.name != 'doBookmark')
+                    <input type="hidden" name="$!item.name" value="$!item.value"/>
+									#end
+								#end
+          </form>
+        </li>
+      </ul>
+
+      <div class="hint">
+        $!bookmark.Help
+      </div>
+
+			#else
+          <div class="hint">
+            $!i18n.bookmark_added
+          </div>
+          <a class="bookmarklink" href="$!bookmark.getBookmark($!request)">$!i18n.stored_bookmark</a>
+				#end
+			#end
+
+				#parse( "copyright/copyright.vm" )
+    </div>
+    
+			<div class="footer">
+				#include( "static/footer.html" )
+			</div>
+				#parse( "help/help.vm" )
+  </body>
+	#if ($!bookmark.IfHasBeenAdded)
+  <script type="text/javascript">
+
+        var div = parent.parent.content.tree.bookmarkDiv;
+        //alert("Div: " + div);
+        var image = parent.parent.content.tree.bookmarkImage;
+        //alert("Image: " + image);
+        var link = parent.parent.content.tree.bookmarkLink;
+        //alert(link);
+        if (div) {
+          if (xGetComputedStyle(div, 'display') == 'block') {
+             //alert("Open");
+            //close
+            if (image) parent.parent.content.tree.openImage(image);
+            div.style.display = 'none';
+            //Open it
+            parent.parent.content.tree.openDrilldownBookmark(image, link);
+          } else {
+             //alert("Closed");
+          }
+        }
+  </script>
+	#end
+</html>

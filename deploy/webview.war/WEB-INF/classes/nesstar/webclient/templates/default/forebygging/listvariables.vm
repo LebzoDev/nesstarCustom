@@ -1,0 +1,10 @@
+<h2>Listen over variabler:</h2>
+<span class="studylist">
+  <ul>
+	#foreach ($variable in $variables)
+    <li>
+      <a href="$!variable.ID" target="_new">$!variable.label</a>
+    </li>
+	#end
+  </ul>
+</span>

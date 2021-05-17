@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+   <title>$!profiler.getTitle()</title>
+   #parse ("cache/cacheHeader.vm")
+   <link href="$!{props.getSkinPath()}css/cube.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+   <link href="$!{props.getSkinPath()}css/draganddrop.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+   <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+   <link href="$!{props.getSkinPath()}css/autocomplete.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+   <link href="static/profile.css?$!props.getTimestamp()" type="text/css" rel="stylesheet"/>
+   <link href="static/custom.css?$!props.getTimestamp()" type="text/css" rel="stylesheet"/>
+
+   #parse( "header.vm" )
+    #if ($doprint)
+        <link href="$!{props.getSkinPath()}css/printspecials.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    #end
+   <script type="text/javascript">
+      var domTT_selectElements;
+   </script>
+   <script type="text/javascript" src="$!{props.getSkinPath()}javascript/postcode.js?$!props.getTimestamp()"></script>
+   <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery-1.8.2.min.js?$!props.getTimeStamp()"></script>
+   <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery.cookie.js?$!props.getTimestamp()"></script>
+   <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery.imagesloaded.min.js?$!props.getTimestamp()"></script>
+   <script src="$!{props.getSkinPath()}/jquery-ui-1.9.0.custom/js/jquery-ui-1.9.0.custom.js" type="text/javascript" charset="utf-8"></script>
+
+   
+</head>
+<body>
+   #if ($!viewer.getIsLogin())
+      <div id="areaprofilercontent">
+      #parse ("login/loginform.vm")
+      </div>
+   #else
+
+   #if (!$!profiler.isPrint())
+   #parse ("profiler/breadcrumb.vm")
+   #end
+   <div id="areaprofilercontent">
+   #if ($!profiler.isReplay())
+      $!profiler.getContent(false)
+
+
+
+   #else
+
+   <div id="selector">
+       #if ($!profiler.isProfileSelector())
+      <h3><img src="images/selectprofile.png" alt="$!i18n.profileProfiles" title="" /></h3>            
+      #elseif ($!profiler.isSearchResult())
+      <h3><img src="images/searchresult.png" alt="$!i18n.profileSearchResult"  title="" /></h3>
+      #else
+      <h3><img src="images/selectarea.png" alt="$!i18n.profileHome"  title="" /></h3>            
+      #end
+      #if ($!profiler.isSearchForm())
+      <form action="" id="postcode" method="get" onsubmit="return validatePostcodeForm()">
+	 <div id="searchmessage">Please select your area from the options below.</div>
+         <div id="wardpostcodeautocomplete">
+            <label for="wardpostcodeinput">First enter the name of the area <span class="underline">or</span> its full postcode:</label>
+            <input id="wardpostcodeinput" type="text" class="textfield" name="areaname" value="$!profiler.getAreaName()"/>
+            <div class="help">e.g. Devonshire <span class="underline">or</span> BN21 3AB</div>       
+         </div>
+         <input type="hidden" name="mode" value="area"/>
+         <input type="hidden" name="submode" value="result"/>
+         <label for="areatype">Then select the type of area you want a profile for:</label>
+         <select id="areatype" name="areatype">
+            <option value="">- Please select -</option>
+            <option value="LA" $!profiler.isLA()>Local authority</option>
+            <option value="WA" $!profiler.isWA()>Ward</option>
+            <option value="PA"$!profiler.isPA()>Parish</option>
+         </select>
+         <input type="submit" id="submit" value="Search" class="button" />         
+      </form>
+      #end
+
+
+      #if ($!profiler.isSearchResult())
+         #set ($hits = $profiler.getSelectedHits())
+         #if (!$!hits || $!hits.size() == 0)
+            <div id="searchmessage">No area was found. The most common reasons for this are:</div>
+            <ul id="nohits">
+               <li>- partial or incomplete postcode (an example full postcode is TN18 4RX)</li>
+               <li>- the area name or postcode does not exist within East Sussex</li>
+               <li>- the area name does not exist within the type of area selected</li>
+               <li>- the area name or postcode has been mis-spelt or mis-typed.</li>
+            </ul>
+         #else
+            <div id="searchmessage">To view a profile, choose your area from the search results below.</div>
+            <ul class="searchresults">
+            #foreach ($hit in $hits)
+               <li><a href="velocity?mode=area&amp;submode=profile&amp;geoid=$!hit.getCode()&amp;areaname=$!profiler.getAreaName()&amp;areatype=$!profiler.getAreaType()">$!hit.getHitLabel()</a></li>
+            #end
+            </ul>
+         #end
+      #end
+
+      #if ($!profiler.isProfileSelector())
+      	    <h4>$!profiler.areaTypeFull profile for  $!profiler.getShortLabel()</h4>
+            <form action="" id="catalog">
+      		<div class="searchmessage">Please select the type of profile you want to view.</div>        
+                <select name="catalog" onchange="submitProfile()">
+                  <option>- Please select -</option>
+                  #foreach ($catalog in $profiler.getCatalogs())
+                  <option value="$!catalog.getID()">$!catalog.getLabel()</option>
+                  #end
+               </select>
+               #if ($!profiler.getAreaName())
+               <input type="hidden" name="areaname" value="$!profiler.getAreaName()"/>
+               #end
+                #if ($!profiler.getAreaType())
+               <input type="hidden" name="areatype" value="$!profiler.getAreaType()"/>
+               #end
+               <input type="hidden" name="mode" value="area" tabindex="0"/>
+               <input type="hidden" name="submode" value="replay" tabindex="0"/>
+               <input type="hidden" name="geoid" value="$!profiler.getGeoId()"/>
+            </form>
+      #end
+   </div>
+   #end
+   #end
+</div>
+#if($!profiler.isPrint())
+      <script type="text/javascript">
+	      setTimeout('window.print()', 5000);
+      </script>
+#end
+</body>
+</html>

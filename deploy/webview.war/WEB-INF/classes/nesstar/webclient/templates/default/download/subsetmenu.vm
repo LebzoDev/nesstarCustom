@@ -1,0 +1,15 @@
+<div class="downloadtabs">
+  <table class="menutable" cellspacing="0" cellpadding="0" border="0">
+    <tr>
+		#foreach ($field in $!download.getSubsetMenu())
+      <td class="bothmenus $!field.style">
+			#if ($!field.href)
+        <a href="$!field.href">$!field.label</a>
+				#else
+				    $!field.label
+				#end
+      </td>
+			#end
+    </tr>
+  </table>
+</div>

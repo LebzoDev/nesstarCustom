@@ -1,0 +1,10 @@
+#foreach($server in $!servers)
+   <div class="cluster">
+      <div class="giveroom"><h2>$!server.label</h2></div>
+      <ul>
+      #foreach($cat in $!server.catalogs)
+         <li><a href="$!{indexurls.getLinkToObject($!cat)}">$!cat.label</a></li>
+      #end
+      </ul>
+   </div>
+#end

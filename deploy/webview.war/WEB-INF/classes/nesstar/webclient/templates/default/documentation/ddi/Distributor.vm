@@ -1,0 +1,45 @@
+#macro ( singledistributor $sub )
+   <tr>
+      <td>
+		#if ($!sub.URL)
+			<a href="$!sub.URL" target="_new">
+				#if ($!sub.Content)
+					$!sub.Content
+				#else
+					$!sub.URL
+				#end
+      		</a>
+      #elseif ($!sub.Content)
+         $!sub.Content
+		#end
+		</td>
+		<td>
+		    $!sub.getAttribute('affiliation')
+      </td>
+      <td>
+		    $!sub.getAttribute('abbr')
+      </td>
+	</tr>
+#end
+
+<h3 class="ddititle">
+	$!node.Name
+</h3>
+#if ($!node.SubNodes.size() > 0)
+   <table class="doctable" border="1">
+      <tr>
+         <th>$!i18nDdi.name</th>
+         <th>$!i18nDdi.affiliation</th>
+         <th>$!i18nDdi.abbr</th>
+      </tr>
+	#foreach ($sub in $!node.SubNodes)
+    	#singledistributor($!sub)
+	#end
+   </table>
+#end
+#foreach ($date in $node.DateNodes)
+	#if ($!date.getAttribute('date'))
+<h3 class="ddititle">$!date.Name</h3>
+<p class="ddicontent">$!date.getAttribute('date')</p>
+	#end
+#end

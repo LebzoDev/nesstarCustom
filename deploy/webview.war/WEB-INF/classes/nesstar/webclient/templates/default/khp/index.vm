@@ -1,0 +1,284 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+   <head>
+      <title>$!i18n.htmlTitle</title>
+      <link href="$!context/$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!context/$!{props.getSkinPath()}css/documentation.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!context/$!{props.getSkinPath()}css/yui/container.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+
+      <!-- YUI CSS Subclassing-->
+      <link rel="stylesheet" type="text/css" href="$!{props.getSkinPath()}css/containerspecials.css?$!props.getTimestamp()"/>
+      
+      <link href="$!context/$!{props.getSkinPath()}css/khp.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+
+      <script type="text/javascript" src="$!context/$!{props.getSkinPath()}javascript/x.js?$!props.getTimestamp()"></script>
+      <script type="text/javascript" src="$!context/$!{props.getSkinPath()}javascript/common.js?$!props.getTimestamp()"></script>
+      <script type="text/javascript" src="$!context/$!{props.getSkinPath()}javascript/browserdetect.js?$!props.getTimestamp()"></script>
+      <script type="text/javascript" src="$!context/$!{props.getSkinPath()}javascript/khp.js?$!props.getTimestamp()"></script>
+      #if (!$!viewer.getIsLogin())
+         #if ($!refCube)
+            #set ($reffed = '&amp;ref=')
+            #set ($start = "$reffed$refCube")
+         #end
+         <script type="text/javascript">
+            #parse("/khp/javascript.vm")
+         </script>
+      #end
+
+      <!-- Custom Style Sheet --->
+      <link href="$!{props.getSkinPath()}css/custom.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+
+      <!--[if lte IE 6]>
+      <script type="text/javascript">
+         xAddEventListener(parent.parent.window, "resize", adjustButton, false);
+         xAddEventListener(window, "scroll", adjustButton,false);
+      </script>
+      <![endif]-->
+      <!--[if lte IE 7]>
+      <link href="skins/default/css/ie7_workarounds.css?$!props.getTimestamp()" type="text/css" rel="stylesheet" media="screen" />
+      <![endif]-->
+      <!--[if lte IE 6]>
+      <link href="skins/default/css/ie6_workarounds.css?$!props.getTimestamp()" type="text/css" rel="stylesheet" media="screen" />
+      <![endif]-->
+      <!-- Dependencies -->
+	<script src="$!context/$!{props.getSkinPath()}javascript/yui/yahoo-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+	<script src="$!context/$!{props.getSkinPath()}javascript/yui/event-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+	<script src="$!context/$!{props.getSkinPath()}javascript/yui/dom-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+	
+	<!-- Source file -->
+	<script src="$!context/$!{props.getSkinPath()}javascript/yui/dragdrop-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+	<script src="$!context/$!{props.getSkinPath()}javascript/yui/animation-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+   <script src="$!context/$!{props.getSkinPath()}javascript/yui/container-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+   <script src="$!context/$!{props.getSkinPath()}javascript/yui/datasource-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+   <script src="$!context/$!{props.getSkinPath()}javascript/yui/autocomplete-min.js?$!props.getTimestamp()" type="text/javascript"></script>
+   
+   <script src="$!context/$!{props.getSkinPath()}javascript/yui/logger.js?$!props.getTimestamp()" type="text/javascript"></script>
+
+   <script src="$!context/$!{props.getSkinPath()}javascript/slideupanimation.js?$!props.getTimestamp()" type="text/javascript"></script>
+
+   <script type="text/javascript">
+     #parse("help/jstranslations.vm")
+     #parse("tree/jsproperties.vm")
+   </script>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <META NAME="WT.ti" CONTENT="Kommunehelseprofiler - forsiden.">
+      #parse ("cache/cacheHeader.vm")
+      
+      <link href="skins/default/css/custom.css?$!props.getTimestamp()" type="text/css" rel="stylesheet" media="screen" />
+   </head>
+   <body onload="onloadEvent();" class="tree" id="thebodyid">
+      #if ($!viewer.getIsLogin())
+        #parse ("login/loginform.vm")
+      #else
+        #parse ("khp/dimension.vm")
+
+        #if ($!selectionNotValid)
+        <div style="clear: both; color: red">
+           $!i18n.hinge_not_complete
+         </div>
+        #end
+
+      #if ($!selected)
+      <script type="text/javascript">
+         selected = '$!selected';
+      </script>
+      #end
+      #end
+
+	<script type="text/javascript">
+	   //Enable this for logging to Firebug console.
+   	//YAHOO.widget.Logger.enableBrowserConsole();
+	
+      //Start the dimension autocomplete
+      var dimensionDataSource = new YAHOO.util.LocalDataSource(collection);
+      dimensionDataSource.queryMatchContains = true;
+      var dimensionAuto = new YAHOO.widget.AutoComplete('search_textinput','search_textinput_container', dimensionDataSource);
+    	dimensionAuto.forceSelection = true;
+    	dimensionAuto.highlightClassName = "highlight";
+    	dimensionAuto.itemSelectEvent.subscribe(openTree);
+      // End dimension autocomplete
+
+    #if(!$!props.useMultipleBarometers())
+      //Start indicators autocomplete
+      var indicatorsDataSource = new YAHOO.util.LocalDataSource(indicators);
+      indicatorsDataSource.queryMatchContains = true;
+      var indicatorsAuto = new YAHOO.widget.AutoComplete('indicators_textinput','indicators_textinput_container', indicatorsDataSource);
+      indicatorsAuto.forceSelection = true;
+      indicatorsAuto.highlightClassName = "highlight";
+      indicatorsAuto.itemSelectEvent.subscribe(openIndicatorTree);
+      //End indicators autocomplete
+
+      //Indicator callback functions
+      if(indicatorsAuto){
+         indicatorsAuto.formatResult = function(oResultItem, sQuery) {
+            return oResultItem[0];
+         };
+      }
+    #end
+   	//Dimension callback function
+   	dimensionAuto.formatResult = function(oResultItem, sQuery) {
+        return oResultItem[0];
+      };
+
+      function openTree(sType, aArgs, oData) {
+      YAHOO.log(["sType: " + sType, "aArgs: " + aArgs, "oData: " + oData]);
+         clearInput('search_textinput');
+         var oAutoComp = aArgs[0];
+         var oItem = aArgs[1];
+         var code = aArgs[2][1];
+         selectAndOpenPath(code, 'dimensions');
+      }
+      //End dimension callback
+
+      function openIndicatorTree(sType, aArgs) {
+         clearInput('indicators_textinput');
+
+         var oAutoComp = aArgs[0];
+         var oItem = aArgs[1];
+         var code = aArgs[2][1];
+         selectAndOpenPath(code, 'indicators');
+      }
+
+    // END THE INDICATORS CALLBACK FUNCTIONS
+
+    function clearInput(inputId){
+      var inputBox = xGetElementById(inputId);
+      if(inputBox){
+         inputBox.value = '';
+      }
+    }
+
+    function selectIndicators(selectedElements) {
+        var selVars = new Array();    	
+    	for (var sel in selectedElements) {
+    		selVars[selectedElements[sel]] = "yep";
+    	}
+   	
+   	for (var i in indicators) {           
+   	   if (selVars[indicators[i][1]]) {
+   	   	selectAndHighLightPath(indicators[i][1]);   	   	
+   	    } else {
+   	    	unSelect(indicators[i][1]);   	    	
+   	    }	    
+   	}
+    }
+    
+    function selectCollection(selectedElements) {        	    	
+    	var selVars = new Array();    	
+    	for (var sel in selectedElements) {
+    		selVars[selectedElements[sel]] = "yep";
+    	}
+
+   	for (var i in collection) {              	   	      	
+   	   if (selVars[collection[i][1]]) {   	   	   
+   	   	selectAndHighLightPath(collection[i][1]);   	   	
+   	    } else {   	
+   	    	unSelect(collection[i][1]);   	    	   	
+   	    }	       	
+   	}
+    }
+    
+    function unSelect(id) {
+    	   var element = xGetElementById(id);
+	   if (element) {
+	   	if (element.checked) {	   	
+	   		element.checked = '';
+	   		var listEntry=element.parentNode;
+	   		listEntry.style.backgroundColor='#ff8888';
+	   		myAnim = new YAHOO.util.ColorAnim(listEntry, {backgroundColor: { to: '#ffffff' } }); 
+	   		myAnim.animate();
+	   	} 
+	   }    	   
+    }
+
+
+function selectAndHighLightPath(id) {
+   var element = xGetElementById(id);
+   var blink = true;
+   if (element) {
+      var clickedElement = element;
+      var listEntry = clickedElement.parentNode;
+      if (element.checked) blink = false;
+      element.checked = 'checked';
+      //Iterate through to the top
+      while (element && element.id != 'topCategoryMenu') {
+         if (element.tagName == 'UL') {
+            element.style.display = "block";
+            if (element.parentNode.id != "topCategoryMenu") {
+               siblings = element.parentNode.childNodes;
+               for (i = 0; i < siblings.length; i++) {
+                  if (siblings[i].tagName == 'A') {
+                     siblings[i].style.display = "block";
+                  }
+                  if (siblings[i].tagName == 'IMG') {
+                     siblings[i].src = "$!context/skins/default/images/minus.gif";
+                  }
+               }
+            }
+         }
+         element = element.parentNode;
+      }
+
+      if (blink) {
+         //Highlight selected element.
+         listEntry.style.backgroundColor = '#fbff00';
+         myAnim = new YAHOO.util.ColorAnim(listEntry, {backgroundColor: { to: '#ffffff' } });
+         myAnim.animate();
+      }
+   }
+}
+
+
+
+
+var inputs = document.getElementsByTagName("INPUT");
+for (c = 0; c < inputs.length; c++) {
+	if (inputs[c].className == "checkbox") {
+	#if ($!{props.getKHPOutput()} == "spider")
+	   ##Multibarometers
+	   #if($!props.useMultipleBarometers())
+         if (browser.isIE) {
+               xAddEventListener(inputs[c], "click", onMultibarometerChanged, false);
+               } else {
+               xAddEventListener(inputs[c], "change", onMultibarometerChanged, false);
+         }
+	   #else
+	      ##Regular spiders
+         if (browser.isIE) {
+               xAddEventListener(inputs[c], "click", onSpiderChanged, false);
+               } else {
+               xAddEventListener(inputs[c], "change", onSpiderChanged, false);
+         }
+      #end
+      	#else
+      		if (browser.isIE) {      
+         		xAddEventListener(inputs[c], "click", onSelectionChanged, false);
+	      	} else {
+        		xAddEventListener(inputs[c], "change", onSelectionChanged, false);         
+		}      
+      	#end    
+	}
+}
+
+var submitEnabled=true;
+
+if (validateProfile() == 0) {
+   enableSubmit();
+} else {
+   disableSubmit();
+}
+
+
+   </script>
+
+<!-- START OF SmartSource Data Collector TAG -->
+<!-- Copyright (c) 1996-2005 WebTrends Inc.  All rights reserved. -->
+<!-- WT8 - Arena Data - support at arena.no - 29/6-2007 -->
+<script language="JavaScript" src="$!{props.getSkinPath()}/javascript/sdc_20061003_kommunehelseprofiler.js?$!props.getTimestamp()" type="text/javascript"></script>
+<!-- <noscript><img alt="" border="0" name="DCSIMG" width="1" height="1" src="http://webtrends.shdir.no/dcs57oddwer7rjfgc1r5k9dfu8d4f/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=8.0.0"></noscript> -->
+<!-- END OF SmartSource Data Collector  TAG -->
+	
+	<div id="panelcontainer" style="position:fixed; width: 100%;"></div>
+   </body>
+</html>

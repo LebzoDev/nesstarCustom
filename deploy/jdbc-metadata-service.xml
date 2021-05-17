@@ -1,0 +1,10 @@
+<server>
+   <!-- ==================================================================== -->
+   <!-- An MBean that is a registry for JDBC type-mapping metadata           -->
+   <!-- ==================================================================== -->
+
+   <mbean code="org.jboss.ejb.plugins.cmp.jdbc.metadata.MetaDataLibrary"
+      name="jboss.jdbc:service=metadata"/>
+
+</server>
+

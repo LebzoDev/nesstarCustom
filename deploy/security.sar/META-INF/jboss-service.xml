@@ -1,0 +1,36 @@
+<server>
+   <!-- ==================================================================== -->
+   <!-- Security                                                             -->
+   <!-- ==================================================================== -->
+
+   <mbean code="org.jboss.security.plugins.SecurityConfig"
+      name="jboss.security:service=SecurityConfig">
+      <attribute name="LoginConfig">jboss.security:service=XMLLoginConfig</attribute>
+   </mbean>
+   <mbean code="org.jboss.security.auth.login.XMLLoginConfig"
+      name="jboss.security:service=XMLLoginConfig">
+      <attribute name="ConfigResource">login-config.xml</attribute>
+   </mbean>
+
+   <!-- JAAS security manager and realm mapping -->
+   <mbean code="org.jboss.security.plugins.JaasSecurityManagerService"
+      name="jboss.security:service=JaasSecurityManager">
+      <attribute name="SecurityManagerClassName">org.jboss.security.plugins.JaasSecurityManager</attribute>
+      <attribute name="DefaultUnauthenticatedPrincipal">anonymous</attribute>
+      <!-- DefaultCacheTimeout: Specifies the default timed cache policy timeout
+      in seconds.
+      If you want to disable caching of security credentials, set this to 0 to
+      force authentication to occur every time. This has no affect if the
+      AuthenticationCacheJndiName has been changed from the default value.
+      -->
+      <attribute name="DefaultCacheTimeout">1800</attribute>
+      <!-- DefaultCacheResolution: Specifies the default timed cache policy
+      resolution in seconds. This controls the interval at which the cache
+      current timestamp is updated and should be less than the DefaultCacheTimeout
+      in order for the timeout to be meaningful. This has no affect if the
+      AuthenticationCacheJndiName has been changed from the default value.
+      -->
+      <attribute name="DefaultCacheResolution">60</attribute>
+   </mbean>
+</server>
+

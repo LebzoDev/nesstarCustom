@@ -1,0 +1,410 @@
+span.welcome {
+   font-size: 12px;
+   color: #000000;
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.allnodes {
+   font-weight: bold;
+   margin: 14px 0 0 0;
+   text-transform:uppercase;
+   border-top:1px solid #DEDEDE;
+   padding:4px 0 2px 0;
+   color: #666666;
+   font-size:11px;
+}
+
+h4 .allnodes{
+   padding:0px 0 0px 0;
+   margin:20px;
+   color:red;
+}
+
+.text, #catalogtext {
+   line-height:150%;
+   margin: 0 0 .4em 0;
+}
+
+td{ /* Legger til denne for � f� tallene p� graphonthefly ned i st�rrelse */
+   font-size:10px;
+}
+
+span.variable {
+   font-weight: bold;
+   color:#666666;
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+div.multiplevariables {
+   margin-top: 20px;
+   clear: both;
+}
+
+.ddititleLarge {
+   font-weight: bold;
+   font-size: 1.3em;
+   margin: 0px;
+   padding: 0px;
+   margin-bottom: 8px;
+}
+
+
+.ddititle, .egmsheading {
+   font-weight: bold;
+   margin: 14px 0 0 0;
+   border-top:1px solid #DEDEDE;
+   padding:5px 0 6px 0;
+   color: #666666;
+   font-size:11px;
+}
+
+.ddicontent, .egmstext {
+   margin: 0px;
+   padding: 0px;
+   margin-bottom: 20px;
+   font-size:11px;
+   color: #333;
+}
+
+.ddicontent p, .egmstext p {
+	margin: 0;
+}
+
+p.ddicontent, p.egmstext {
+   line-height:140%;
+}
+
+.abstractExtlink {
+   margin: 0px;
+   padding: 0px;
+   margin-top: 30px;
+}
+
+.ddiabbr {
+   margin: 0px;
+   padding: 0px;
+}
+
+ul.keywordnode {
+   margin-bottom: 0px;
+   margin-top: 0px;
+   padding-bottom: 0px;
+   padding-top: 0px;
+}
+/*
+table.keywordnode {
+	border-collapse: collapse;
+}
+
+table.keywordnode td {
+	border: 1px solid #666;
+}
+
+table.keywordnode th {
+	text-align: left;
+}
+
+table.keywordnode th, table.keywordnode td {
+	padding: 2px 10px 2px 4px;
+}
+*/
+td.allcell {
+   padding-right: 10px;
+   padding-bottom: 2px;
+}
+
+td.head {
+   text-align: left;
+   font-size:11px;
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-weight: bold;
+   color:#666666;
+}
+
+td.headN {
+   text-align: right;
+   font-size:11px;
+}
+
+td.stringcell {
+   text-align: left;
+   font-size:11px;
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+td.numcell {
+   text-align: right;
+   padding-bottom: 1px;
+   font-size:11px;
+}
+
+td.graph {
+   padding-bottom: 2px;
+   font-size:10px;
+}
+
+td.graphonthefly {
+   background-color: #b3c0cd;
+   background-color: #b7c2c7;
+   background-color: #037FB2;
+   font-size: 11px;
+}
+
+ul.variablegroup {
+   padding-top: 0px;
+   margin: 10px 0 0 -15px;
+}
+
+ul.variablegroup li{
+   list-style-image: url(../images/variable.gif);
+   padding:3px 0 3px 0;
+   color: #666666;
+   font-size:11px;
+}
+
+ul.variablegroup li a{
+    text-decoration: none;
+}
+
+.egmstopheading {
+   font-weight: bold;
+   margin-bottom: 30px;
+}
+
+.egmssubheading {
+   font-weight: bold;
+   font-size: 11px;
+   margin-bottom: 1px;
+}
+
+.egmslevel2 {
+   margin-left: 0px;
+}
+
+.egmslevel2 ul {
+   margin-top: 1px;
+   margin-bottom: 30px;
+}
+
+ul.egmsul {
+   margin-top: 0px;
+   margin-bottom: 30px;
+}
+
+.recode_space {
+   padding-right: 10px;
+}
+
+div.recode {
+   padding-top: 5px;
+}
+
+table.summary tbody {
+	border: none;
+}
+
+table.summary td {
+	font-size: 11px;
+   line-height:110%;
+   padding-left: 0;
+}
+
+table.summary tr th {
+   text-align: left;
+   font-weight: normal;
+   color: white;
+}
+
+table.summary tr th.last, table.summary tr td.last {
+   padding-left: 10px;
+}
+
+table.summary .right {
+	text-align: right;
+}
+
+.bo_freqtable td {
+   font-size:11px;
+}
+
+.bo_freqtable {
+   padding-top: 52px;
+   padding-top: 10px;
+}
+
+div.metadata {
+   position: fixed;
+   bottom: 0px;
+   width: auto;
+   margin: 0px;
+   z-index: 1;
+   width: 100%;
+   padding:0;
+
+}
+
+div#metaBuffer {
+   height:180px;
+   float:left;
+   clear:both;
+}
+
+ul#metadatamenu {
+   color: white;
+   height: 1.7em;
+   padding: 0px;
+   margin: 0px;
+   margin-left:25px;
+   padding-top: 1em;
+   list-style: none;
+   float: left;
+}
+
+div#metadatacontrol {
+   text-align: right;
+   background: white;
+   float: right;
+   padding-top: 1em;
+}
+
+div#metadatacontrol a img {
+   border: none;
+}
+
+ul#metadatamenu li {
+   border: 1px solid #BCBCBC;
+   border-bottom: none;
+   float: left;
+   margin-left: 3px;
+   margin-top: -1px;
+}
+
+ul#metadatamenu li a{
+   white-space: nowrap;
+}
+
+ul#metadatamenu li.menunotchosen {
+   border-bottom: 1px solid #BCBCBC;
+   background-color: #ffffff;
+}
+
+ul#metadatamenu li.menuchosen {
+   border-top: 3px solid rgb(0, 82, 155);
+   margin-top: -2px;
+   background-color: #ffffff;
+}
+
+.metadata a {
+   text-decoration: none;
+   font-weight: bold;
+   display: block;
+   height: 1.5em;
+   padding-top: 0.2em;
+   padding-left: 1.5em;
+   padding-right: 1.5em;
+   margin: 0px;
+}
+
+
+div#metacontent {
+   background: #ffffff;
+   padding: 10px;
+   border-top: 1px solid #BCBCBC;
+   margin: 0px;
+   min-height: 100px;
+   height: 125px;
+   position: relative;
+
+   overflow: auto;
+   clear: both;
+   z-index: -1;
+   margin-bottom: -1px;
+}
+
+a.hidemetadatalink {
+   cursor: pointer;
+}
+
+div#metacontent div.metacontentseparator{
+   padding-bottom: 10px;
+}
+
+div#metacontentprint div.metacontentseparator{
+   padding-bottom: 10px;
+}
+
+div#metacontent ul.keywordlist{
+   list-style-type: none;
+   margin-left: 0;
+   padding-left: 0;
+}
+
+div#metacontent ul.keywordlist li{
+   margin-left: 0;
+   padding-left: 0;
+}
+
+div#metacontent ul.keywordlist a{
+  font-weight: normal;
+  text-decoration: underline;
+  padding: 0;
+}
+
+div#metacontent a{
+   padding-left: 0;
+   display: inline;
+}
+
+
+h3.print{
+   margin-bottom: 10px;
+   font-size: 125%;
+   width: 90%;
+}
+
+.doctable td {
+	min-width: 50px;
+}
+
+/*
+General styles for the catalog text.
+Also see common.css for shared styles.
+*/
+#catalogtext h4, #catalogtext h5, #catalogtext h6 {
+	color: #666;
+	margin-bottom: 6px;
+}
+.doctable {
+	border-collapse: collapse;
+	border-color: #ccc;
+}
+.doctable caption {
+	caption-side: bottom;
+	font-style: italic;
+	font-size: 90%;
+	text-align: right;
+	padding: .5em 0;
+}
+.doctable th {
+	padding: .2em .6em;
+	font-size: 10px;
+	font-weight: normal;
+	border-color: #ccc;
+}
+.doctable td {
+	padding: .2em .4em;
+	border-color: #ccc;
+}
+#catalogtext hr {
+	border: 1px solid #ccc;
+}
+#catalogtext h4 {
+	font-size: 11px;
+}
+#catalogtext h5 {
+	font-size: 10px;
+	font-weight: bold;
+}
+#catalogtext h6 {
+	font-size: 10px;
+}

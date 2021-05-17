@@ -1,0 +1,126 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		#parse ("cache/cacheHeader.vm")
+    <link href="$!{props.getSkinPath()}css/subset.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/common.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/cases.js?$!props.getTimestamp()"></script>
+    <title>Download</title>
+  </head>
+  <body onload="setList()">
+    <div>
+		#if ($!errormessage)
+      <div class="errormessage">$errormessage</div>
+		#else
+      ## If it's a contineous variable, show range
+      #if ($!categoriesView.getIsContin())
+      <div class="padcontin">
+        <span class="contintext">$!i18n.subsetcontin</span>
+        <form class="caseform" action="$!form_action" onsubmit="return false">
+          <input id="inputlist" type="text" class="textfield" size="16" name="list"/>
+				#if ($!categoriesView.getIsMinAndMaxNotSet())
+            <div>$!i18n.subset_range_not_set</div>
+				#else
+              <br/>
+              <span id="subset_min">$!i18n.subset_min
+                  #if ($!categoriesView.minValue)
+                      $!categoriesView.minValue
+                  #else
+                     $!i18n.subset_not_set
+                  #end
+              </span>
+              <br/>
+              <span id="subset_max">$!i18n.subset_max
+                  #if ($!categoriesView.maxValue)
+                     $!categoriesView.maxValue
+                  #else
+                     $!i18n.subset_not_set
+                  #end
+              </span>
+				#end
+        </form>
+      </div>
+		#end
+      <table border="0" cellspacing="0" cellpadding="0" class="categorysubset">
+        #foreach ($category in $!categoriesView.getCategories())
+          #if ($!category.disabled)
+          <tr id="$!utils.encode($!category.value)">
+            <td valign="top" style="color:#999; background:white">$!utils.escape($!category.value)</td>
+            <td valign="top" style="color:#999; background:white">&nbsp;$!category.label</td>
+          </tr>
+          #else
+          <tr id="$!utils.encode($!category.value)" onclick="parent.select(this,'$!utils.escapeJS($!category.value)',event,'$!category.number')">
+            <td valign="top" nowrap="nowrap">$!utils.escape($!category.value)</td>
+            <td valign="top">&nbsp;$!utils.escape($!category.label)</td>
+          </tr>
+          #end
+        #end
+      </table>
+    #if ($!categoriesView.categories.size() == 0)
+			#if ($!categoriesView.isContin)
+			#else
+      <div>$!i18n.subset_discrete_nocat</div>
+			#end
+		#end
+		#end
+
+      <script type="text/javascript">
+			#foreach ($category in $!categoriesView.categories)
+			makeNotSelectable('$!utils.escape($!category.value)');
+			#end
+
+			function setList() {
+				var element = document.getElementById('inputlist');
+            var maxConVal=null;
+            var minConVal=null;
+				parent.setList(element);
+
+            #if($!categoriesView.maxValue) maxConVal=$!categoriesView.maxValue; #end
+            #if($!categoriesView.minValue) minConVal=$!categoriesView.minValue; #end
+            parent.setMaxMinConVal(maxConVal,minConVal);
+			}
+
+			#if($!categoriesView.IsMultipleAllowed)
+			parent.isMultiple();
+			#end
+
+			var isChild = false;
+		function removeSubsetBox(e) {
+			findMainFrame(parent);
+			if (mainframe.content.tree.previousmenu) {
+				if(!e) e=window.event;
+				if (e.target)
+	    			target=e.target;
+				else if (e.srcElement)
+	    			target=e.srcElement;
+
+				isChildOf(target,mainframe.content.tree.previousmenu);
+				if (!isChild) mainframe.content.tree.previousmenu.style.display = 'none';
+		    }
+		}
+
+		function isChildOf(node, what) {
+    		isChild = false;
+
+    		while(node) {
+        		node = node.parentNode;
+        		if (!node) break;
+        		if (node && node.nodeType == 9) break;
+        		if (node.id == what.id) {
+            		isChild = true;
+            		break;
+        		}
+    		}
+		}
+
+      </script>
+
+    </div>
+  </body>
+</html>

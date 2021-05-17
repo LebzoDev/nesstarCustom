@@ -1,0 +1,99 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>$!frametitle</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		#parse ("cache/cacheHeader.vm")
+
+    <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/documentation.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/computing.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/bookmark.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery-1.8.2.min.js?$!props.getTimeStamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery.cookie.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/computing.js?$!props.getTimestamp()"></script>
+    <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+
+		#parse( "header.vm" )
+
+  </head>
+	#if ($!doprint)
+		#set ($onload = "setScrollableSize();window.print()")
+	#else
+		#set ($onload = "setScrollableSize()")
+	#end
+  <body onload="$!onload">
+
+		#parse( "menu/menu.vm" )
+    <div class="mozview bodypadder" id="exploder">
+
+				#parse( "toptitle.vm" )
+
+				#if ($!viewer.getIsLogin())
+					#parse ("login/loginform.vm")
+				#elseif ($!errormessage)
+      <div class="errormessage">$utils.escape($!{errormessage})</div>
+				#else
+
+					#if ($!compute.getErrorMessage())
+            <div class="errormessage">$utils.escape($!{compute.getErrorMessage()})</div>
+					#end
+
+      <h3>$!i18n.compute</h3>
+
+					#if ($!compute.getIsEmtpy())
+						#parse( "computing/types.vm" )
+                        #parse( "computing/delete.vm" )
+      <div class="hint">
+        $!i18n.compute_help
+      </div>
+					#else
+            #if ($!compute.getComputeType() == 'add' || $!compute.getComputeType() == 'mul' || $!compute.getComputeType() == 'avg')
+              #parse( "computing/add.vm" )
+						#elseif ($!compute.getComputeType() == 'sub' || $!compute.getComputeType() == 'div' || $!compute.getComputeType() == 'pct' || $!compute.getComputeType() == 'pcGrw')
+							#parse( "computing/sub.vm" )
+						#elseif ($!compute.getComputeType() == 'recode')
+							#parse( "computing/recode.vm")
+                        #end
+      <div class="hint">
+						#if ($!compute.getComputeType() == 'avg')
+							$!i18n.compute_avg_help
+						#elseif ($!compute.getComputeType() == 'add')
+							$!i18n.compute_add_help
+						#elseif ($!compute.getComputeType() == 'mul')
+							$!i18n.compute_mul_help
+						#elseif ($!compute.getComputeType() == 'sub')
+							$!i18n.compute_sub_help
+						#elseif ($!compute.getComputeType() == 'div')
+							$!i18n.compute_div_help
+						#elseif ($!compute.getComputeType() == 'pct')
+							$!i18n.compute_pct_help
+						#elseif ($!compute.getComputeType() == 'pcGrw')
+							$!i18n.compute_pcGrw_help
+						#elseif ($!compute.getComputeType() == 'recode')
+							$!i18n.compute_recode_help
+						#end
+      </div>
+                    #end
+					#if ($!compute.getComputeType() == 'recode')
+						#if ($!compute.getView().getVariables().size() > 0)
+							#parse( "documentation/vardoc.vm" )
+						#end
+					#end
+                    #if ($!compute.getIfAdded())
+      <div class="added">$!i18n.compute_variable_added</div>
+                    #end
+				#end
+
+				##The footer and help implementation
+				
+			<div class="footer">
+				#include( "static/footer.html" )
+			</div>
+				#parse( "help/help.vm" )
+    </div>
+        #parse( "computing/update.vm")
+  </body>
+</html>

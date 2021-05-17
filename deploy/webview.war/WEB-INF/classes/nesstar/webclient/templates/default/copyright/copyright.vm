@@ -1,0 +1,3 @@
+#if ($!menuClass.getStudy().StdyCopyright)
+<div class="copyright">$utils.escape($!{menuClass.getStudy().StdyCopyright})</div>
+   #end

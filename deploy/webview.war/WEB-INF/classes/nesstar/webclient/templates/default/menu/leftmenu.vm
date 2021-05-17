@@ -1,0 +1,23 @@
+   #if ($!menuClass.getLeftMenu().size() > 1)
+      ## Only run this check one time. Makes sure the submode=abstract is only sent to one page
+      #set ($checkOnce = false)
+      #foreach ($field in $!menuClass.getLeftMenu())
+   <td align="left" class="bothmenus $!field.style" nowrap="true">
+      #if ($!field.href)
+         #if(!$!prop.cubeDisplayMetadata() && $!currentIsCube && !$!checkOnce)
+            #set ($href = "$!field.href&submode=abstract")
+            #set ($checkOnce = true)
+         #else
+            #set ($href = "$!field.href")
+         #end
+      <a id="$!field.id" href="$!href">$!field.label</a>
+      #else
+      $!field.label
+      #end
+   </td>
+   		#set ($!colspan = $!colspan + 1)
+      #end
+   #end
+<td width="100%">&nbsp;</td>
+<td class="menuImageLeft">&nbsp;</td>
+ 

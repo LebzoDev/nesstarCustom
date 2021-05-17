@@ -1,0 +1,85 @@
+#if (!$!viewer.getIsLogin())
+
+<script type="text/javascript">
+		mode = 'correlation';
+</script>
+
+   
+
+	#if ($!analysis.getTableParser().getTable())
+<table class="matrix" border="0" id="correlation">
+			#foreach ($row in $!analysis.getTableParser().getTable())
+  <tr>
+				#foreach ($element in $row)
+                    #if ($!element.rowspan)
+                        #set ( $rowspan = $element.rowspan )
+                    #else
+                        #set ($rowspan = 1)
+                    #end
+
+                    #if ($!element.colspan)
+                        #set ( $colspan = $element.colspan )
+                    #else
+                        #set ( $colspan = 1 )
+                    #end
+
+                    #set ( $class = $element.type)
+
+                    #if ($class == 'stublabel')
+                        #set ($title = $!i18n.canmovetocolumn)
+                    #elseif ($class == 'headlabel')
+                        #set ($title = $!i18n.canmovetorow)
+                    #else
+                        #set ($title = "")
+                    #end
+
+
+                    #if ($class == 'stublabel' || $class == 'headlabel'  || $class == 'empty' || $class == 'emptystub')
+                       #if ($class == 'matrix')
+                          #set ($class = "matrix")
+                       #else
+                          #set ($class = "stub")
+                       #end
+    <td class="$!class" title="$!title" rowspan="$!rowspan" colspan="$!colspan">
+                   #if ($!element.label.trim().length() == 0)
+                      &nbsp;
+                   #end
+                   $!utils.escapeHtml($element.label)
+    </td>
+                    #else
+    <td class="corr_stub $!class" title="$!element.tooltip" rowspan="$!rowspan" colspan="$!colspan">
+                        #if ($!element.subset && !$!doprint)
+      <a href="$!element.link" onclick="hideTheViewArea()">$element.label</a>
+                        #else
+                            $!utils.escapeHtml($element.label) $!element.significance 
+                        #end
+    </td>
+                    #end
+				#end
+  </tr>
+			#end
+</table>
+  <table id="legend" border="0" cellspacing="0" cellpadding="2">
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="padder"></td>
+      <td>**</td>
+      <td class="legend_label">$!i18n.correlation_second_sign</td>
+    </tr>
+    <tr>
+      <td class="padder"></td>
+      <td>*</td>
+      <td class="legend_label">$!i18n.correlation_third_sign</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+	#end
+#end

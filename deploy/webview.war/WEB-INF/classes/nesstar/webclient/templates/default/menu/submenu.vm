@@ -1,0 +1,17 @@
+#set ($submenu = $!menuClass.getSubmenu())
+
+#if ($!submenu)
+<tr>
+    #foreach ($field in $!submenu)
+  <td align="left" class="submenu sub$!field.style">
+        #if ($!field.href)
+    <a href="$!field.href">$!field.label</a>
+         #else
+             $!field.label
+        #end
+  </td>
+    #end
+  <td align="left" class="submenu bothmenus">&nbsp;</td>
+  <td class="bothmenus" colspan="$!colspan">&nbsp;</td>
+</tr>
+#end

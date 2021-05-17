@@ -1,0 +1,9 @@
+<h3 class="ddititle">
+	$!node.Name
+</h3>
+
+<div class="ddicontent">
+    #foreach ($sub in $!node.SubNodes)
+  <p>$!sub.Date</p>
+    #end
+</div>

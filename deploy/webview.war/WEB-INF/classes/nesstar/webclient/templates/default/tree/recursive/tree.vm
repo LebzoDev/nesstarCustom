@@ -1,0 +1,71 @@
+#set ($thislevel = 0)
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  #parse ("cache/cacheHeader.vm")
+  <script type="text/javascript">
+  #parse ("tree/jsproperties.vm")
+  </script>
+  <script type="text/javascript" src="$!{props.getSkinPath()}javascript/x.js?$!props.getTimestamp()"></script>
+  <script type="text/javascript" src="$!{props.getSkinPath()}javascript/treeview.js?$!props.getTimestamp()"></script>
+  <link href="$!{props.getSkinPath()}css/treeview.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+  <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+  <!-- Custom Style Sheet --->
+  <link href="$!{props.getSkinPath()}css/custom.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript" src="$!{props.getSkinPath()}javascript/common.js?$!props.getTimestamp()"></script>
+  <script type="text/javascript" src="$!{props.getSkinPath()}javascript/search.js?$!props.getTimestamp()"></script>
+  <script type="text/javascript" src="$!{props.getSkinPath()}javascript/browserdetect.js?$!props.getTimestamp()"></script>
+<!--[if lte IE 6]>
+<link href="$!{props.getSkinPath()}css/ie6_workarounds.css?$!props.getTimestamp()" type="text/css" rel="stylesheet" media="screen" />
+<![endif]-->
+  <title>The browselist</title>
+</head>
+#if ($!searchView.getDocument())
+#set ($document = $!searchView.getDocument())
+#end
+<body onload="$!document.onload" id="body" onclick="closeBookmarkMenu();" onmouseup="endDrag()">
+##parse ("tree/treeloginscripts.vm")
+#parse ( "tree/treemenues.vm" )
+<div class="mozview">
+  #parse ( "tree/recursive/structure.vm" )
+  #if (!$!searchView) 
+  <div id="searchdivinsert" style="display: none">Searching...</div>
+  <iframe id="searchit" name="hiddensearch" style="display: none; width: 0px; height: 0px"></iframe>
+  #else
+  <div class="hidden" id="searchQuery">$!searchQuery</div>
+  <script type="text/javascript">	
+	//FIXME: This should be more dynamic. Maybe traverse untill known point and then go back down.
+	termstore=parent.parent.frames[0].document.getElementById("currentSearchTerm");
+	if (termstore) {
+		termstore.value=document.getElementById("searchQuery").innerHTML;
+	}
+   </script>
+  #end
+</div>
+#parse( "tree/recursive/scripts.vm" )
+#parse( "help/help.vm" )
+
+##Some fields to copy into the treeview. This to avoid repeating the same content over again
+<div class="hidden" id="studyload">
+  <span class="otherload studyload">$!i18n.processing</span>
+</div>
+
+<div class="hidden" id="load">
+  <span class="otherload">$!i18n.processing</span>
+</div>
+
+<div class="hidden" id="loginstudy">
+  <span class="otherload studyload">$!i18n.treelogin</span>
+</div>
+
+<div class="hidden" id="login">
+  <span class="otherload" id="waitforloginspan">$!i18n.treelogin</span>
+</div>
+
+<div class="hidden" id="searching">
+  <div class="nohits">$!i18n.searching</div>
+</div>
+
+</body>
+</html>

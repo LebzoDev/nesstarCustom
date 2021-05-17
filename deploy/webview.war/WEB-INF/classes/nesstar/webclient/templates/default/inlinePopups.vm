@@ -1,0 +1,165 @@
+<link type="text/css" rel="stylesheet" href="skins/default/css/yui/logger.css?$!props.getTimestamp()">
+<script type="text/javascript">
+	var hasRun=0;
+	function init() {
+		if (hasRun < 1) {
+			YAHOOpanel = new YAHOO.widget.Panel("inlinePopupContainer", { visible: false, zindex: 1000, fixedcenter: true, constraintoviewport: true, width: 300 } );
+			YAHOOpanel.render();
+			//var myLogReader = new YAHOO.widget.LogReader();
+			hasRun=1;
+		}
+	}
+	YAHOO.util.Event.addListener(window, "load", init);
+
+
+
+   var panePaddingTotal = 12;
+	var bookmarkDialogWidth = 324;
+   var urlPaneHeight = 50 + panePaddingTotal;
+   var embedPaneHeight = 50 + panePaddingTotal;
+   var advancedPaneHeight = 16 + panePaddingTotal;
+   var advancedExpandedPaneHeight = 232 + panePaddingTotal;
+							//head + URL pane + embed pane + server side pane
+	var bookmarkDialogHeight = urlPaneHeight #if ($!isEmbeddable && !$!embeddingMeasureLimit) + embedPaneHeight #end #if ($!menuClass.ServerSideBookmarkAvailable) + advancedPaneHeight #end;
+	var maxBookmarkDialogHeight = urlPaneHeight #if ($!isEmbeddable && !$!embeddingMeasureLimit) + embedPaneHeight #end #if ($!menuClass.ServerSideBookmarkAvailable) + advancedExpandedPaneHeight #end;
+</script>
+
+<div id="inlinePopupContainer" style="display: none">
+	<iframe id="inlinePopupContents" name="inlinePopupContents" src="" scrolling="no"></iframe>
+</div>
+
+<script type="text/javascript">
+    baseUrl = "$!embedder.getBaseUrl()";
+    newUrl = "$!embedder.getEmbedUrl()";
+    spinnerUrl = "$!embedder.getSpinnerUrl()";
+
+    var objectWidth = "$!embedder.getWidth()";
+    var objectHeight = "$embedder.getHeight()";
+
+    objectWidth = (objectWidth != "") ? (+objectWidth) : 0;
+    objectHeight = (objectHeight != "") ? (+objectHeight) : 0;
+
+    var border = false;
+    var scrollbars = false;
+
+    //translations
+    var embed_iframe_message = '<a href="$!embedder.getViewUrl()">$!i18n.embed_iframe_message</a>';
+    var embed_external_link_message = "$!i18n.embed_external_link_message";
+    var embed_external_link_title = "$i18n.embed_external_link_title";
+</script>
+<div id="embedDialog">
+    <div class="hd">Embedding</div>
+    <div class="bd">
+    <div id="simpleembedding" style="display: block;">
+       $!i18n.embed_short_description:
+    </div>
+    <div class="output">
+        <input class="code" type="text" id="codeBox" name="codeBox" onclick="highlightCode();" value='$!embedder.getBaseHtml()' />
+        <input type="hidden" id="baseUrlBox" name="baseUrl" value='$!embedder.getBaseUrl()' />
+    </div>
+    <fieldset id="advancedembedding" style="display: none">
+        <legend>$!i18n.embed_advanced_settings</legend>
+        <div>$!i18n.embed_long_description.</div>
+
+        <div class="col leftcol">
+            <h3>
+                    $!i18n.embed_frame_size
+            </h3>
+            <div class="sub element relative" id="embedsize">
+               <div class="form-row">
+                  <label>$!i18n.embed_width:</label>
+                  <input onchange="javascript: updateTextValues(this);" class="number" type="text" value="" name="frameWidth" id="frameWidth" /> $!i18n.embed_pixels
+               </div>
+               <div class="form-row">
+                  <label>$!i18n.embed_height:</label>
+                  <input onchange="javascript: updateTextValues(this);" class="number" type="text" value="" name="frameHeight" id="frameHeight" /> $!i18n.embed_pixels
+               </div>
+               <div class="form-row">
+                  <small>
+                     <a href="javascript:fitAndUpdate();" title="$!i18n.embed_fit_title">$!i18n.embed_fit</a>
+                     <a href="javascript:reset();" title="$!i18n.embed_reset_title">$!i18n.embed_reset</a>
+                  </small>
+               </div>
+               <div class="form-row" id="aspectratio">
+                  <label for="ratiobutton" title="$i18n.embed_keep_ratio_tooltip"><input type="checkbox" id="ratiobutton" title="$i18n.embed_keep_ratio_tooltip" /> $i18n.embed_keep_ratio</label>
+               </div>
+            </div>
+            <div class="sub element form-row">
+                <label for="embed_border"><input onclick="javascript: updateValues(this, -1);" type="checkbox" id="embed_border" name="embed_border" /> $!i18n.embed_frame_border</label>
+            </div>
+         </div>
+         <div class="col rightcol">
+            <h3>
+                $!i18n.embed_align
+            </h3>
+            <div class="sub element">
+                <div class="form-row">
+                   <label for="embed_align_left"><input onclick="setAlignment(this);" type="radio" id="embed_align_left" name="embed_align" value="left" checked="checked" /> $!i18n.embed_align_left</label>
+                </div>
+                <div class="form-row">
+                   <label for="embed_align_right"><input onclick="setAlignment(this);" type="radio" id="embed_align_right" name="embed_align" value="right" /> $!i18n.embed_align_right</label>
+                </div>
+                <div class="form-row">
+                   <label for="embed_align_none"><input onclick="setAlignment(this);" type="radio" id="embed_align_none" name="embed_align" value="none" /> $!i18n.embed_align_none</label>
+                </div>
+            </div>
+            <div class="sub element form-row">
+               <label for="embed_title"><input onclick="javascript: updateValues(this, TITLE);" type="checkbox" id="embed_title" checked="checked" /> $!i18n.embed_object_title</label>
+            </div>
+        </div>
+    </fieldset>
+    <div class="link">
+        <a href="" onclick="return openEmbedPreview('$!i18n.embed_preview');" title="$!i18n.embed_preview_title">$!i18n.embed_preview</a>
+    </div>
+    </div>
+    <div class="ft"></div>
+</div>
+<div id="embedPreviewContainer">
+    <div class="hd"></div>
+    <div class="bd"></div>
+    <div class="ft"></div>
+</div>
+
+<div id="bookmarkDialog">
+	<div class="bd">
+	<div id="urlpane">
+		<div class="bookmarkhead">
+			<h2>$!i18n.bookmark_url</h2><span>$!i18n.bookmark_title</span>
+		</div>
+		<input type="text" class="textfield" name="url" id="bookmarkurl" value="$!menuClass.getCurrentViewUrl()" onclick="highlightText(this);" readonly="readonly" />
+	</div>
+	#if ($!isEmbeddable && !$!embeddingMeasureLimit)
+	<div id="embedpane">
+		<div class="bookmarkhead">
+		<h2>$!i18n.embed_title</h2><span>$i18n.embed_short_description</span>
+		</div>
+		<input id="simpleCodebox" type="text" class="textfield" name="embed" value='$!embedder.getBaseHtml()' onclick="highlightText(this);" readonly="readonly" />
+		<a id="advancedLink" href="" onclick="return openAdvancedEmbedding();" title="">$!i18n.embed_advanced_settings</a>
+	</div>
+	#end
+	#if ($!menuClass.ServerSideBookmarkAvailable)
+	<div id="serversidebookmarkpane">
+		<div id="serversidebookmarktoggle">
+			<a id="togglearrow" class="toggleright" href="" onclick="return expandBookmarkDialog()" title="$!i18n.bookmark_serverside_link_title">$!i18n.bookmark_serverside_link</a>
+		</div>
+		<div id="serversidebookmarkcontent">
+			<h2>$!i18n.add_bookmark</h2>
+			<p>$!i18n.bookmark_serverside_description.</p>
+			<form method="get" action="$!form_action" accept-charset="UTF-8">
+			<label for="bookmarklabel">$!i18n.bookmark_label</label>
+			<input type="text" class="textfield" name="bookmarklabel" id="bookmarklabel"/>
+			<label for="comment">$!i18n.bookmark_comment</label>
+			<textarea name="comment" id="comment" cols="25" rows="4"></textarea>
+			<div class="buttonpadder">
+			<button name="save" type="submit" class="button">$!i18n.bookmark_add</button>
+			</div>
+			<input type="hidden" name="add" value="true"/>
+			#foreach ($item in $!bookmark.FormElements)
+            	<input type="hidden" name="$!item.name" value="$!item.value"/>
+			#end
+			</form>
+		</div>
+	</div>
+	#end
+	</div>
+</div>

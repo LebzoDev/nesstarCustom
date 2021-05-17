@@ -1,0 +1,307 @@
+ul#topCategoryMenu {
+   padding: 0px;
+   margin: 0px;
+   margin-top: 30px;
+   list-style: none;
+   height: 413px;
+   max-height: 413px;
+   overflow-y: auto;
+   border-top: 2px solid #b2b2b2;      
+}
+
+html {
+	width: 100%;
+}
+
+body.subsetbody{
+   margin: 0 0 0 -1px;
+   padding: 0;
+   width: 100%;
+   border: 0px;
+}
+
+ul#topCategoryMenu li input {
+   margin-left: 0.5em;
+}
+
+ul#topCategoryMenu li a, ul#topCategoryMenu li span.invisibleplusminus {
+   display: block;
+   height: 12px;
+   width: 12px;
+   text-decoration: none;
+   float:left;
+   background-repeat: no-repeat;
+   background-position: 2px 2px;
+   font-size: 0px;
+}
+
+ul#topCategoryMenu li a.open {
+   background-image: url( '../images/minus.gif' );
+}
+
+ul#topCategoryMenu li a.closed {
+   background-image: url( '../images/plus.gif' );
+}
+
+ul.open {
+   display: block;
+}
+
+ul.closed {
+   display: none;
+}
+
+ul#topCategoryMenu li ul {
+   padding: 0px;
+   margin: 0px;
+   margin-left: 1.5em;
+   list-style: none;
+}
+
+#search_textinput {
+   width: 150px;
+   background-color: white;
+   background-image: url( '../images/system-search.png' );
+   background-position: 1px 1px;
+   background-repeat: no-repeat;
+   padding-left: 20px;
+}
+
+.autocomplete-trix {position:relative;margin-top:-3px;z-index:9000;clear:both;}
+.autocomplete-trix .yui-ac-content {position:absolute;margin-left:4px;width:275px;border:1px solid #404040;background:#fff;overflow:hidden;z-index:9050;}
+.autocomplete-trix .yui-ac-shadow {position:absolute;margin:.3em;width:100%;background:#a0a0a0;z-index:9049;}
+.autocomplete-trix .yui-ac-bd {padding: 0px;}
+.autocomplete-trix ul {margin: 0px; padding:5px 0;width:100%;}
+.autocomplete-trix li {padding:0 5px;cursor:default;white-space:nowrap; color: black;}
+.autocomplete-trix li.highlight {background:#ff0;}
+.autocomplete-trix li.prehighlight {background:#FFFFCC;}
+
+div#subsetsearch {
+   padding: 6px 0px 4px 8px;
+   background: #eee;
+   color: black;
+   position: fixed;
+   top: 0px;
+   width: 100%;
+   height: 20px;
+}
+
+div#subsetsearch a{
+   cursor: pointer;
+}
+
+form#types, form#grouped_cats {
+  	background: #eee;
+   color: black;
+   padding: 5px;
+   margin: 0px;
+   border-top: 1px solid #eee;
+   height: 25px;
+   max-height: 25px;
+   white-space: nowrap;
+}
+
+form#types input:focus {
+   background-color: yellow;
+}
+
+fieldset.categorytree {
+   border: none;
+   margin: 0px;
+   padding: 0px;
+}
+
+fieldset.topruler  legend {
+   font-weight: bold;
+}
+
+div.calculations {
+   clear: both;
+}
+
+#inlinePopupContainer_h {
+   height: 13px;
+   max-height: 13px;
+   min-height: 13px;
+}
+
+div.calculations ul#topCategoryMenu {
+   height: 268px;
+   overflow-y: auto;
+}
+
+ul#calculationformelements {
+   height: 338px;
+   max-height: 338px;
+   overflow-y: auto;
+   margin: 0;
+   padding: 5px;
+   list-style-type: none;
+   border-top: 2px solid #b2b2b2;
+}
+
+#calculationformelements li {
+   margin-top: 2px;
+}
+
+#calculationformelements li label {
+   width: 100px;
+}
+
+#calculationformelements li select{
+
+}
+
+#calculationformelements li.conjunction {
+   padding: 1em;
+   font-weight: bold;
+}
+
+div.calculations ul#topCategoryMenu {
+   margin-top: 0px;
+}
+
+ul.calculationdialogpages {
+   margin: 0px;
+   padding: 0px;
+}
+
+ul.calculationdialogpages li {
+   margin: 0px;
+   margin-left: 5px;
+   padding: 5px;
+   display: block;
+   float: left;
+   border: 1px solid black;
+   background: #eee;
+   color: #aaa;
+   bottom: 0px;
+   margin-bottom: -1px;
+   margin-top: 5px;
+   height: 15px;
+   max-height: 15px;
+   white-space: nowrap;
+}
+
+ul.calculationdialogpages li.selected {
+   border-bottom: 1px solid #eee;
+   color: black;
+}
+
+div.calculations div#subsetsearch {
+   position: static;
+   width: auto;
+   height: 25px;
+   max-height: 25px;
+   white-space: nowrap;
+}
+
+div#subsetsearch img {
+   margin-top: 4px;
+   margin-left: 3px;
+}
+
+div#subsetsearch a {
+   color: white;
+   text-decoration: none;
+   vertical-align: text-bottom;
+   font-size: 0px;
+   display: block;
+   float: left;
+}
+
+.searchcombo {
+   display: block;
+   float: left;
+}
+
+ul#titleanddecs {
+   background: #eee;
+   color: black;
+   padding-left: 5px;
+   padding-bottom: 9px;
+   margin: 0px;
+
+   list-style-type: none;
+   white-space: nowrap;
+   border-top: 2px solid #b2b2b2;
+}
+
+ul#titleanddecs li {
+   height: 20px;
+   margin-bottom: 5px;
+   margin-right: 10px;
+   white-space: nowrap;
+   clear: both;
+}
+
+ul#titleanddecs li label {
+   text-align: right;
+   width: 80px;
+   float: left;
+   margin-top: 8px;
+}
+
+ul#titleanddecs li input {
+   width: 180px;
+   float: right;
+   margin-top: 5px;
+}
+
+ul#titleanddecs li button {
+   padding: 3px 0 3px 0;
+   width: 60px;
+   float: right;
+   margin-top: 5px;
+}
+
+ul#titleanddecs li.radioentry {
+   padding: 0px;
+   margin-bottom: 0px;
+}
+
+ul#titleanddecs li.radioentry input{
+   width: auto;
+   margin-top: auto;
+   margin-left: 0px;
+   margin-right: 10px;
+   padding: 0px;
+}
+
+ul#titleanddecs li.radioentry label{
+   margin-right: 10px;
+   float: none;
+   text-align: left;
+   width: auto;
+
+}
+
+a#subsetsubmit:hover, a#subsetdelete:hover  {
+   background-position: 0px -34px;
+}
+
+a#subsetsubmit, a#subsetdelete  {
+   margin-left: 10px;
+   margin-top: 2px;
+   background-image: url(../images/OK_double.png);
+   background-repeat: no-repeat;
+   padding-top: 2px;
+   padding-bottom: 2px;
+}
+
+a#subsetdelete {
+   background-image: url(../images/delete_calc_double.png);
+}
+
+
+#subsetsubmit img,#subsetdelete img {
+  display: inline;
+  height: 16px;
+  width: 23px;
+  visibility: hidden;
+}
+
+a#subsetsubmit:hover {
+   background-position: 0px -34px;
+}
+

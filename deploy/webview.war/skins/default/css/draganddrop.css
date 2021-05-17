@@ -1,0 +1,63 @@
+#drop {
+   border: solid white 1px;
+   margin-left: -3px;
+   padding: 3px;
+   display: inline-block;
+}
+
+#mainmenu:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+
+.mouseover {
+    background-color: rgb(179,192,205) !important;
+    border: 1px solid rgb(179,192,205);
+    cursor: move !important;
+    text-align: left !important;
+    padding: 1px 5px 1px 5px;
+    white-space: normal !important;
+}
+
+table.matrix td.mouseoverstub {
+    background-color: #d7d0c5;
+    border: 1px solid #d7d0c5;
+    cursor: move;
+    text-align: left;
+    white-space: normal;
+    padding: 1px 5px 1px 5px;
+}
+
+table.matrix td.movingcellstub {
+    background: #ffffff;
+    color: #ffffff;
+    cursor: move;
+    text-align: left;
+    white-space: normal;
+    padding: 1px 5px 1px 5px;
+}
+
+td.movingcellstub div {
+    background: #d7d0c5;
+    color: #000;
+    cursor: move;
+    padding: 1px 5px 1px 5px;
+}
+
+td.movingcell div {
+    background: #000;
+    color: #000;
+    cursor: move;
+    padding: 1px 5px 1px 5px;
+}
+
+table.matrix td.movingcell {
+    background: #fff;
+    color: #fff;
+    cursor: move;
+    padding: 2px 5px 2px 5px;
+}
+

@@ -1,0 +1,13 @@
+#if ($!doprint)
+  <h3>$!i18n.get("sourcelabel")</h3>
+#end
+
+#set ($study = $!parameters.getStudy())
+#set($source = $!study.getSource())
+#if($!source)
+  <strong>
+    $!i18n.get("sourcelabel"):
+  </strong>
+  $utils.escapeHtml($!source, true)
+#end
+

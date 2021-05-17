@@ -1,0 +1,22 @@
+#parse ("khp/toptext.vm")
+
+#parse("khp/tooltippreparations.vm")
+
+#if ($!selector)
+  #parse("khp/selector.vm")
+#end
+
+<form name="areawizard" action="kommune" method="post" id="areawizard" autocomplete="off" target="rightside">
+   <ul id="menu">
+      #if($!{props.showIndicatorsBeforeRegions()})
+         #parse("khp/indicatortree.vm")
+         #parse("khp/dimensiontree.vm")
+      #else
+         #parse("khp/dimensiontree.vm")
+         #parse("khp/indicatortree.vm")
+      #end
+   </ul>
+
+   #parse("khp/hiddenfields.vm")
+   #parse("khp/outputtypecontroller.vm")
+</form>

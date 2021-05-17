@@ -1,0 +1,1753 @@
+html {
+   width: 100%;
+}
+
+body {
+   padding: 0;
+   margin: 0;
+   font-family: verdana, helvetica, arial, sans-serif;
+   font-size: 11px;
+   background-color: #ffffff;
+   color: #333;
+}
+
+div.bodypadder {
+   padding-left: 8px;
+   padding-left: 18px;
+   padding-right: 18px;
+}
+
+a {
+   color: #1F3C79;
+}
+
+a:link {
+   color: #1F3C79;
+}
+
+a:visited {
+   color: #1F3C79;
+}
+
+div.footer {
+   clear: both;
+}
+
+h1, h2, h3, h4, h5, h6 {
+   font-family: verdana, helvetica, arial, sans-serif;
+}
+
+h1, #catalogtext h1 {
+   color: #888;
+   font-size: 16px;
+}
+
+h3 {
+   font-size: 14px;
+   margin: 0;
+   padding: 0 0 4px;
+}
+
+h3.variableheader {
+   color:#454545;
+   font-size: 16px;
+   font-weight: bold;
+}
+
+.readonly{
+   background-color: #eeeeee;
+}
+
+.readonly:hover{
+   cursor:default;
+}
+
+/* A class for the copyright | */
+div.copyright, div.copyright a {
+   color: #999999;
+   text-decoration:none;
+   font-size:9px;
+}
+
+div.errormessage {
+   background-color: #FFFF99;
+   border: 1px solid #CDCDCD;
+   font-size: 10px;
+   text-align: left;
+   padding: 8px;
+   margin: 0 4px 10px 10px;
+   width: 300px;
+   color: #000;
+}
+
+#errortip {
+   margin-left: 6px;
+   margin-top: -14px;
+   float: left;
+}
+
+div.filtermessage, div.weightmessage {
+   color: #666;
+   font-size: 12px;
+   height: 16px;
+   line-height: 18px;
+   padding-left: 24px;
+   background-repeat: no-repeat;
+   background-position: 0 0;
+   background-color: transparent;
+}
+
+div.filtermessage {
+   background-image: url(../images/menu/subset_double.png);
+}
+
+div.weightmessage {
+   background-image: url(../images/menu/weight_double.png);
+}
+
+#tablemsg {
+   clear: both;
+   padding: 6px 0 8px 0; /* Used padding to create space between any floated elements (graph scalers) */ 
+   font-style: italic;
+}
+
+td.titlemeny {
+   background-color: #6688aa;
+   color: #ffffff;
+}
+
+a.titleicons {
+   padding-left: 3px;
+}
+
+a.makesomeroom {
+   padding-left: 10px;
+}
+
+a.submenu {
+   font-size: 12px;
+   color: #ffffff;
+   text-decoration: none;
+}
+
+a.submenu:link {
+   font-size: 12px;
+   color: #ffffff;
+   text-decoration: none;
+}
+
+a.submenu:visited {
+   font-size: 12px;
+   color: #ffffff;
+   text-decoration: none;
+}
+
+div.titletext {
+   color: #1f2f6f;
+   background-color: #ffffff;
+   font-weight: bold;
+}
+
+.giveroom, .giveroom h2, #catalogtext h2, #bookmarkDialog h2 {
+   color: #666;
+   font-weight: normal;
+   margin-bottom: 11px;
+   font-size:14px;
+   font-family: verdana, helvetica, arial, sans-serif;
+}
+
+.subtitle{
+   color: #666;
+   background-color: #ffffff;
+   font-weight: normal;
+   font-size: 11px;
+   margin-bottom: 10px;
+   margin-top: 0;
+}
+
+input.changeSubmit {
+   color: #000000;
+   border: 2px solid #6688aa;
+   vertical-align: top;
+   padding-left: 3px;
+   padding-right: 3px;
+}
+
+/* These also apply for the weight window */
+
+button, textarea, input .button,input.button {
+   padding: 3px;
+   font-size: 9pt;
+   border: 1px solid #cdcdcd;
+}
+
+.textfield {
+   padding: 3px;
+   font-size: 10px;
+   border: 1px solid #cdcdcd;
+}
+
+.noPadding {
+   padding: 0;
+}
+
+select {
+   padding: 2px;
+   font-size: 9pt;
+   border: 1px solid #cdcdcd;
+}
+
+input.changeSubsetButtons {
+   border: 1px solid #666;
+   vertical-align: top;
+   padding-left: 3px;
+   padding-right: 3px;
+   margin-right: 3px;
+   height: 22px;
+   text-transform:uppercase;
+}
+
+input.changeSubsetButtonsNoPointer {
+   border: 1px solid #666;
+   vertical-align: top;
+   padding-left: 3px;
+   padding-right: 3px;
+   height: 22px;
+   text-transform:uppercase;
+}
+
+input.changeSubsetButtonOk {
+   border: 1px solid #000000;
+   vertical-align: top;
+   padding-left: 6px;
+   padding-right: 6px;
+   height: 22px;
+   border: 1px solid #898989;
+   text-transform:uppercase;
+}
+
+div.scaleadjust {
+   white-space: nowrap;
+}
+
+div.scaleadjust form {
+   float: left;
+}
+
+div.graphmessage {
+   margin-top: 20px;
+   margin-bottom: 20px;
+   font-weight: bold;
+}
+
+div.processing {
+   display: none;
+   font-weight: bold;
+   font-size: 1.4em;
+   text-align: center;
+   margin-top: 60px;
+}
+
+div.download_auto {
+   padding-bottom: 8px;
+}
+
+div.varHeading {
+   color: #000000;
+   font-size: 11px;
+   padding-bottom: 5px;
+}
+
+div.layerVarHead {
+   color: #000000;
+   font-size: 11px;
+   font-weight: bold;
+}
+
+div.layerVar {
+   color: #000000;
+   font-size: 11px;
+   line-height: 1.4em;
+}
+
+div.layerVar sub, div.layerVar sup {
+   line-height: 0px;
+}
+
+#itemlist, #itemlist li {
+   list-style: none;
+   padding-left: 0px;
+   margin-left: 0px;
+}
+
+#itemlist li span {
+   line-height: 1.4em;
+}
+
+#itemlist li span sub, #itemlist li span sup {
+   line-height: 0px;
+}
+
+div.pageheader {
+   margin-top: 20px;
+   font-weight: bold;
+   margin-bottom: 10px;
+}
+
+ul.serverbookmark {
+   padding: 0px;
+   margin: 0px;
+   list-style: none;
+   margin-bottom: 2em;
+}
+
+ul.serverbookmark li {
+   display: inline;
+   padding: 0px;
+   margin: 0px;
+}
+
+ul.serverbookmark li form {
+   display: inline;
+   padding: 0px;
+   margin: 0px;
+}
+
+ul.serverbookmark li form input {
+   padding: 0px;
+   margin: 0px;
+}
+
+div.bookmarkhelp {
+   width: 400px;
+   padding-top: 10px;
+   margin-bottom: 10px;
+}
+
+.theInput {
+   font-size: 100%;
+   font-family: verdana, helvetica, arial, sans-serif;
+}
+
+div.poweredby {
+   position: absolute;
+   right: 3px;
+   top: 5px;
+}
+
+/* For hints&tips placed below the tables */
+.hint {
+   clear: both;
+   color: #000000;
+   background-color: #f6f6f6;
+   border: 1px solid #ddd;
+   padding: 10px;
+   height: auto;
+   width: 800px;
+   margin-top: 1em;
+}
+
+.hint h3 {
+   margin: 0px;
+}
+
+.bookmarkinfo {
+   padding-left: 40px;
+   font-style: italic;
+}
+
+.bookmarkinfo h4 {
+   margin-bottom: 4px;
+   padding: 0px;
+}
+
+.hideClass {
+   position: absolute;
+   top: 0px;
+   left: 0px;
+   margin: 0;
+   padding: 0;
+   background: white;
+   text-align: center;
+   width: 100%;
+   opacity: .9;
+   font-weight: bold;
+   font-size: 1.8em;
+   z-index: 1000;
+}
+
+
+.hideClass img {
+   margin: auto;
+   padding-top: 30%;
+}
+
+/**The class for all the menus*/
+
+#top {
+   clear: both;
+   margin: 0px;
+   margin-bottom: 0em;
+   white-space: nowrap;
+   z-index: 2;
+}
+
+.form-row {
+   margin: 6px 0;
+}
+
+.form-row label {
+   display: block;
+}
+
+.form-row label input {
+   width: 13px;
+   height: 13px;
+   padding: 0;
+   margin: 0;
+   vertical-align: middle;
+   position: relative;
+   top: -1px;
+   *overflow: hidden;
+}
+
+#top li:hover ul, li.over ul {
+   display: block;
+}
+
+#top li:hover ul {
+   display: block;
+}
+
+#menu li > ul {
+   top: auto;
+   left: auto;
+}
+
+#mainmenu {
+   height: auto;
+   min-height: 20px;
+   list-style: none;
+   padding: 0;
+   margin: 0;
+   line-height: 0.7em;
+   display: block;
+   color: #333;
+}
+
+#mainmenu li ul li span.disabled {
+   color: #888;
+}
+
+#mainmenu li ul li span.disabled:hover {
+   background: white;
+}
+
+a.selectedLevel, a.selectedSlice, a.selectedType, a.selectedMeas {
+   background-image: url( '../images/checkmark.gif' );
+   background-position: left center;
+   background-repeat: no-repeat;
+}
+
+#mainmenu li {
+   float: left;
+   text-align: center;
+   padding: 0;
+   margin: 0;
+   position: relative;
+   border: 1px solid #999;
+}
+
+#mainmenu li a,
+#mainmenu li span {
+   display: block;
+   margin: 0px;
+   white-space: nowrap;
+   text-decoration: none;
+   text-align: left;
+   font-size: 11px;
+   color: #333;
+   float: none;
+   position: relative;
+   padding: 5px 25px 5px 5px;
+}
+
+#mainmenu li a.combolink {
+   background-image: url( '../images/menuarrow.gif' );
+   background-position: right center;
+   background-repeat: no-repeat;
+   cursor: pointer;
+}
+
+span.sliceselection,
+#mainmenu li a span.sliceselection {
+   padding: 0px;
+   margin: 0px;
+   display: inline;
+   font-weight: normal;
+}
+
+#mainmenu li span.movingcelllayer,
+#mainmenu li span.layerlabel,
+#mainmenu li span.mouseoverlayer {
+   background-image: url( '../images/grip.png' );
+   background-repeat: repeat;
+   width: 10px;
+   font-size: 10px;
+   padding-left: 0px;
+   padding-right: 0px;
+   margin: 0px;
+   border: none;
+   padding-bottom: 0px;
+   margin-right: 2px;
+   display: block;
+   float: left;
+   cursor: move;
+   z-index: 2;
+   white-space: nowrap;
+}
+
+span.layerlabel {
+   line-height: 10px;
+}
+
+div.layerlabel {
+   z-index: 2;
+   width: auto;
+   padding: 1px 4px 1px 4px;
+   margin: 0px;
+   color: black;
+   font-size: 11px;
+   position: relative;
+   border: 1px solid black;
+   background-position: right center;
+   background-repeat: repeat-y;
+   background-color: white;
+}
+
+div.layerlabel span.sliceselection {
+   margin-left: 3px;
+}
+
+#mainmenu li.toppop {
+   visibility: visible;
+   margin: 0 1.5em .5em 0;
+}
+
+#mainmenu li.toppop:hover ul {
+   display: block;
+}
+
+#mainmenu li.hiddencombo {
+   visibility: hidden;
+}
+
+#mainmenu li.hiddencombo span {
+   display: none;
+}
+
+#mainmenu li ul > li {
+   position: relative;
+}
+
+#mainmenu li:hover > ul {
+   visibility: visible;
+}
+
+#mainmenu li ul {
+   z-index: 3;
+   display: block;
+   margin-top: -1.5em;
+   background-color: white;
+   border: 1px solid #888;
+   padding: 0px;
+   margin: 0px;
+   padding-right: 0px;
+   padding-left: 0px;
+   min-width: 200px;
+   position: absolute;
+   margin-left: -1px;
+   list-style: none;
+   left: 0px;
+   float: none;
+   visibility: hidden;
+}
+
+#mainmenu.jai li ul li > ul {
+   visibility: hidden;
+}
+
+#mainmenu.jai li ul li:hover > ul {
+   visibility: visible;
+}
+
+#mainmenu li ul li {
+   margin-right: 0px;
+   padding: 0px;
+   background-image: none;
+   min-width: 200px;
+   width: 100%;
+   border: none;
+   display: block;
+   float: none;
+   clear: both;
+}
+
+#mainmenu li ul li ul {
+   margin-top: -1.5em;
+   left: 100%;
+}
+
+#mainmenu li ul li.parentmenu {
+   background-image: url( '../images/right.gif' );
+   background-position: right center;
+   background-repeat: no-repeat;
+}
+
+#mainmenu li ul li a,
+#mainmenu li ul li span {
+   padding-right: 0px;
+   position: relative;
+   border: none;
+   display: block;
+   padding-left: 15px;
+   float: none; /* Works around bug in Firefox 1.0.7 */
+   min-width: 185px;
+   line-height: 0.7em;
+}
+
+#mainmenu li ul li:hover {
+   background-color: #eee;
+}
+
+hr.menuseparator {
+   width: 100%;
+   margin: 0px;
+   padding: 0px;
+   color: #aaa;
+   border: none;
+   border-top: solid 1px #aaa;
+   background-color: #aaa;
+   margin-left: -15px;
+   height: 0px;
+   font-size: 0px; /* Works around bug in Firefox 1.0.7 */
+   min-width: 200px;
+}
+
+table.matrix {
+   clear: both;
+}
+
+div#tableinfo {
+   clear: both;
+}
+
+div#colorschememenu {
+   position: relative;
+   border: 1px solid black;
+   height: 2em;
+   min-width: 100px;
+   display: inline;
+   padding: 3px;
+   padding-left: 5px;
+   padding-right: 20px;
+   background-color: white;
+   background-image: url( '../images/menuarrow.gif' );
+   background-position: right center;
+   background-repeat: no-repeat;
+   cursor: pointer;
+   top: 4px;
+}
+
+div#colorschememenu span {
+   background-position: left center;
+   background-repeat: no-repeat;
+   padding-left: 15px;
+}
+
+div#colorschememenu ul {
+   z-index: 3;
+   display: block;
+   background-color: white;
+   border: 1px solid black;
+   padding: 0px;
+   margin: 0px;
+   padding-right: 0px;
+   padding-left: 0px;
+   min-width: 100px;
+   position: absolute;
+   margin-left: -1px;
+   list-style: none;
+   left: 0px;
+   top: 1.5em;
+   float: none;
+   visibility: hidden;
+}
+
+div#colorschememenu:hover ul {
+   visibility: visible;
+}
+
+div#colorschememenu ul li a {
+   padding-right: 0px;
+   position: relative;
+   border: none;
+   display: block;
+   text-decoration: none;
+   float: none; /* Works around bug in Firefox 1.0.7 */
+   min-width: 100px;
+   padding: 3px;
+   padding-left: 5px;
+}
+
+div#colorschememenu ul li a:hover {
+   background: #eee;
+}
+
+div#colorschememenu ul li {
+   margin-right: 0px;
+   padding: 0px;
+   background-image: none;
+   min-width: 100px;
+   width: 100%;
+   border: none;
+   display: block;
+   float: none;
+   clear: both;
+}
+
+div#colorschememenu img {
+   margin-right: 5px;
+   vertical-align: middle;
+   border: 1px solid #aab;
+}
+
+/* Maps */
+div.mapping {
+   clear: both;
+   width: 1050px;
+}
+
+#mapdiv {
+   padding: 0px;
+   position: relative;
+   float: left;
+   z-index: 1;
+}
+
+#mapdiv p {
+   margin: 0px;
+   padding: 0px;
+   margin-right: 1em;
+   position: absolute;
+}
+
+#reset {
+   position: absolute;
+   right: 20px;
+   display: none;
+}
+
+#reset img {
+   border: none;
+}
+
+#mapImage {
+   float: left;
+   position: relative;
+   border: 1px solid #aab;
+   background-position: top left;
+   background-repeat: no-repeat;
+   margin-right: 1em;
+   margin-bottom: 1em;
+   /*
+   -moz-transition: background 0.5s linear;
+   -webkit-transition: background  0.5s linear;
+   -o-transition: background  0.5s linear;
+   transition: background  0.5s linear;
+   */
+}
+
+.mapMessageBox {
+   background-color: black;
+   padding: 0.5em 2em;
+   opacity: 0.8;
+   color: white;
+   position: absolute;
+   bottom: 0px;
+   left: 0;
+   right: 0;
+   min-height: 30px;
+   line-height: 36px;
+   display: none;
+   z-index: 10;
+}
+
+.mapMessageBox span {
+   margin-left: 10px
+}
+
+#mapLoadingTimeoutIndicator, #genericMapErrorIndicator {
+   background-color: #600;
+}
+
+#tempMapImage {
+   position: absolute;
+   left: 0;
+   top: 0;
+   padding: 1px;
+   margin: 0px;
+   z-index: 0;
+   display: none;
+}
+
+#rubberBand {
+   border: 2px solid black !important;
+   background-image: url( '../images/rubberbandbackground.png' );
+   z-index: 2;
+}
+
+#wmsPanInstructions {
+   display: none;
+}
+
+#sidebar {
+   display: none;
+   width: 150px;
+   float: left;
+   margin: auto;
+}
+
+#sidebar hr {
+   height: 1px;
+   background-color: #888;
+   color: #888;
+   border: none;
+   width: 50%;
+   margin-top: 1em;
+   margin-bottom: 1em;
+}
+
+form#categories {
+   padding: 0px;
+   margin: 0px;
+}
+
+div#legend {
+   padding: 1em;
+   border: 1px solid #aab;
+   background: #fff;
+   margin-bottom: 1em;
+   font-size: 90%;
+}
+
+div#legend div {
+   margin: 0px;
+   margin-bottom: 0.5em;
+   border: none;
+   border-left: 2ex solid;
+   padding-left: 1em;
+}
+
+ul#legendlist {
+   list-style-type: none;
+   margin-left: 0px;
+   padding: 0px;
+}
+
+#imgLoader {
+   display: none;
+}
+
+ul#nonthematiclegendlist {
+   list-style-type: none;
+   margin-left: 0px;
+   padding: 0px;
+}
+
+span.wordcnp {
+   border: none;
+   padding-left: 1em;
+   padding-right: 1em;
+   margin-right: 1em;
+   font-family: mono;
+   display: none;
+}
+
+div#legend h3, h3#layersheader {
+   font-size: 12px;
+   text-align: center;
+   margin: 0 0 0.5em 0;
+   padding: 0;
+}
+
+#legend ul li span {
+   border: none; 
+   padding-left: 0px;	
+   white-space: nowrap;
+}
+
+#legend ul li img {
+   margin-right: 1em;
+   vertical-align: middle;	
+}
+
+div#tooltipdiv {
+   background: #ff9;
+   color: black;
+   border: 1px solid black;
+   padding: 2px;
+   z-index: 2;
+   margin-left: 13px;
+}
+
+div.controls ul {
+   list-style-type: none;
+   margin-left: 0px;
+   padding: 0px;
+}
+
+ul.numCategoriesList {
+   white-space: nowrap;
+}
+
+ul.numCategoriesList li {
+   display: inline;
+   padding: 0px;
+   margin: 0px;
+}
+
+ul.numCategoriesList li label {
+   padding: 0px;
+   margin: 0px;
+}
+
+ul.numCategoriesList li label img {
+   padding: 0px;
+   margin: 0px;
+}
+
+ul.numCategoriesList li input {
+   display: none;
+}
+
+ul.classification li {
+   margin-left: 0px;
+   padding-left: 0px;
+   margin-bottom: 0.5em;
+}
+
+ul.classification li input {
+   display: none;
+}
+
+ul.classification li label {
+   color: #555;
+   white-space: nowrap;
+}
+
+ul.classification li label.selected {
+   color: black;
+}
+
+ul.classification li label img {
+   vertical-align: middle;
+   display: inline;
+}
+
+ul.labels li {
+   margin-left: 0px;
+   padding-left: 0px;
+   margin-bottom: 0.5em;
+}
+
+ul.labels li input {
+   display: none;
+}
+
+ul.labels li label {
+   color: #555;
+   white-space: nowrap;
+}
+
+ul.labels li label.selected {
+   color: black;
+}
+
+ul.labels li label img {
+   vertical-align: middle;
+   display: inline;
+}
+
+ul.layers li {
+   margin-bottom: 3px;
+   white-space: nowrap;
+}
+
+ul.layers li.toggle-all-layers {
+   border-bottom: 1px dotted #D3D3D3;
+}
+
+ul.layers li.hidden {
+    display: none;
+}
+
+ul.layers label {
+   margin-bottom: 2px;
+   position: relative;
+   bottom: 2px;
+   left: 4px;
+}
+
+div.mapAbstract {
+   width: 820px;
+   font-size: 80%;
+   color: #888;
+   text-align: right;
+   margin-right: 1em;
+}
+
+#referer {
+   margin: 0;
+   padding: 0;
+   padding-right: 18px;
+   float: right;
+}
+
+/* Login template */
+#login fieldset {
+   border: none;
+   padding: 2em;
+   width: 290px;
+}
+
+#login .loginelement {
+   margin: 0;
+   padding: 0;
+   line-height: 22px;
+   clear: both;
+   text-align: right;
+}
+
+#login .failedlogin {
+   color: #ed2326;
+}
+
+#login p, #login label {
+   color: #000;
+   font-size: 11px;
+}
+
+#login label, #login input {
+   margin-bottom: 8px;
+}
+
+#login label {
+   font-weight: bold;
+   margin: 0 1em 0 0;
+   padding: 0;
+   width: 90px;
+   float: left;
+   text-align: right;
+}
+
+#login .textfield {
+   width: 170px;
+}
+
+#login h2, #login h3 {
+   color: #666;
+   font-weight: bold;
+}
+#login h2 {
+   font-size: 14px;
+}
+#login h3 {
+   font-size: 11px;
+}
+
+#login p.loginfail, #login p.replay{
+   color: red;
+   font-weight: bold;
+}
+
+button, .button, .button-group button {
+   display: inline;
+   text-transform: uppercase;
+   font-size: 9pt;
+   font-weight: bold;
+   color: #666;
+   padding: 3px;
+}
+
+.minWidth{
+   min-width:40px;
+}
+
+button:hover, .button:hover, .button-group button:hover {
+   border: 1px solid #CDCDCD;
+   background-color: #E0E1E1;
+}
+
+.small {
+   font-size: 8pt;
+   padding: 2px;
+   margin-left: 4px;
+}
+
+.button_margin {
+   margin-right: 1em;
+}
+
+.formbutton {
+   vertical-align: top;
+   padding-right: 4px;
+}
+
+.button_top_margin {
+   margin-top: 10px;
+}
+
+.buttonpadder {
+   text-align: right;
+   clear: both;
+}
+
+#login button {
+   font-size: 120%;
+}
+
+.unregistered {
+   margin-top: 2em;
+   padding-top: .3em;
+   border-top: 1px solid #DEDEDE;
+}
+
+ul.variableActions {
+   list-style: none;
+   margin: 0px;
+   padding: 0px;
+   margin-top: 1em;
+   margin-bottom: 1em;
+}
+
+ul.variableActions li {
+   background-image: url( '../images/shoppingcart-right.png' );
+   height: 39px;
+   font-size: 12px;
+   width: 22em;
+   background-position: top right;
+   background-repeat: no-repeat;
+   margin: 0px;
+   padding: 0px;
+   padding-right: 10px;
+}
+
+ul.variableActions li a {
+   background-image: url( '../images/shoppingcart-left.png' );
+   padding-left: 25px;
+   padding-top: 12px;
+   white-space: nowrap;
+   color: #777;
+   font-weight: bold;
+   text-decoration: none;
+   display: block;
+   background-position: top left;
+   background-repeat: no-repeat;
+   height: 38px;
+}
+
+span.searchHighlight0 {
+   background-color: #ff6;
+   color: black;
+   padding: 0px;
+   margin: 0px;
+   display: inline;
+}
+
+span.searchHighlight1 {
+   background-color: #aff;
+   color: black;
+   padding: 0px;
+   margin: 0px;
+   display: inline;
+}
+
+span.searchHighlight2 {
+   background-color: #9f9;
+   color: black;
+   padding: 0px;
+   margin: 0px;
+   display: inline;
+}
+
+span.searchHighlight3 {
+   background-color: #f99;
+   color: white;
+   padding: 0px;
+   margin: 0px;
+   display: inline;
+}
+
+span.searchHighlight4 {
+   background-color: #f6f;
+   color: black;
+   padding: 0px;
+   margin: 0px;
+   display: inline;
+}
+
+label {
+   cursor: pointer;
+   font-size: 9pt;
+}
+
+#diagram img {
+   border: none;
+}
+
+
+/* Spider */
+form#spiderlabelform {
+   text-align: center;
+}
+
+/****************************
+ **
+ ** Start feedback form
+ **
+ **
+ *****************************/
+
+   #feedback a {
+   }
+
+   #feedbackform {
+      text-align: left;
+      padding: 20px;
+   }
+
+   #feedbackform input, #feedbackform textarea, #feedbackform label {
+      display: block;
+      margin-bottom: 6px;
+      font-family: verdana, helvetica, arial, sans-serif;
+   }
+
+   #email {
+      width: 100%;
+      padding: 2px;
+   }
+
+   #feedbackform .button {
+      display: inline;
+   }
+
+   #feedbackform div.close {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+   }
+
+   div.close a img {
+      border: none;
+   }
+
+   #feedbackform textarea {
+      height: 10em;
+      width: 25em;
+   }
+
+   #feedbackform label {
+      margin-bottom: 4px;
+   }
+
+   #feedbackform p {
+      margin-top: 0px;
+      padding: 0px;
+      color: #000;
+      font-family: verdana, helvetica, arial, sans-serif;
+      line-height: 150%;
+   }
+
+   a.email {
+      float: right;
+      font-weight: bold;
+      padding-right: 18px;
+      padding-left: 4px;
+      color: #666;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-size: 10pt;
+   }
+
+   a.email:hover {
+      text-decoration: underline;
+   }
+
+   /****************************
+    **
+    ** End feedback form
+    **
+    **
+    *****************************/
+
+   /**********************
+    **
+    ** Embedding
+    **
+    *****************************/
+   #embeddingcontainer {
+      margin: 10px 14px 10px 10px;
+   }
+
+   #advancedembedding td, #advancedembedding label {
+      font-size: 11px !important;
+   }
+
+   #simpleembedding {
+      margin: 10px auto 0 auto;
+      width: 396px;
+   }
+
+   fieldset#advancedembedding {
+      border: 1px solid #B3C0CD;
+      width: 396px;
+      margin: 0 auto;
+      padding: 5px;
+   }
+   #advancedembedding legend {
+      background-color: #EFEFEF; /* hopefully fixes IE-bug letting fieldset frame bleed through */
+   }
+
+   #advancedembedding legend, #advancedembedding h3 {
+      font-size: 13px;
+      font-weight: bold;
+   }
+
+   #advancedembedding h3 {
+      margin: 1em 0 .3em 0;
+      padding: 0;
+   }
+
+   #advancedembedding div.col {
+      float: left;
+      width: 46%;
+      position: relative;
+      margin: .8em 6px 0 6px;
+      padding: 0;
+   }
+   
+   #advancedembedding div.leftcol {
+      width: 230px;
+   }
+   
+   #advancedembedding div.rightcol {
+      width: 135px;
+   }
+
+   #advancedembedding .element {
+      margin: .2em;
+      padding-bottom: 0;
+   }
+
+   #advancedembedding .sub {
+      padding-left: .4em;
+   }
+
+   #advancedembedding .disabled {
+      font-style: italic;
+      color: #ccc;
+   }
+   
+   #embedsize label {
+      float: left;
+      width: 50px;
+      line-height: 24px;
+   }
+   
+   #aspectratio {
+      background: transparent url(../images/aspect-pointer.png) no-repeat -1px 5px;
+      position: absolute;
+      top: 0;
+      left: 150px;
+      padding-top: 10px;
+      height: 40px;
+   }
+   
+   input.code, input.number {
+      border: 1px solid #B3C0CD;
+      padding: 3px;
+      margin: 0;
+   }
+
+   input.code {
+      width: 398px;
+   }
+
+   input.number {
+      width: 30px;
+   }
+
+   input.number:focus {
+      border-color: #888;
+   }
+
+   div.output {
+      margin: .8em 0;
+      padding: 0;
+      text-align: center;
+   }
+
+   div.link {
+      text-align: center;
+      padding: 1em 0;
+   }
+
+   div.link a {
+      display: inline;
+      margin: 0 20px;
+   }
+
+   #embedPreviewContents {
+      margin: 18px;
+      border: none;
+   }
+
+   .creationdate {
+      font-size: 7pt;
+      font-weight: bold;
+      color: #B3C0CD;
+      text-transform: uppercase;
+   }
+
+   .openorig {
+      padding: 2px;
+      background-color:#eee;
+      border: 1px solid #bbb;
+      color:#888;
+      width: 110px;
+      text-align: center;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 7pt;
+      margin-top: 5px;
+   }
+
+   .openorig:visited {
+      color: #888;
+   }
+   .openorig:link {
+      color: #888;
+   }
+   .updated {
+      padding-bottom: 6px;
+      margin-left: 2px;
+      width: 100%;
+   }
+
+   /**
+   Styles for hiding the navigation tree
+    */
+   #navhide {
+      position: fixed;
+      top: 50%;
+      left: 0;
+      width: 8px;
+      height: 50px;
+      background-color: transparent;
+      line-height: 50px;
+      text-decoration: none;
+      z-index: 10001;
+   }
+
+   #navhide img {
+      border: 0;
+   }
+
+   .navigationvisible {
+      background: transparent url(../images/nav_hide.png) no-repeat top left;
+   }
+
+   .navigationvisible:hover {
+      background-image: url(../images/nav_hide_hover.png);
+   }
+
+   .navigationhidden {
+      background: transparent url(../images/nav_show.png) no-repeat top left;
+   }
+
+   .navigationhidden:hover {
+      background-image: url(../images/nav_show_hover.png);
+   }
+
+   /* bookmark dialog */
+   #bookmarkDialog h2 {
+      text-transform: uppercase;
+      font-size: 11px;
+      font-weight: bold;
+      float: left;
+      margin: 0;
+   }
+
+   #bookmarkDialog h2, #bookmarkDialog span, #bookmarkDialog label {
+      color: #000;
+      margin-bottom: 0;
+   }
+
+   #bookmarkDialog span {
+      margin-left: 8px;
+   }
+
+   #bookmarkDialog input, #bookmarkDialog textarea {
+      clear: both;
+      width: 100%;
+      color: #666;
+   }
+
+   #bookmarkDialog .bd, #emailDialog .bd, #embedDialog .bd {
+      padding: 0 !important;
+      font-family: verdana, arial, sans-serif;
+   }
+
+   div#embedDialog, div#bookmarkDialog {
+      display: none;
+      background-color: #efefef;
+   }
+
+   #urlpane, #embedpane, #serversidebookmarkpane {
+      width: 300px;
+      margin: 0;
+      border-bottom: 1px solid #aaa;
+   }
+
+   #urlpane, #embedpane {
+      height: 50px;
+      padding: 6px 12px;
+   }
+
+   #serversidebookmarkpane {
+      height: 229px;
+      padding: 6px 12px;
+      line-height: 10px;
+   }
+
+   #serversidebookmarkpane h2 {
+      float: none;
+   }
+
+   #serversidebookmarkpane p {
+      margin: 4px 0;
+   }
+
+   #serversidebookmarkpane label {
+      display: block;
+      margin: 8px 0 2px 0;
+      font-size: 1em;
+   }
+
+   #serversidebookmarkpane textarea {
+      width: 100%;
+   }
+
+   #serversidebookmarkpane button {
+      margin-top: 6px;
+   }
+
+   #serversidebookmarkcontent {
+      padding-top: 12px;
+   }
+
+   #bookmarkDialog a {
+      text-decoration: none;
+   }
+
+   #bookmarkDialog a img {
+      border: none;
+   }
+
+   #advancedLink {
+      display: block;
+      text-align: right;
+   }
+
+   #togglearrow {
+      background-image: url(../images/togglearrow.png);
+      background-repeat: no-repeat;
+      padding-left: 12px;
+   }
+
+   .toggleright {
+      background-position: 0 2px;
+   }
+
+   .toggledown {
+      background-position: 0 -9px;
+   }
+
+   /** subset */
+   table.categorysubset {
+      width: 100%;
+      font-size: 8pt;
+   }
+
+   table.categorysubset tr.selected {
+      background-color: #E0E1E1;
+   }
+
+   table.categorysubset td {
+      padding: 2px 4px;
+   }
+
+   table.categorysubset:hover{
+      cursor:pointer;
+   }
+
+   .indicatorlink:hover {
+      cursor: pointer;
+   }
+
+   #inlinePopupContents, #inlinePopupContents html {
+      /*margin-left: -1px;*/
+      margin: 0;
+      padding: 0;
+      border: 0px;
+   }
+
+   .linkcategory img {
+      border: none;
+      position: relative;
+      top: 2px;
+      padding-left: 1px;
+   }
+
+
+   /**
+   Hack for IE6 to position the hide/show navigation button correctly.
+    */
+* html #navhide {
+   position: absolute;
+}
+
+div#suppressionmsg{
+   margin: 0 0 10px 0;
+}
+
+div.mapping div.controls div.bd {
+   margin: 1em;
+}
+
+div#mapcontrolpanel {
+   width: 270px;
+}
+
+div#mapcontrolpanel .bd {
+   overflow-y: auto;
+   overflow-x: hidden;
+}
+
+button.map-button {
+   position: absolute;
+   right: 20px;
+   padding: 7px 10px 5px 10px;
+}
+
+button.map-button img {
+   width: 15px;
+}
+
+button.map-button span {
+   float: right;
+   margin-left: 5px;
+}
+
+button#settings {
+   top: 20px;   
+   z-index: 10;
+}
+
+button#reset {
+   bottom: 20px;
+   z-index: 10;
+}
+
+label.sprite {
+   height: 19px;
+   padding-left: 22px;
+   overflow: hidden;
+   background-position: 0px -3px;
+   background-repeat: no-repeat;
+}
+
+label#equal-interval {   
+   background-image: url('../images/equal-interval.png');
+}
+
+label#equal-groups {
+   background-image: url('../images/equal-groups.png');
+}
+
+label#show-labels {
+   background-image: url('../images/show-labels.png');
+}
+
+label#show-values {
+   background-image: url('../images/show-values.png');
+}
+
+#mapcontrolpanel label.selected {
+   background-position: 0px -21px !important;
+}
+
+div.header {
+   z-index: 2;
+   width: 100%;
+   position: fixed;
+   top: 0;
+   left: 0;
+   padding: 0px;
+   margin: 0px;
+   height: 22px;
+}
+
+div#topstrip tr.mainmenu {
+   background: transparent url('../images/menu/forlopning.jpg') repeat-x top left;
+}
+
+div.headersub {
+   height: 30px;
+}
+
+div.headerTree {
+   border-bottom: solid 3px #b2b2b2;
+   position: fixed;
+   top: 0;
+   left: 0;
+   background-color: #e6e7e8;
+   z-index: 2;
+   width: 100%;
+   padding: 0px;
+   margin: 0px;
+   height: 22px;   
+}
+
+div.mozview {
+   margin-top: 33px;
+}
+
+div.mozviewanalysis{
+   margin-top: 55px;
+}
+
+#categoriesslider {
+   width: 90%;
+   margin: 0 auto;
+}
+
+.relative {
+   position: relative;
+}
+
+.vertical-middle {
+   position: absolute;
+   top: 40%;
+}

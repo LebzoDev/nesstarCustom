@@ -1,0 +1,13 @@
+collection = [
+   #foreach ($item in $items)
+   $!item
+   #end
+];
+   
+indicators = [
+   #foreach ($indi in $indis)
+   $!indi
+   #end
+];
+
+

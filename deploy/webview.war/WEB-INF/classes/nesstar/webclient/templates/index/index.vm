@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>$!htmlTitle</title>
+      <link rel="canonical" href="$!canonicalURL" />
+      <link href="$!rooturl/icons/SmallN1.ico" rel="shortcut icon"/>
+      <link href="$!rooturl/$!{props.getSkinPath()}css/documentation.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!rooturl/$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+      <link href="$!rooturl/$!{props.getSkinPath()}css/index.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+
+      <!--[if lte IE 6]>
+      <style type="text/css">
+         #explorecontainer{
+          width:250px;
+         }
+      </style>
+      <![endif]-->
+
+      <script type="text/javascript" src="$!rooturl/$!{props.getSkinPath()}javascript/jquery-1.8.2.min.js?$!props.getTimeStamp()"></script>
+
+      #parse('static/stats.html')
+
+      <script type="text/javascript">
+         $(document).ready(function() {
+            var topFrameHeight = $!props.getTopFrameHeight();
+            $('#container').css('top',topFrameHeight-5);
+            var bgheight = 22;
+            var bodyHeight = $(window).height() - topFrameHeight - bgheight;
+            var containerHeight = $("#container").height();
+            if (bodyHeight > containerHeight)
+               $("#leftpanel").height(bodyHeight);
+            else
+               $("#leftpanel").height(containerHeight);
+         });
+      </script>
+
+      <style type="text/css">
+      ##Background-position of gradient needs to be dynamic to fit with the top frame
+      body{
+        background-position: left $!props.getTopFrameHeight()px;
+      }
+      </style>
+   </head>
+   <body>
+   <iframe src="$!rooturl/static/header.html?language=no" scrolling="no" frameborder="0" style="width: 100%; margin: 0; padding: 0; height:$!props.getTopFrameHeight()px;"></iframe>
+      <div id="container">
+         #if($!error)
+            #parse ('error.vm')
+         #else
+            #parse ('breadcrumbs.vm')
+            <div id="metadata">
+               #if ($!webviewurl)
+               <div id="explorecontainer">
+                  <div class="explorebutton">
+                     <a href="$!webviewurl">
+                  #if($!indexurls.getFocusedObject().isServer() || $!indexurls.getFocusedObject().isCatalog() || !$!indexurls.getFocusedObject()) $!i18n.index_explore
+                  #else $!i18n.index_webview
+                  #end
+                        </a>
+                     </div>
+                  </div>
+               #end
+            #if($!indexurls.getFocusedObject().isServer())
+               #parse ('server.vm')
+            #elseif ($!indexurls.getFocusedObject().isCatalog())
+               #parse ('catalog.vm')
+            #elseif ($!indexurls.getFocusedObject().isCube())
+               #set ($study = $!cube.getStudy())
+               #parse ('study.vm')
+            #elseif ($!indexurls.getFocusedObject().isStudy())
+               #parse ('study.vm')
+            #elseif ($!indexurls.getFocusedObject().isVariableGroup())
+               #parse ('variablegroup.vm')
+            #elseif ($!indexurls.getFocusedObject().isSection())
+               #parse ('section.vm')
+            #elseif ($!indexurls.getFocusedObject().isVariable())
+               #parse ('variable.vm')
+            #elseif ($!indexurls.getFocusedObject().isEgmsResource())
+               #parse ('egms.vm')
+            #else
+               #parse ('server.vm')
+            #end
+            </div>
+         #end
+         #parse ('footer.vm')
+      </div>
+      <div id="leftpanel">
+         <h1 id="metameta">$!i18n.index_leftcolumn_headline</h1>
+         <p>$!i18n.index_leftcolumn_text</p>
+      </div>
+   </body>
+</html>

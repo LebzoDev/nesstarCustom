@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<r:RDF 	xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:s="http://www.w3.org/TR/1999/PR-rdf-schema-19990303#"
+	xmlns:n="http://www.nesstar.org/rdf/"
+	xmlns:cm="http://www.nesstar.org/rdf/common/">
+
+<cm:Server r:about="%%SERVERURL%%/obj/cServer/%%SERVERNAME%%"/>
+<r:Bag r:about="%%SERVERURL%%/obj/aUserHome/UserHome?http%3A%2F%2Fwww.nesstar.org%2Frdf%2Fmethod=http%3A%2F%2Fwww.nesstar.org%2Frdf%2Facu%2FUserHome%2FEJBQuery&amp;query=select+o.id+from+User+o"/>
+</r:RDF>
+

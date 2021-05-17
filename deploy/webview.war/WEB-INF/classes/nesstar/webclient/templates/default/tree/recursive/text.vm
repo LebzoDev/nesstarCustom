@@ -1,0 +1,153 @@
+#if ($!child.getType() == 'Catalog')
+   #if($!child.isShowing())
+      #set($cssClass = 'nodetext nodetextSelected')
+   #else
+      #set($cssClass = 'nodetext')
+   #end
+   #if(!$child.catalogHasComment())
+      <a class="$!cssClass" title="$!theTooltip" onclick="openRootCatalogWithoutCatalogComment(this, '$!child.getDrillDownLink()', $!closeDown);">
+         $!utils.escape($!child.getLabel())</a>
+   #else
+      <a class="$!cssClass" title="$!theTooltip" onclick="openRootCatalogWithCatalogComment(this, '$!child.getID()', '$!child.getDrillDownLink()', $!closeDown);" $!child.getCommentLink() target="rightside">
+         $!utils.escape($!child.getLabel())</a>
+   #end
+#elseif ($!child.getType() == 'Study')
+   #set($foundAttr = '')
+   #if ($!child.isOpen())
+      #set($foundAttr = ' name="FOUND" ')
+   #end
+
+   ##If metadata-nodes are configured not to show - all DDI content and not
+   ##just abstract must show when clicking on study title. Similar to clicking on the plus icon
+   #set($displayDDIFlag = 'false')
+   #if(!$!props.microdataDisplayMetadata())
+      #set($displayDDIFlag = 'true')
+   #end
+   
+   #set($cssClass = "nodetext")
+   #if(!$!isSearch && $!child.isShowing())
+      #set($cssClass = "nodetext nodetextSelected")
+   #end
+
+   <a class="$!cssClass" $!foundAttr title="$!theTooltip" href="$!child.getLink()" target="rightside"
+   onclick="return openStudyTextlink(this, '$!child.getDrillDownLink()')">$!utils.escape($!child.getLabel())
+
+   #if ($!child.isNew())
+      <img src="$!{props.getSkinPath()}images/dataset_new.png" title="This dataset is new"/>
+   #end
+   </a>
+#elseif ($!child.getType() == 'StudySearchWrapper')
+   <a class="nodetext" title="$!theTooltip" href="$!child.getLink()" target="rightside" onclick="return openStudyTextlink(this, '$!child.getDrillDownLink()')">
+      $!utils.escape($!child.getLabel())</a>
+#elseif ($!child.getType() == 'Cube')
+   #set($cssClass = "nodetext")
+   #if($!child.isShowing())
+      #set($cssClass = "nodetext nodetextSelected")
+   #end
+   #if ($!child.isOpen())
+   <a class="$!cssClass" name="FOUND" title="$!theTooltip" href="$!child.getLink()"
+      onclick="return openCube(this, '$!child.getDrillDownLink()', '$!child.getID()', event)" target="rightside">
+      $!utils.escape($!child.getLabel())
+   #else
+   <a class="$!cssClass" title="$!theTooltip" href="$!child.getLink()"
+      onclick="return openCube(this, '$!child.getDrillDownLink()', '$!child.getID()', event)" target="rightside">
+      $!utils.escape($!child.getLabel())
+   #end
+   #if ($!child.isOnTop() && $!child.isNew())
+      <img src="$!{props.getSkinPath()}images/dataset_new.png" title="This dataset is new"/>
+   #end
+   </a>
+#elseif ($!child.getType() == 'Variable')
+   #if ($!child.isOpen())
+      #set ($class = 'nodetextSelected')
+   #else
+      #set ($class = 'nodetext')
+   #end
+   <a class="$!class"
+      onclick="return displayVariable(this, '$!child.getID()', '$!child.getFormat()', '$!child.getVarID()', false, event,'$!child.getSectionID()');"
+      title="$!theTooltip">$!utils.escape($!child.getLabel())</a>
+#elseif ($!child.getType() == 'Section')
+   <a class="nodetext" title="$!theTooltip"
+      onclick="return displaySection(this, '$!child.getID()',event, '$!child.getDrillDownLink()', false)">$!utils.escape($!child.getLabel())</a>
+#elseif ($!child.getType() == 'Metadata')
+   #set ($cssClass = "nodetext")
+   #if($!child.isShowing())
+      #set($cssClass = "nodetext nodetextSelected")
+   #end
+   <a class="$!cssClass #if(!$!props.expandMetadataNode())noexpand#end" title="$!theTooltip" onclick="return displayDdi(this, '$!child.getOrder()', '$!child.getDrillDownLink()', false)">
+      $!utils.escape($!child.getLabel())</a>
+#elseif ($!child.getType() == 'metadataEntry')
+   #set ($cssClass = "nodetext")
+   #if($!child.isShowing())
+      #set($cssClass = "nodetext nodetextSelected")
+   #end
+   <a class="$!cssClass" title="$!theTooltip" onclick="return displayDdi(this, '$!child.getOrder()', '$!child.getDrillDownLink()', false)">
+      $!utils.escape($!child.getLabel())</a>
+#elseif ($!child.getType() == 'metadataEntryLeaf')
+   #set ($cssClass = "nodetext")
+   #if($!child.isOpen())
+      #set($cssClass = "nodetext nodetextSelected")
+   #end
+   <a class="$!cssClass #if($!child.isLeaf())leafnode#end" title="$!theTooltip" onclick="return displayDdi(this, '$!child.getOrder()', '$!child.getDrillDownLink()', false)">
+      $!utils.escape($!child.getLabel())</a>
+#elseif ($!child.getType() == 'Bookmark')
+   <a class="nodetext" onclick="openDrilldownBookmark(this, '$!child.getDrillDownLink()')">$!utils.escape($!child.getLabel())</a>
+#elseif ($!child.getType() == 'Statement')
+   <a class="nodetext" title="$!theTooltip" href="$!child.getLink()" target="rightside"
+      onclick="return openBookmark(this, '$!child.getID()', '$!child.getDrilldownWithRemove()',event)">
+      $!utils.escape($!child.getLabel())</a>
+#elseif ($!child.getType() == 'Resource')
+
+   ##Note the difference between opening a EGMS-resource in a popup or in the rightside-frame
+   #if ($!props.openEgmsInPopup() && ($!child.getUri() || $!child.getFileUrl()))
+      #set ($theLink = '')
+      #if($!child.getUri())
+       #set ($theLink = $!child.getUri())
+      #elseif($!child.getFileUrl())
+       #set ($theLink = $!child.getFileUrl())
+      #end
+      #set($found = '')
+      #if ($!child.isOpen())
+         #set($found = 'name="FOUND"')
+      #end
+      <a class="nodetext" $!$found href="$!theLink" title="$!theTooltip"
+         onclick="displayEGMSResource(this); return openEGMS('$!theLink');" target="EGMS">$!utils.escape($!child.getLabel())
+   #else
+      #if ($!child.isOpen())
+      <a class="nodetext nodetextSelected" name="FOUND" href="$!child.getLink()" title="$!theTooltip"
+         onclick="return displayEGMSResource(this)" target="rightside">$!utils.escape($!child.getLabel())
+      #else
+      <a class="nodetext" href="$!child.getLink()" title="$!theTooltip"
+         onclick="return displayEGMSResource(this)" target="rightside">$!utils.escape($!child.getLabel())
+      #end
+   #end
+   #if ($!child.isNew())
+      <img src="$!{props.getSkinPath()}images/dataset_new.png" title="This dataset is new"/>
+   #end
+   </a>
+#elseif ($!child.getType() == 'VariableDescription')
+   <a class="nodetext" title="$!theTooltip"
+      onclick="return displaySection(this, '$!child.getStudyID()',event, '$!child.getDrillDownLink()', false)">$!utils.escape($!child.getLabel())</a>
+#elseif ($!child.getType() == 'UserDefined')
+   <a class="nodetext" title="$!theTooltip" href="$!child.getDrillDownLink()" target="rightside" onclick="return openUserDefinedTextlink(this)">
+      $!utils.escape($!child.getLabel())</a>
+#elseif ($!child.getType() == 'searchResultNode')
+   <a class="nodetext" title="$!theTooltip">$!utils.escape($!child.getLabel())</a>
+#elseif ($!child.getType() == 'NoHitsHelp')   
+   <div class="nothitshelp">
+      $!utils.escape($!child.getLabel())
+      #if ($child.hasCauses())
+      <ul>
+         #foreach ($cause in $child.causes)
+         <li>$!utils.escape($!cause)</li>
+         #end
+      </ul>         
+      #end
+   </div>
+#elseif ($!child.getType() == 'Empty')
+   <p class="nodetext noicon" title="$!theTooltip">$!utils.escape($!child.getLabel())</p>
+#end
+   
+#if ($!child.getType() == 'Variable' && $!child.isVariableSearch())
+   <a href="$!child.getOpenInContextLink()" class="advancedsearch" target="$!child.getID()">$!utils.escape($!i18n.openInContext)</a>
+#end

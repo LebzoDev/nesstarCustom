@@ -1,0 +1,53 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		#parse ("cache/cacheHeader.vm")
+    <link href="$!{props.getSkinPath()}css/subset.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+    <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/cases.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript">
+        var skinPath = '$!{props.getSkinPath()}';
+    </script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/cube.js?$!props.getTimestamp()"></script>
+    <script type="text/javascript" src="$!{props.getSkinPath()}javascript/bookmark.js?$!props.getTimestamp()"></script>
+    <title>$!i18n.print_subset_title</title>
+		#parse( "header.vm" )
+  </head>
+  <body onload="setScrollableSize()">
+    <script type="text/javascript">
+			mode = 'subset';
+    </script>
+
+		#parse( "menu/menu.vm" )
+    <div class="mozview bodypadder" id="exploder">
+
+			#parse( "toptitle.vm" )
+
+			#if ($!viewer.getIsLogin())
+				#parse ("login/loginform.vm")
+			#elseif ($!errormessage)
+      <div class="errormessage">$errormessage</div>
+			#else
+      <div class="subsetHeader">$!i18n.subset</div>
+				#if ($!caseSubset)
+					#parse ("subset/cases.vm")
+				#else
+					#parse ("subset/variables.vm")
+				#end
+      <div style="margin-top: 20px">
+				$!i18n.subset_help
+      </div>
+			#end
+
+			<div class="footer">
+			#include( "static/footer.html" )
+			</div>
+			#parse( "help/help.vm" )
+    </div>
+  </body>
+</html>

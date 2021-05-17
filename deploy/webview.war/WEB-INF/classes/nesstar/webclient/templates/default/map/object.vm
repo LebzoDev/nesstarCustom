@@ -1,0 +1,5 @@
+#set ($className = $!map.getClass().getSimpleName())
+#set ($prefix = "map/")
+#set ($suffix = ".vm")
+#set ($templName = "$!prefix$!className$!suffix")
+#parse ($templName)

@@ -1,0 +1,12 @@
+#*
+ All translation strings from src/nesstar/webclient/translation will be
+ available for use in javascripts. Dots (.) in the keys will be replaced
+ with underscores.
+*#
+
+var translation = {};
+
+#foreach ( $translationKey in $!i18n.keySet() )
+   #set ( $velocitySafeKey = $translationKey.replaceAll("\.", "_") )
+   translation.$velocitySafeKey = "$i18n.get($translationKey)";
+#end

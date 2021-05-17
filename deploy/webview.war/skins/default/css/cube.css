@@ -1,0 +1,450 @@
+td a {
+   text-decoration: underline;
+}
+
+table.matrix td {
+	background-color: #F5F7F5;
+	color: #000000;
+	text-align: right;
+	cursor: default;
+	white-space: nowrap;
+	line-height: 150%;
+	font-size: 10px;
+	padding: 2px 5px;
+}
+
+
+table.matrix td sup {
+   font-size: 0.85em !important;
+   line-height: 0;
+}
+
+table.sortingmenu td {
+   font-size: 1.0em;
+   white-space: normal;
+}
+
+img {
+   display: inline;
+}
+
+table.matrix td.images {
+   padding-right: 14px;
+   white-space: normal;   
+}
+
+table.matrix td.tablehead {
+   color: #000000;
+   background-color: #dedede;
+   font-weight: normal;
+   text-align: left;
+   white-space: normal; 
+}
+
+table.matrix td.tableheadlast {
+   background-color: #dedede;
+   font-weight: normal;
+   vertical-align: top;
+   text-align: left;
+   white-space: normal;
+}
+
+table.matrix td.headerlast {
+   background-color: #D6DEF0;
+   font-weight: normal;
+   vertical-align: top;
+   text-align: center;
+   color: #000000;
+   white-space: normal;   
+   padding: 2px 7px;
+}
+
+table.matrix td.header {
+   color: #000000;
+   background-color: #D6DEF0;
+   font-weight: normal;
+   vertical-align: top;
+   text-align: center;
+   white-space: normal;   
+}
+
+table.matrix td.tablestub {
+   background-color: #efefef;
+   text-align: left;
+   white-space: normal;   
+}
+
+table.matrix td.stub {
+   background-color: #dfdfdf; 
+   text-align: left;
+   color: #000000;
+   padding: 1px 15px 1px 5px;
+   white-space: normal;
+}
+
+table.matrix td.stublabel {
+   background-color: #dfdfdf;
+   border: 1px solid #dfdfdf; 
+   text-align: left;
+   cursor: move;
+   color: #000000;
+   white-space: normal;
+   padding: 1px 5px 1px 5px;
+}
+
+table.matrix td.regressionlabel {
+   background-color: #fdd298; /* orange  - til orang/bl� skjema */
+   text-align: left;
+   color: #000000;
+   white-space: normal;   
+}
+
+table.matrix  td.tablecontent {
+   background-color: #F5F5F7;
+   text-align: right;
+   white-space: normal;   
+}
+
+/** Focused cells */
+table.matrix td.stubHigh {
+   text-align: left;
+   padding: 1px 15px 1px 5px;
+   white-space: normal;   
+   background-color: #dfdfdf; 
+}
+
+table.matrix td.headerlastHigh {
+   background-color: #cccccc;
+   font-weight: normal;
+   vertical-align: top;
+   color: #000000;
+   text-align: center;
+   white-space: normal;
+   padding: 2px 7px;
+}
+
+table.matrix td.highlight {
+   color: #000000;
+   background-color: #eeeeee;
+}
+
+table.matrix td.focus {
+   color: #000000;
+   background-color: #adc5db;
+}
+
+table.matrix td.focusHead {
+   background-color: #D6DEF0;
+   font-weight: normal;
+   vertical-align: top;
+   text-align: center;
+   color: #000000;
+   white-space: normal;
+   padding: 2px 7px; 
+}
+
+table.matrix td.focusStub {
+   background-color: #cccccc;
+   font-weight: normal;
+   text-align: left;
+   color: #000000;
+   padding: 1px 15px 1px 5px;
+   padding-left: 5px;
+   white-space: normal;   
+}
+
+table.matrix td.vardroptoheader {
+   background-color: #cccccc;
+}
+
+
+fieldset {
+   display: inline;
+   color: #000000;
+}
+
+legend {
+   display: inline;
+   vertical-align: top;
+}
+
+fieldset.lastmenu {
+   margin-right: 10px;
+}
+
+fieldset.measure {
+   color: #1F3C79;
+}
+
+fieldset.measure legend {
+   font-weight: bold;
+}
+
+table.toptitle {
+   border: dashed;
+   border-color: #000000;
+   padding: 1em;
+   margin: 0;
+}
+
+table.bcohead {
+   width: 100%;
+   height: 25px;
+}
+
+table.bcohead tr {
+   height: 19px;
+}
+
+td.bcotitle {
+   font-size: 1.0em;
+   font-weight: bold;
+   color: #1F3C79;
+}
+
+td.toptitle {
+   font-size: 1.0em;
+   font-weight: bold;
+}
+
+td.toptitle span {
+   color: #ffffff;
+}
+
+.label {
+   border: solid #ffffff 1px;
+   color: black;
+   background: #aabbcc;
+   cursor: move;
+}
+
+label {
+   cursor: pointer;
+}
+
+table.matrix .empty {
+   border: solid #ddd 1px;
+   color: black;
+   background-color: #dddddd;
+}
+
+table.matrix .emptystub {
+   border: solid #ddd 1px;
+   color: black;
+   background-color: #dddddd;
+}
+
+#droptostub {
+   background-color: #dddddd;
+}
+
+.headlabel {
+   color: black !important;
+   background-color: #D6DEF0 !important;
+   border: 1px solid #B6CDE5;
+   cursor: move !important;
+   text-align: left !important;
+   padding: 0 5px;
+   white-space: normal !important;
+}
+
+div.leftmargin {
+   padding: 8px;
+}
+
+td.waitmessage {
+   font-size: 1.0em;
+   text-align: center;
+   font-weight: bold;
+}
+
+td.errormessage {
+   font-size: 1.0em;
+   text-align: center;
+   font-weight: bold;
+   color: red;
+}
+
+td.interval {
+   font-size: 1.0em;
+   position: absolute;
+   left: 15%;
+}
+
+table.metadata {
+   width: 99%;
+}
+
+a.mapnoavail {
+   cursor: text;
+}
+
+a.line {
+   cursor: text;
+}
+
+form {
+   margin: 0px;
+   padding: 0px;
+}
+
+div.matrixdiv {
+   margin-top: 10px;
+}
+
+.bcohide {
+   display: none;
+}
+
+div.metadataplace {
+   background-color: #ffffff;
+   position: absolute;
+   bottom: 0%;
+   border: solid 1px #f0a13e;
+}
+
+div.metadataview {
+   overflow: auto;
+   height: 200px;
+   display: none;
+}
+
+td.metadata {
+   background-repeat: no-repeat;
+   width: 30%;
+   color: #1f3c79;
+   font-weight: bold;
+   font-size: 11px;
+   padding-left: 10px;
+}
+
+div.metadatacontent {
+   padding-top: 4px;
+}
+
+span.title {
+   font-size: 11px;
+   font-weight: bold;
+   color: #1F3C79;
+}
+
+div.content {
+   font-size: 10px;
+   color: #1F3C79;
+}
+
+form.cubemenu {
+   margin-bottom: 10px;
+}
+
+div.measureVar {
+   color: #000000;
+   margin-bottom: 10px;
+   font-size: 11px;
+   padding-left: 4px;
+}
+
+img.sortimage {
+   display: inline;
+   visibility:hidden;
+   text-align: right;
+   padding: 0px;
+   margin: 0px;
+   cursor: pointer;
+}
+
+img.sortimageHead {
+   display:block;
+   visibility:hidden;
+   text-align: center;
+   padding: 0px;
+   margin: 0px auto 0px auto;
+   cursor: pointer;
+}
+
+img.sortimageOpen {
+   visibility:visible;
+   display: inline;
+   cursor: pointer;
+}
+
+a.menulinks {
+   font-size: 1.5em;
+   white-space: pre;
+}
+
+div.copyright {
+   margin-top: 10px;
+}
+
+#multigraphs dt {
+   color: #000;
+   font-weight: bold;
+   margin: 0px;
+   padding-left: 250px;
+
+}
+
+#multigraphs dt dd {
+   margin: 0px;
+   padding: 0px;
+}
+
+span.cubehingeitem {
+   color: #000000;
+   font-weight: bold;
+}
+
+div.referencehelp {
+   padding-top: 15px;
+   width: 50%;
+   color: #000;
+}
+
+/** ILM-styles **/
+td.item {
+   background-image: url( "../images/item.png" );
+   background-position: 0px 0px;
+   background-repeat: no-repeat;
+   padding-left: 6px;
+}
+
+.sup {
+   font-size: 0.4em;
+}
+
+ul.ilmnotes {
+   margin: 0px;
+   padding: 0px;
+   margin-left: 10px;   
+}
+
+/** ILM-styles end **/
+
+/** Cell-flag-legends **/
+#cellmarkings h4{
+   padding: 0;
+   margin: 10px 0 5px 0;
+}
+
+#cellmarkings dl{
+   margin: 0;
+   padding: 0;
+}
+
+#cellmarkings dt{
+   margin: 0;
+   padding: 0;
+   float: left;
+}
+
+#cellmarkings dd{
+   margin: 0 0 0 2em;
+   padding: 0;
+}
+
+td.embedded {
+	cursor: default !important;
+}
+/** Cell-flag-legends end **/
+

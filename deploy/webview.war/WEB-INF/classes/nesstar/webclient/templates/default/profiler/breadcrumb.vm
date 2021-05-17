@@ -1,0 +1,40 @@
+<div id="bread">
+#set ($breads = $profiler.getBreadCrumb())
+#if ($!breads)
+   #foreach ($crumb in $breads)
+   <ul><li>
+      #if ($crumb.isActive())
+       #set ($class = 'active')
+      #else
+       #set ($class = 'end')
+      #end
+      #if ($crumb.isActive())<a href="$!crumb.getLink()" class="active">#end<span class="$!class">$!crumb.getLabel()</span>#if ($crumb.isActive())</a>#end
+   #end
+   </li>
+   #set ($size = $profiler.getBreadCrumb().size())
+   #set ($counter = 1)
+   #foreach ($crumb in $profiler.getBreadCrumb())
+   </ul>
+   #if ($!counter < $!size)
+   </li>
+   #end
+   #set ($counter = $counter + 1)
+   #end
+#end
+
+ #if ($!profiler.isReplay())
+     <div id="icons">
+      #if ($!profiler.isPDFEnabled())
+     <a href="$!profiler.getPDFLink()" title="$!i18n.pdf">
+               <img class="images" src="$!{props.getSkinPath()}images/menu/pdf.png" border="0" title="$!i18n.pdf" alt=""/>
+     </a>
+     #else
+         <img class="images" src="$!{props.getSkinPath()}images/menu/pdf_disabled.png" border="0" title="$!i18n.pdf_disabled" alt=""/>
+     #end
+     <a href="$!profiler.getPrintUrl()" target="print" title="$!i18n.print">
+               <img class="images" src="$!{props.getSkinPath()}images/menu/print.png" border="0" title="$!i18n.print" alt=""/>
+    </a>
+   </div>
+ #end
+
+</div>

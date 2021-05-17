@@ -1,0 +1,25 @@
+/**
+ * This is called after YUI to override certain YUI styles
+ */
+
+.button, .button-group button {
+   display: inline;
+	text-transform: uppercase;
+	font-size: 9pt;
+	font-weight: bold;
+	color: #666;
+   border:1px solid #CDCDCD;
+	padding: 2px;
+   background-color: #F0F1F1;
+}
+
+.button:hover, .button-group button:hover {
+   border: 1px solid #CDCDCD;
+   background-color: #E0E1E1;
+}
+
+button, textarea {
+   padding: 3px;
+   font-size: 9pt;
+   border: 1px solid #cdcdcd;
+}

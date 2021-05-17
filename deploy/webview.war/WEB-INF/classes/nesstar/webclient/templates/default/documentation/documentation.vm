@@ -1,0 +1,78 @@
+#parse ("doctype/doctypepage.vm")
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <title>$!frametitle</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  #parse ("cache/cacheHeader.vm")
+  <link href="$!{props.getSkinPath()}css/common.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+  <link href="$!{props.getSkinPath()}css/documentation.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+  <link href="$!{props.getSkinPath()}css/menu.css?$!props.getTimestamp()" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript" src="$!{props.getSkinPath()}javascript/bookmark.js?$!props.getTimestamp()"></script>
+  <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery-1.8.2.min.js?$!props.getTimeStamp()"></script>
+  <script type="text/javascript" src="$!{props.getSkinPath()}javascript/jquery.cookie.js?$!props.getTimestamp()"></script>
+
+  <link href="$!{props.getSkinPath()}css/languagecss.jsp?$!props.getTimestamp()&language=$!currentlyActiveLanguageISO" rel="stylesheet" type="text/css"/>
+
+  #parse( "header.vm" )
+
+</head>
+#if ($!doprint)
+#set ($onload = "setScrollableSize();window.print()")
+#else
+#set ($onload = "setScrollableSize();")
+#end
+<body onload="$!onload; highlightSearch()">
+<script type="text/javascript">
+  mode = 'documentation';
+</script>
+
+#parse( "menu/menu.vm" )
+<div class="mozview bodypadder" id="exploder">
+  #parse( "toptitle.vm" )
+  #if ($!documentation.actionFlashText)
+  <div class="hint">
+	$documentation.actionFlashText 
+  </div>
+  #end
+  
+  <div id="metadata">
+
+   #if ($!errormessage && !$!viewer.getIsLogin())
+      <div>$!errormessage</div>
+   #end
+   #if ($!viewer.getIsLogin())
+      #parse ("login/loginform.vm")
+   #elseif ( $!documentation.getType() == 'summary' )
+   ##Do nothing special, as abstract is displayed always anyway. See #6315
+    #elseif ($!documentation.getType() == 'vardoc')
+    #parse( "documentation/vardoc.vm" )
+    #elseif ($!documentation.getType() == 'catalog')
+    #parse( "documentation/catalog.vm" )
+    #elseif ($!documentation.getType() == 'section')
+    #parse( "documentation/section.vm" )
+    #elseif ($!documentation.getType() == 'bookmark')
+    #parse( "documentation/bookmark.vm" )
+    #elseif ($!documentation.getType() == 'multicube')
+    #parse ("documentation/multicube.vm")
+    #elseif ($!documentation.getType() == 'ddi')
+    #parse( "documentation/ddi/ddi.vm" )
+    #elseif ($!documentation.getType() == 'welcome')
+      #parse ("documentation/welcome.vm")
+    #elseif ( $!text )
+    $!text
+    #else
+    #if ( $!documentation.getType() == 'egmsresource' )
+    #parse( "documentation/egmsresource.vm" )
+    #end
+    #end
+  </div>
+  
+  <div class="footer">
+  #include( "static/footer.html" )
+  </div>
+
+  #parse( "help/help.vm" )
+</div>
+</body>
+</html>
